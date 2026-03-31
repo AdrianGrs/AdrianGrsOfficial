@@ -324,7 +324,7 @@
         document.getElementById(`item-${id}`)?.remove();
         showToast('Produs șters.', 'success');
         const items = document.querySelectorAll('.prod-item').length;
-        document.getElementById('list-count').textContent = `${items} produse`;
+        document.getElementById('list-count').textContent = `${items} produs${items !== 1 ? 'e' : ''}`;
     }
 
     function showToast(msg, type = 'success') {

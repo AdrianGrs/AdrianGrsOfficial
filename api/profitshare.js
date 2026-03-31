@@ -22,9 +22,6 @@ function buildAuthHeaders(method, endpoint, queryString) {
   const signatureString = `${method.toUpperCase()}${endpoint}?${qs}/${apiUser}${date}`;
   const auth = crypto.createHmac('sha1', apiKey).update(signatureString).digest('hex');
 
-  console.log('DEBUG signature:', signatureString);
-  console.log('DEBUG auth:', auth);
-
   return {
     'Date': date,
     'X-PS-Client': apiUser,
@@ -38,8 +35,6 @@ async function psGet(endpoint, queryString = '') {
   const url = queryString
     ? `${PS_BASE}/${endpoint}?${queryString}`
     : `${PS_BASE}/${endpoint}`;
-
-  console.log('DEBUG url:', url);
 
   const res = await fetch(url, { headers });
   if (!res.ok) {
@@ -120,7 +115,8 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 
 module.exports = async function handler(req, res) {
   if (req.method === 'OPTIONS') {
-    return res.status(200).set(CORS).end();
+    Object.entries(CORS).forEach(([k, v]) => res.setHeader(k, v));
+    return res.status(200).end();
   }
   Object.entries(CORS).forEach(([k, v]) => res.setHeader(k, v));
 

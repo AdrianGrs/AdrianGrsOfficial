@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="ro">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Politică Cookies — MinimalTechRo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg:#080808;--surface:#101010;--surface2:#181818;--surface3:#222;--border:rgba(255,255,255,0.06);--white:#f5f5f5;--muted:#666;--muted2:#444;--red:#e8341a;--green:#22c55e;--gold:#f0a500;--font-display:'Oswald',sans-serif;--font-body:'Space Grotesk',sans-serif;}
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+        body{background:var(--bg);color:var(--white);font-family:var(--font-body);min-height:100vh;-webkit-font-smoothing:antialiased;}
+        .topbar{max-width:480px;margin:0 auto;position:sticky;top:0;z-index:100;background:rgba(8,8,8,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between;}
+        @media(min-width:520px){.topbar{border-left:1px solid var(--border);border-right:1px solid var(--border);}}
+        .brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+        .brand-icon{width:32px;height:32px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;}
+        .brand-icon svg{width:16px;height:16px;fill:#fff;}
+        .brand-name{font-family:var(--font-display);font-size:17px;font-weight:600;letter-spacing:1px;color:var(--white);}
+        .brand-name span{color:var(--red);}
+        .back-btn{font-size:11px;color:var(--muted);text-decoration:none;font-weight:600;}
+        .back-btn:hover{color:var(--white);}
+        .content{max-width:480px;margin:0 auto;padding:32px 16px 80px;}
+        @media(min-width:520px){.content{border-left:1px solid var(--border);border-right:1px solid var(--border);}}
+        .page-tag{font-size:10px;font-weight:700;letter-spacing:3px;color:var(--red);text-transform:uppercase;margin-bottom:10px;}
+        .page-title{font-family:var(--font-display);font-size:32px;font-weight:700;letter-spacing:1px;margin-bottom:8px;}
+        .page-date{font-size:11px;color:var(--muted);margin-bottom:28px;}
+        .section{margin-bottom:28px;}
+        .section h2{font-family:var(--font-display);font-size:16px;letter-spacing:1px;color:var(--white);margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--border);}
+        .section p{font-size:13px;color:var(--muted);line-height:1.75;margin-bottom:10px;}
+        .cookie-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:10px;}
+        .cookie-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}
+        .cookie-name{font-size:13px;font-weight:700;}
+        .cookie-badge{font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;padding:3px 8px;border-radius:4px;}
+        .badge-essential{background:rgba(34,197,94,0.15);color:var(--green);}
+        .badge-analytics{background:rgba(59,130,246,0.15);color:#60a5fa;}
+        .badge-marketing{background:rgba(240,165,0,0.15);color:var(--gold);}
+        .cookie-desc{font-size:12px;color:var(--muted);line-height:1.6;}
+        .cookie-provider{font-size:10px;color:var(--muted2);margin-top:6px;}
+        .footer{max-width:480px;margin:0 auto;padding:24px 16px 40px;text-align:center;}
+        .footer-brand{font-family:var(--font-display);font-size:18px;letter-spacing:2px;color:var(--surface3);}
+        .footer-brand span{color:var(--red);}
+        .footer-links{display:flex;gap:16px;justify-content:center;margin-top:12px;flex-wrap:wrap;}
+        .footer-links a{font-size:11px;color:var(--muted);text-decoration:none;}
+        .footer-links a:hover{color:var(--white);}
+        a{color:var(--red);}
+    </style>
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" href="index.html">
+        <div class="brand-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <span class="brand-name">Minimal<span>TechRo</span></span>
+    </a>
+    <a class="back-btn" href="index.html">← Înapoi</a>
+</header>
+
+<div class="content">
+    <div class="page-tag">Legal</div>
+    <h1 class="page-title">Politică Cookies</h1>
+    <div class="page-date">Ultima actualizare: 30 martie 2026</div>
+
+    <div class="section">
+        <h2>CE SUNT COOKIE-URILE</h2>
+        <p>Cookie-urile sunt fișiere text mici stocate pe dispozitivul tău când vizitezi un site web. Ajută site-ul să funcționeze corect și ne oferă informații despre cum este utilizat.</p>
+    </div>
+
+    <div class="section">
+        <h2>COOKIE-URILE PE CARE LE FOLOSIM</h2>
+
+        <div class="cookie-card">
+            <div class="cookie-header">
+                <div class="cookie-name">🔧 Cookie-uri esențiale</div>
+                <div class="cookie-badge badge-essential">Esențiale</div>
+            </div>
+            <div class="cookie-desc">Necesare pentru funcționarea de bază a site-ului. Nu pot fi dezactivate.</div>
+            <div class="cookie-provider">Provider: MinimalTechRo</div>
+        </div>
+
+        <div class="cookie-card">
+            <div class="cookie-header">
+                <div class="cookie-name">📊 Google Analytics</div>
+                <div class="cookie-badge badge-analytics">Analytics</div>
+            </div>
+            <div class="cookie-desc">Colectează date anonimizate despre vizitatori: număr de sesiuni, pagini vizitate, durata sesiunii. Ne ajută să îmbunătățim site-ul.</div>
+            <div class="cookie-provider">Provider: Google LLC · Cookie: _ga, _ga_* · Durată: 2 ani</div>
+        </div>
+
+        <div class="cookie-card">
+            <div class="cookie-header">
+                <div class="cookie-name">📱 TikTok Pixel</div>
+                <div class="cookie-badge badge-marketing">Marketing</div>
+            </div>
+            <div class="cookie-desc">Măsoară eficiența conținutului nostru de pe TikTok și comportamentul vizitatorilor care vin din TikTok.</div>
+            <div class="cookie-provider">Provider: TikTok Inc. · Durată: 13 luni</div>
+        </div>
+
+        <div class="cookie-card">
+            <div class="cookie-header">
+                <div class="cookie-name">🛒 Profitshare Tracking</div>
+                <div class="cookie-badge badge-marketing">Afiliat</div>
+            </div>
+            <div class="cookie-desc">Urmărește click-urile pe linkurile afiliate pentru atribuirea corectă a comisioanelor. Necesar pentru funcționarea programului de afiliere.</div>
+            <div class="cookie-provider">Provider: Profitshare.ro · Durată: 30 zile</div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2>CUM POȚI CONTROLA COOKIE-URILE</h2>
+        <p>Poți gestiona sau dezactiva cookie-urile din setările browserului tău:</p>
+        <p>
+            <a href="https://support.google.com/chrome/answer/95647" target="_blank">Chrome</a> ·
+            <a href="https://support.mozilla.org/en-US/kb/cookies-information-websites-store-on-your-computer" target="_blank">Firefox</a> ·
+            <a href="https://support.apple.com/en-us/105082" target="_blank">Safari</a>
+        </p>
+        <p>Dezactivarea cookie-urilor poate afecta funcționarea unor părți ale site-ului.</p>
+    </div>
+
+    <div class="section">
+        <h2>CONTACT</h2>
+        <p>Întrebări despre cookies: <a href="mailto:grosuadrian88@gmail.com">grosuadrian88@gmail.com</a></p>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer-brand">MINIMAL<span>TECHRO</span></div>
+    <div class="footer-links">
+        <a href="despre.html">Despre</a>
+        <a href="contact.html">Contact</a>
+        <a href="confidentialitate.html">Confidențialitate</a>
+        <a href="termeni.html">Termeni</a>
+        <a href="cookies.html">Cookies</a>
+    </div>
+</footer>
+</body>
+</html>

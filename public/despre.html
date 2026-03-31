@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="ro">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Despre Noi — MinimalTechRo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #080808; --surface: #101010; --surface2: #181818; --surface3: #222;
+            --border: rgba(255,255,255,0.06); --white: #f5f5f5; --muted: #666; --muted2: #444;
+            --red: #e8341a; --gold: #f0a500;
+            --font-display: 'Oswald', sans-serif; --font-body: 'Space Grotesk', sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--white); font-family: var(--font-body); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+        .topbar { max-width: 480px; margin: 0 auto; position: sticky; top: 0; z-index: 100; background: rgba(8,8,8,0.92); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 0 16px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+        @media (min-width: 520px) { .topbar { border-left: 1px solid var(--border); border-right: 1px solid var(--border); } }
+        .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+        .brand-icon { width: 32px; height: 32px; background: var(--red); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .brand-icon svg { width: 16px; height: 16px; fill: #fff; }
+        .brand-name { font-family: var(--font-display); font-size: 17px; font-weight: 600; letter-spacing: 1px; color: var(--white); }
+        .brand-name span { color: var(--red); }
+        .back-btn { font-size: 11px; color: var(--muted); text-decoration: none; font-weight: 600; display: flex; align-items: center; gap: 5px; }
+        .back-btn:hover { color: var(--white); }
+
+        .content { max-width: 480px; margin: 0 auto; padding: 32px 16px 80px; }
+        @media (min-width: 520px) { .content { border-left: 1px solid var(--border); border-right: 1px solid var(--border); } }
+
+        .page-hero { margin-bottom: 32px; }
+        .page-tag { font-size: 10px; font-weight: 700; letter-spacing: 3px; color: var(--red); text-transform: uppercase; margin-bottom: 10px; }
+        .page-title { font-family: var(--font-display); font-size: 36px; font-weight: 700; letter-spacing: 1px; line-height: 1.1; margin-bottom: 16px; }
+        .page-title span { color: var(--red); }
+        .page-desc { font-size: 14px; color: var(--muted); line-height: 1.7; }
+
+        .divider { height: 1px; background: var(--border); margin: 28px 0; }
+
+        .section-title { font-family: var(--font-display); font-size: 14px; letter-spacing: 2px; color: var(--muted2); text-transform: uppercase; margin-bottom: 14px; }
+
+        .card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; margin-bottom: 12px; }
+        .card-icon { font-size: 22px; margin-bottom: 10px; }
+        .card-title { font-size: 14px; font-weight: 700; margin-bottom: 6px; }
+        .card-text { font-size: 12px; color: var(--muted); line-height: 1.6; }
+
+        .stat-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 12px; }
+        .stat-box { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; text-align: center; }
+        .stat-val { font-family: var(--font-display); font-size: 28px; color: var(--red); }
+        .stat-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+        .contact-row { display: flex; align-items: center; gap: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 16px; margin-bottom: 10px; text-decoration: none; color: inherit; transition: border-color 0.15s; }
+        .contact-row:hover { border-color: var(--red); }
+        .contact-icon { width: 36px; height: 36px; background: var(--red); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 16px; flex-shrink: 0; }
+        .contact-label { font-size: 10px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+        .contact-val { font-size: 13px; font-weight: 600; margin-top: 2px; }
+
+        .footer { max-width: 480px; margin: 0 auto; padding: 24px 16px 40px; text-align: center; }
+        .footer-brand { font-family: var(--font-display); font-size: 18px; letter-spacing: 2px; color: var(--surface3); }
+        .footer-brand span { color: var(--red); }
+        .footer-links { display: flex; gap: 16px; justify-content: center; margin-top: 12px; }
+        .footer-links a { font-size: 11px; color: var(--muted); text-decoration: none; }
+        .footer-links a:hover { color: var(--white); }
+    </style>
+</head>
+<body>
+
+<header class="topbar">
+    <a class="brand" href="index.html">
+        <div class="brand-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <span class="brand-name">Minimal<span>TechRo</span></span>
+    </a>
+    <a class="back-btn" href="index.html">← Înapoi</a>
+</header>
+
+<div class="content">
+    <div class="page-hero">
+        <div class="page-tag">Despre noi</div>
+        <h1 class="page-title">Produse tech<br><span>recomandate</span> real</h1>
+        <p class="page-desc">MinimalTechRo este un site de recomandări tech creat de Adrian Grosu — creator de conținut cu peste 20.000 de urmăritori pe TikTok. Selectăm și promovăm produse testate personal, la prețuri competitive.</p>
+    </div>
+
+    <div class="stat-row">
+        <div class="stat-box"><div class="stat-val">20K+</div><div class="stat-label">Urmăritori TikTok</div></div>
+        <div class="stat-box"><div class="stat-val">100%</div><div class="stat-label">Produse reale</div></div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-title">Ce facem</div>
+
+    <div class="card">
+        <div class="card-icon">🔍</div>
+        <div class="card-title">Selectăm produsele</div>
+        <div class="card-text">Alegem manual produse tech cu raport calitate-preț excelent, pe care le-am testat sau recomandat pe canalele noastre de social media.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-icon">💸</div>
+        <div class="card-title">Linkuri afiliate</div>
+        <div class="card-text">Site-ul folosește linkuri afiliate prin platforma Profitshare. Când cumperi prin linkurile noastre, primim un mic comision fără costuri suplimentare pentru tine.</div>
+    </div>
+
+    <div class="card">
+        <div class="card-icon">🚀</div>
+        <div class="card-title">Actualizat constant</div>
+        <div class="card-text">Adăugăm produse noi în mod regulat, în special oferte și reduceri pe care le descoperim pe TikTok și YouTube.</div>
+    </div>
+
+    <div class="divider"></div>
+    <div class="section-title">Contact</div>
+
+    <a class="contact-row" href="mailto:grosuadrian88@gmail.com">
+        <div class="contact-icon">✉️</div>
+        <div>
+            <div class="contact-label">Email</div>
+            <div class="contact-val">grosuadrian88@gmail.com</div>
+        </div>
+    </a>
+
+    <a class="contact-row" href="https://www.tiktok.com/@adriangrs1" target="_blank">
+        <div class="contact-icon">📱</div>
+        <div>
+            <div class="contact-label">TikTok</div>
+            <div class="contact-val">@adriangrs1</div>
+        </div>
+    </a>
+
+    <a class="contact-row" href="https://www.youtube.com/@AdrianGrsOfficial" target="_blank">
+        <div class="contact-icon">▶️</div>
+        <div>
+            <div class="contact-label">YouTube</div>
+            <div class="contact-val">@AdrianGrsOfficial</div>
+        </div>
+    </a>
+</div>
+
+<footer class="footer">
+    <div class="footer-brand">MINIMAL<span>TECHRO</span></div>
+    <div class="footer-links">
+        <a href="despre.html">Despre</a>
+        <a href="contact.html">Contact</a>
+        <a href="confidentialitate.html">Confidențialitate</a>
+        <a href="termeni.html">Termeni</a>
+        <a href="cookies.html">Cookies</a>
+    </div>
+</footer>
+</body>
+</html>

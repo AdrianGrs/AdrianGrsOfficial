@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="ro">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Contact — MinimalTechRo</title>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root{--bg:#080808;--surface:#101010;--surface2:#181818;--surface3:#222;--border:rgba(255,255,255,0.06);--white:#f5f5f5;--muted:#666;--muted2:#444;--red:#e8341a;--gold:#f0a500;--green:#22c55e;--font-display:'Oswald',sans-serif;--font-body:'Space Grotesk',sans-serif;}
+        *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+        body{background:var(--bg);color:var(--white);font-family:var(--font-body);min-height:100vh;-webkit-font-smoothing:antialiased;}
+        .topbar{max-width:480px;margin:0 auto;position:sticky;top:0;z-index:100;background:rgba(8,8,8,0.92);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 16px;height:56px;display:flex;align-items:center;justify-content:space-between;}
+        @media(min-width:520px){.topbar{border-left:1px solid var(--border);border-right:1px solid var(--border);}}
+        .brand{display:flex;align-items:center;gap:10px;text-decoration:none;}
+        .brand-icon{width:32px;height:32px;background:var(--red);border-radius:8px;display:flex;align-items:center;justify-content:center;}
+        .brand-icon svg{width:16px;height:16px;fill:#fff;}
+        .brand-name{font-family:var(--font-display);font-size:17px;font-weight:600;letter-spacing:1px;color:var(--white);}
+        .brand-name span{color:var(--red);}
+        .back-btn{font-size:11px;color:var(--muted);text-decoration:none;font-weight:600;}
+        .back-btn:hover{color:var(--white);}
+        .content{max-width:480px;margin:0 auto;padding:32px 16px 80px;}
+        @media(min-width:520px){.content{border-left:1px solid var(--border);border-right:1px solid var(--border);}}
+        .page-tag{font-size:10px;font-weight:700;letter-spacing:3px;color:var(--red);text-transform:uppercase;margin-bottom:10px;}
+        .page-title{font-family:var(--font-display);font-size:36px;font-weight:700;letter-spacing:1px;margin-bottom:10px;}
+        .page-desc{font-size:14px;color:var(--muted);line-height:1.7;margin-bottom:28px;}
+        .contact-card{display:flex;align-items:center;gap:14px;background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:10px;text-decoration:none;color:inherit;transition:border-color 0.15s,transform 0.15s;}
+        .contact-card:hover{border-color:var(--red);transform:translateX(4px);}
+        .contact-card:active{transform:scale(0.98);}
+        .contact-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:20px;flex-shrink:0;}
+        .ic-email{background:rgba(232,52,26,0.15);}
+        .ic-tiktok{background:rgba(255,255,255,0.08);}
+        .ic-youtube{background:rgba(255,0,0,0.15);}
+        .ic-instagram{background:rgba(225,48,108,0.15);}
+        .contact-info{}
+        .contact-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
+        .contact-val{font-size:14px;font-weight:600;}
+        .contact-sub{font-size:11px;color:var(--muted);margin-top:2px;}
+        .divider{height:1px;background:var(--border);margin:24px 0;}
+        .section-title{font-family:var(--font-display);font-size:13px;letter-spacing:2px;color:var(--muted2);text-transform:uppercase;margin-bottom:14px;}
+        .response-box{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:16px;display:flex;align-items:center;gap:12px;}
+        .response-icon{font-size:24px;}
+        .response-text{font-size:12px;color:var(--muted);line-height:1.6;}
+        .response-text strong{color:var(--white);}
+        .footer{max-width:480px;margin:0 auto;padding:24px 16px 40px;text-align:center;}
+        .footer-brand{font-family:var(--font-display);font-size:18px;letter-spacing:2px;color:var(--surface3);}
+        .footer-brand span{color:var(--red);}
+        .footer-links{display:flex;gap:16px;justify-content:center;margin-top:12px;flex-wrap:wrap;}
+        .footer-links a{font-size:11px;color:var(--muted);text-decoration:none;}
+        .footer-links a:hover{color:var(--white);}
+    </style>
+</head>
+<body>
+<header class="topbar">
+    <a class="brand" href="index.html">
+        <div class="brand-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+        <span class="brand-name">Minimal<span>TechRo</span></span>
+    </a>
+    <a class="back-btn" href="index.html">← Înapoi</a>
+</header>
+
+<div class="content">
+    <div class="page-tag">Contact</div>
+    <h1 class="page-title">Hai să vorbim</h1>
+    <p class="page-desc">Ai întrebări despre produse, colaborări sau orice altceva? Găsești-mă pe oricare din canalele de mai jos.</p>
+
+    <a class="contact-card" href="mailto:grosuadrian88@gmail.com">
+        <div class="contact-icon ic-email">✉️</div>
+        <div class="contact-info">
+            <div class="contact-label">Email</div>
+            <div class="contact-val">grosuadrian88@gmail.com</div>
+            <div class="contact-sub">Pentru colaborări și întrebări generale</div>
+        </div>
+    </a>
+
+    <a class="contact-card" href="https://www.tiktok.com/@adriangrs1" target="_blank">
+        <div class="contact-icon ic-tiktok">📱</div>
+        <div class="contact-info">
+            <div class="contact-label">TikTok</div>
+            <div class="contact-val">@adriangrs1</div>
+            <div class="contact-sub">20.4K urmăritori · Conținut tech zilnic</div>
+        </div>
+    </a>
+
+    <a class="contact-card" href="https://www.youtube.com/@AdrianGrsOfficial" target="_blank">
+        <div class="contact-icon ic-youtube">▶️</div>
+        <div class="contact-info">
+            <div class="contact-label">YouTube</div>
+            <div class="contact-val">@AdrianGrsOfficial</div>
+            <div class="contact-sub">Review-uri și unboxing-uri tech</div>
+        </div>
+    </a>
+
+    <a class="contact-card" href="https://www.instagram.com/adriangrsofficial/" target="_blank">
+        <div class="contact-icon ic-instagram">📸</div>
+        <div class="contact-info">
+            <div class="contact-label">Instagram</div>
+            <div class="contact-val">@adriangrsofficial</div>
+            <div class="contact-sub">Stories și reels tech</div>
+        </div>
+    </a>
+
+    <div class="divider"></div>
+    <div class="section-title">Timp de răspuns</div>
+
+    <div class="response-box">
+        <div class="response-icon">⚡</div>
+        <div class="response-text">
+            Răspund la emailuri în <strong>24-48 de ore</strong> în zilele lucrătoare. Pentru colaborări și parteneriate, te rog să incluzi detalii despre proiect în mesaj.
+        </div>
+    </div>
+</div>
+
+<footer class="footer">
+    <div class="footer-brand">MINIMAL<span>TECHRO</span></div>
+    <div class="footer-links">
+        <a href="despre.html">Despre</a>
+        <a href="contact.html">Contact</a>
+        <a href="confidentialitate.html">Confidențialitate</a>
+        <a href="termeni.html">Termeni</a>
+        <a href="cookies.html">Cookies</a>
+    </div>
+</footer>
+</body>
+</html>

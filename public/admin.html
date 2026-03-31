@@ -1,0 +1,340 @@
+<!doctype html>
+<html lang="ro">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>MinimalTechRo — Admin</title>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #080808; --surface: #101010; --surface2: #181818; --surface3: #222;
+            --border: rgba(255,255,255,0.08); --white: #f0f0f0; --muted: #666;
+            --red: #e8341a; --gold: #f0a500; --green: #22c55e;
+            --font: 'Space Grotesk', sans-serif; --font-display: 'Oswald', sans-serif;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        body { background: var(--bg); color: var(--white); font-family: var(--font); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+        #login-screen { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 999; flex-direction: column; align-items: center; justify-content: center; }
+        .login-box { width: 320px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 36px 28px; display: flex; flex-direction: column; gap: 20px; }
+        .login-brand { text-align: center; }
+        .login-brand-name { font-family: var(--font-display); font-size: 26px; letter-spacing: 2px; color: var(--white); }
+        .login-brand-name span { color: var(--red); }
+        .login-brand-sub { font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 5px; }
+        .login-field { display: flex; flex-direction: column; gap: 6px; }
+        .login-field label { font-size: 10px; font-weight: 600; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; }
+        .login-field input { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; color: var(--white); font-family: var(--font); font-size: 14px; padding: 12px 14px; outline: none; transition: border-color 0.15s; width: 100%; }
+        .login-field input:focus { border-color: var(--red); }
+        .login-error { background: rgba(232,52,26,0.1); border: 1px solid rgba(232,52,26,0.3); border-radius: 8px; padding: 10px 12px; font-size: 12px; color: var(--red); display: none; text-align: center; }
+        .btn-login { width: 100%; background: var(--red); color: #fff; border: none; border-radius: 10px; font-family: var(--font); font-size: 13px; font-weight: 700; padding: 13px; cursor: pointer; transition: opacity 0.15s; letter-spacing: 0.3px; }
+        .btn-login:hover { opacity: 0.88; }
+        .btn-login:disabled { opacity: 0.5; pointer-events: none; }
+        #admin-ui { display: none; }
+        .header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+        .header-brand { font-family: var(--font-display); font-size: 18px; letter-spacing: 1px; }
+        .header-brand span { color: var(--red); }
+        .header-right { display: flex; align-items: center; gap: 10px; }
+        .user-pill { background: var(--surface2); border: 1px solid var(--border); border-radius: 100px; padding: 5px 12px; font-size: 11px; color: var(--muted); font-weight: 600; }
+        .btn-logout { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--muted); font-family: var(--font); font-size: 11px; font-weight: 700; padding: 6px 12px; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
+        .btn-logout:hover { border-color: var(--red); color: var(--red); }
+        .main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+        @media (max-width: 640px) { .main { grid-template-columns: 1fr; } }
+        .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+        .panel-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+        .panel-icon { width: 30px; height: 30px; border-radius: 8px; background: var(--red); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; }
+        .panel-title { font-weight: 700; font-size: 14px; }
+        .panel-body { padding: 20px; }
+        .field { margin-bottom: 14px; }
+        .field label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; }
+        .field input, .field select { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--white); font-family: var(--font); font-size: 13px; padding: 10px 12px; outline: none; transition: border-color 0.15s; -webkit-appearance: none; }
+        .field input:focus, .field select:focus { border-color: var(--red); }
+        .field select option { background: #1a1a1a; }
+        .ai-row { display: flex; gap: 8px; align-items: flex-end; }
+        .ai-row .field { flex: 1; margin-bottom: 0; }
+        .btn-ai { background: var(--surface3); border: 1px solid var(--border); border-radius: 8px; color: var(--white); font-family: var(--font); font-size: 11px; font-weight: 700; padding: 10px 12px; cursor: pointer; white-space: nowrap; display: flex; align-items: center; gap: 5px; transition: background 0.15s, border-color 0.15s; }
+        .btn-ai:hover { border-color: var(--red); }
+        .btn-ai.loading { opacity: 0.5; pointer-events: none; }
+        .cat-badge { display: none; align-items: center; gap: 6px; background: rgba(232,52,26,0.1); border: 1px solid rgba(232,52,26,0.25); border-radius: 6px; padding: 5px 10px; font-size: 11px; font-weight: 600; color: var(--red); margin-top: 8px; }
+        .btn-submit { width: 100%; background: var(--red); color: #fff; border: none; border-radius: 10px; font-family: var(--font); font-size: 13px; font-weight: 700; padding: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; transition: opacity 0.15s; margin-top: 4px; }
+        .btn-submit:hover { opacity: 0.88; }
+        .btn-submit:disabled { opacity: 0.5; pointer-events: none; }
+        .preview-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; display: none; margin-bottom: 16px; }
+        .preview-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--surface3); }
+        .preview-body { padding: 12px; }
+        .preview-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+        .preview-price { font-family: var(--font-display); font-size: 18px; color: var(--gold); }
+        .prod-list { display: flex; flex-direction: column; gap: 10px; }
+        .prod-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px; display: flex; gap: 12px; align-items: center; }
+        .prod-item-img { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; background: var(--surface3); flex-shrink: 0; }
+        .prod-item-body { flex: 1; min-width: 0; }
+        .prod-item-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .prod-item-meta { display: flex; gap: 8px; margin-top: 3px; align-items: center; }
+        .prod-item-price { font-family: var(--font-display); font-size: 13px; color: var(--gold); }
+        .prod-item-cat { font-size: 9px; font-weight: 700; letter-spacing: 1px; background: var(--surface3); border-radius: 4px; padding: 2px 6px; color: var(--muted); text-transform: uppercase; }
+        .btn-delete { background: none; border: 1px solid var(--border); border-radius: 7px; color: var(--muted); cursor: pointer; padding: 6px 8px; font-size: 14px; transition: border-color 0.15s, color 0.15s; flex-shrink: 0; }
+        .btn-delete:hover { border-color: var(--red); color: var(--red); }
+        .empty-list { text-align: center; color: var(--muted); font-size: 12px; padding: 30px 0; }
+        .list-count { font-size: 11px; color: var(--muted); margin-bottom: 12px; font-weight: 600; }
+        .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 20px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; z-index: 9999; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; }
+        .toast.show { transform: translateX(-50%) translateY(0); }
+        .toast.success { border-color: var(--green); color: var(--green); }
+        .toast.error { border-color: var(--red); color: var(--red); }
+    </style>
+</head>
+<body>
+
+<div id="login-screen">
+    <div class="login-box">
+        <div class="login-brand">
+            <div class="login-brand-name">MINIMAL<span>TECHRO</span></div>
+            <div class="login-brand-sub">Admin Panel</div>
+        </div>
+        <div class="login-field">
+            <label>Email</label>
+            <input type="email" id="login-email" placeholder="email@exemplu.ro" autocomplete="email">
+        </div>
+        <div class="login-field">
+            <label>Parolă</label>
+            <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <div class="login-error" id="login-error">Email sau parolă incorectă.</div>
+        <button class="btn-login" id="btn-login" onclick="doLogin()">Intră în Admin</button>
+    </div>
+</div>
+
+<div id="admin-ui">
+    <header class="header">
+        <div class="header-brand">MINIMAL<span>TECHRO</span></div>
+        <div class="header-right">
+            <div class="user-pill" id="user-email">—</div>
+            <button class="btn-logout" onclick="doLogout()">Ieși</button>
+        </div>
+    </header>
+    <div class="main">
+        <div class="panel">
+            <div class="panel-header">
+                <div class="panel-icon">➕</div>
+                <div class="panel-title">Adaugă Produs</div>
+            </div>
+            <div class="panel-body">
+                <div class="preview-card" id="preview-card">
+                    <img class="preview-img" id="preview-img" src="" alt="">
+                    <div class="preview-body">
+                        <div class="preview-name" id="preview-name"></div>
+                        <div class="preview-price" id="preview-price"></div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>Nume Produs *</label>
+                    <input type="text" id="f-name" placeholder="ex: Zeblaze Stratos 4">
+                </div>
+                <div class="field">
+                    <label>Link Afiliat *</label>
+                    <input type="url" id="f-link" placeholder="https://profitshare.ro/...">
+                </div>
+                <div class="field">
+                    <label>Imagine URL</label>
+                    <input type="url" id="f-img" placeholder="https://..." oninput="updatePreview()">
+                </div>
+                <div class="field">
+                    <label>Preț</label>
+                    <input type="text" id="f-pret" placeholder="ex: 358 lei" oninput="updatePreview()">
+                </div>
+                <div class="field">
+                    <label>Preț Vechi (opțional)</label>
+                    <input type="text" id="f-pret-vechi" placeholder="ex: 377 lei">
+                </div>
+                <div class="field">
+                    <label>Categorie</label>
+                    <div class="ai-row">
+                        <div class="field">
+                            <select id="f-cat">
+                                <option value="">— Selectează sau detectează AI —</option>
+                                <option value="SmartTech">⌚ SmartTech</option>
+                                <option value="Gaming">🎮 Gaming</option>
+                                <option value="Gadgets">🚀 Gadgets</option>
+                                <option value="Fashion">👕 Fashion</option>
+                                <option value="Jucarii">🧸 Jucării</option>
+                                <option value="Gradina">🏡 Grădină</option>
+                                <option value="Bucatarie">🍳 Bucătărie</option>
+                                <option value="Sport">💪 Sport</option>
+                                <option value="Health And Beauty">✨ Health & Beauty</option>
+                                <option value="Auto">🚗 Auto</option>
+                                <option value="Carti">📚 Cărți</option>
+                                <option value="Animale">🐾 Animale</option>
+                            </select>
+                        </div>
+                        <button class="btn-ai" id="btn-ai" onclick="detectCategory()">✨ AI</button>
+                    </div>
+                    <div class="cat-badge" id="cat-badge"></div>
+                </div>
+                <button class="btn-submit" id="btn-submit" onclick="saveProduct()">💾 Salvează Produs</button>
+            </div>
+        </div>
+        <div class="panel">
+            <div class="panel-header">
+                <div class="panel-icon">📦</div>
+                <div class="panel-title">Produse Active</div>
+            </div>
+            <div class="panel-body">
+                <div class="list-count" id="list-count">Se încarcă...</div>
+                <div class="prod-list" id="prod-list">
+                    <div class="empty-list">Se încarcă...</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+    const SUPABASE_URL = 'https://sysheihugyeuvwxbpvxc.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5c2hlaWh1Z3lldXZ3eGJwdnhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxMTMzMTIsImV4cCI6MjA4ODY4OTMxMn0.jYwwm5BR30Nj_5naoK1XMw6wRwxdrqco5ydbFBgAIFY';
+    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    function escapeHtml(str) {
+        const d = document.createElement('div');
+        d.textContent = str == null ? '' : String(str);
+        return d.innerHTML;
+    }
+    const CATEGORIES = ['SmartTech','Gaming','Gadgets','Fashion','Jucarii','Gradina','Bucatarie','Sport','Health And Beauty','Auto','Carti','Animale'];
+
+    async function initAuth() {
+        const { data: { session } } = await db.auth.getSession();
+        if (session) { showAdmin(session.user.email); } else { showLogin(); }
+    }
+
+    function showLogin() {
+        document.getElementById('login-screen').style.display = 'flex';
+        document.getElementById('admin-ui').style.display = 'none';
+    }
+
+    function showAdmin(email) {
+        document.getElementById('login-screen').style.display = 'none';
+        document.getElementById('admin-ui').style.display = 'block';
+        document.getElementById('user-email').textContent = email;
+        loadProducts();
+    }
+
+    async function doLogin() {
+        const email = document.getElementById('login-email').value.trim();
+        const password = document.getElementById('login-password').value;
+        const btn = document.getElementById('btn-login');
+        const err = document.getElementById('login-error');
+        if (!email || !password) { err.style.display = 'block'; err.textContent = 'Completează emailul și parola.'; return; }
+        btn.disabled = true; btn.textContent = 'Se conectează...'; err.style.display = 'none';
+        const { data, error } = await db.auth.signInWithPassword({ email, password });
+        if (error) { err.style.display = 'block'; err.textContent = 'Email sau parolă incorectă.'; btn.disabled = false; btn.textContent = 'Intră în Admin'; }
+        else { showAdmin(data.user.email); }
+    }
+
+    document.addEventListener('keydown', e => {
+        if (e.key === 'Enter' && document.getElementById('login-screen').style.display === 'flex') doLogin();
+    });
+
+    async function doLogout() { await db.auth.signOut(); showLogin(); }
+
+    function updatePreview() {
+        const img = document.getElementById('f-img').value;
+        const name = document.getElementById('f-name').value;
+        const pret = document.getElementById('f-pret').value;
+        const card = document.getElementById('preview-card');
+        if (img || name) {
+            card.style.display = 'block';
+            document.getElementById('preview-img').src = img || '';
+            document.getElementById('preview-name').textContent = name || '—';
+            document.getElementById('preview-price').textContent = pret || '';
+        } else { card.style.display = 'none'; }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        document.getElementById('f-name').addEventListener('input', updatePreview);
+    });
+
+    async function detectCategory() {
+        const name = document.getElementById('f-name').value.trim();
+        if (!name) { showToast('Introdu mai întâi numele produsului!', 'error'); return; }
+        const btn = document.getElementById('btn-ai');
+        btn.classList.add('loading'); btn.textContent = '⏳';
+        try {
+            const res = await fetch(`/api/profitshare?action=categorize&name=${encodeURIComponent(name)}`);
+            const data = await res.json();
+            const detected = data.category;
+            if (detected && CATEGORIES.includes(detected)) {
+                document.getElementById('f-cat').value = detected;
+                const emojiMap = {'SmartTech':'⌚','Gaming':'🎮','Gadgets':'🚀','Fashion':'👕','Jucarii':'🧸','Gradina':'🏡','Bucatarie':'🍳','Sport':'💪','Health And Beauty':'✨','Auto':'🚗','Carti':'📚','Animale':'🐾'};
+                const badge = document.getElementById('cat-badge');
+                badge.textContent = `${emojiMap[detected]} ${detected} — detectat de AI`;
+                badge.style.display = 'inline-flex';
+                showToast(`Categorie: ${detected} ✅`, 'success');
+            } else { showToast('Nu am detectat categoria. Selectează manual.', 'error'); }
+        } catch(err) { showToast('Eroare la detectare.', 'error'); }
+        btn.classList.remove('loading'); btn.textContent = '✨ AI';
+    }
+
+    async function saveProduct() {
+        const name = document.getElementById('f-name').value.trim();
+        const link = document.getElementById('f-link').value.trim();
+        const img = document.getElementById('f-img').value.trim();
+        const pret = document.getElementById('f-pret').value.trim();
+        const pretVechi = document.getElementById('f-pret-vechi').value.trim();
+        const cat = document.getElementById('f-cat').value;
+        if (!name || !link) { showToast('Completează Numele și Linkul!', 'error'); return; }
+        const btn = document.getElementById('btn-submit');
+        btn.disabled = true; btn.textContent = '⏳ Se salvează...';
+        const { error } = await db.from('produse').insert([{ nume: name, link_afiliat: link, imagine_url: img || null, pret: pret || null, pret_vechi: pretVechi || null, categorie: cat || null }]);
+        if (error) { showToast('Eroare: ' + error.message, 'error'); }
+        else {
+            showToast('Produs salvat! 🎉', 'success');
+            ['f-name','f-link','f-img','f-pret','f-pret-vechi'].forEach(id => document.getElementById(id).value = '');
+            document.getElementById('f-cat').value = '';
+            document.getElementById('cat-badge').style.display = 'none';
+            document.getElementById('preview-card').style.display = 'none';
+            loadProducts();
+        }
+        btn.disabled = false; btn.textContent = '💾 Salvează Produs';
+    }
+
+    async function loadProducts() {
+        const list = document.getElementById('prod-list');
+        const count = document.getElementById('list-count');
+        const { data, error } = await db.from('produse').select('*').order('created_at', { ascending: false });
+        if (error || !data) { list.innerHTML = '<div class="empty-list">Eroare la încărcare.</div>'; return; }
+        count.textContent = `${data.length} produs${data.length !== 1 ? 'e' : ''}`;
+        if (data.length === 0) { list.innerHTML = '<div class="empty-list">Niciun produs adăugat încă.</div>'; return; }
+        list.innerHTML = data.map(p => `
+            <div class="prod-item" id="item-${escapeHtml(String(p.id))}">
+                <img class="prod-item-img" src="${escapeHtml(p.imagine_url || 'https://via.placeholder.com/48x48/181818/444?text=•')}" alt="${escapeHtml(p.nume || '')}" onerror="this.src='https://via.placeholder.com/48x48/181818/444?text=•'">
+                <div class="prod-item-body">
+                    <div class="prod-item-name">${escapeHtml(p.nume || '')}</div>
+                    <div class="prod-item-meta">
+                        <span class="prod-item-price">${escapeHtml(p.pret || '—')}</span>
+                        ${p.categorie ? `<span class="prod-item-cat">${escapeHtml(p.categorie)}</span>` : ''}
+                    </div>
+                </div>
+                <button class="btn-delete" onclick="deleteProduct('${escapeHtml(String(p.id))}')">🗑</button>
+            </div>`).join('');
+    }
+
+    async function deleteProduct(id) {
+        if (!confirm('Ștergi acest produs?')) return;
+        const { error } = await db.from('produse').delete().eq('id', id);
+        if (error) { showToast('Eroare la ștergere.', 'error'); return; }
+        document.getElementById(`item-${id}`)?.remove();
+        showToast('Produs șters.', 'success');
+        const items = document.querySelectorAll('.prod-item').length;
+        document.getElementById('list-count').textContent = `${items} produse`;
+    }
+
+    function showToast(msg, type = 'success') {
+        const t = document.getElementById('toast');
+        t.textContent = (type === 'success' ? '✅ ' : '❌ ') + msg;
+        t.className = `toast ${type} show`;
+        setTimeout(() => t.classList.remove('show'), 3000);
+    }
+
+    initAuth();
+</script>
+</body>
+</html>

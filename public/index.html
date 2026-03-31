@@ -1,0 +1,381 @@
+<!doctype html>
+<html lang="ro">
+<head>
+    <script>
+    !function (w, d, t) {
+      w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie","holdConsent","revokeConsent","grantConsent"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(
+    var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var r="https://analytics.tiktok.com/i18n/pixel/events.js",o=n&&n.partner;ttq._i=ttq._i||{},ttq._i[e]=[],ttq._i[e]._u=r,ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._o=ttq._o||{},ttq._o[e]=n||{};n=document.createElement("script")
+    ;n.type="text/javascript",n.async=!0,n.src=r+"?sdkid="+e+"&lib="+t;e=document.getElementsByTagName("script")[0];e.parentNode.insertBefore(n,e)};
+      ttq.load("D6NTICBC77UCRHPRIDN0");
+      ttq.page();
+    }(window, document, "ttq");
+    </script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-845D47THD2"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag("js", new Date());
+      gtag("config", "G-845D47THD2");
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#080808">
+    <meta name="description" content="MinimalTechRo — Produse tech recomandate de Adrian Grosu, văzute pe TikTok. Prețuri imbatabile, livrare rapidă.">
+    <meta property="og:title" content="MinimalTechRo — Produse Tech Recomandate">
+    <meta property="og:description" content="Produse tech selectate manual, văzute pe TikTok. Prețuri imbatabile, livrare rapidă.">
+    <meta property="og:image" content="https://www.adriangsofficial.shop/minimaltechro-logo.jpeg">
+    <meta property="og:url" content="https://www.adriangsofficial.shop">
+    <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary_large_image">
+    <title>MinimalTechRo — Produse Tech Recomandate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg: #080808; --surface: #101010; --surface2: #181818; --surface3: #222222;
+            --border: rgba(255,255,255,0.06); --border-hover: rgba(255,255,255,0.14);
+            --white: #f5f5f5; --muted: #666; --muted2: #444;
+            --red: #e8341a; --red-dim: rgba(232,52,26,0.15);
+            --gold: #f0a500; --green: #22c55e;
+            --font-display: "Oswald", sans-serif; --font-body: "Space Grotesk", sans-serif;
+            --radius: 14px;
+        }
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+        body { background: var(--bg); color: var(--white); font-family: var(--font-body); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+        .topbar { position: sticky; top: 0; z-index: 100; background: rgba(8,8,8,0.95); backdrop-filter: blur(16px); border-bottom: 1px solid var(--border); padding: 0 24px; height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+        .topbar-inner { max-width: 1400px; width: 100%; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+        .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; flex-shrink: 0; }
+        .brand-icon { width: 34px; height: 34px; background: var(--red); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+        .brand-icon svg { width: 17px; height: 17px; fill: #fff; }
+        .brand-name { font-family: var(--font-display); font-size: 20px; font-weight: 600; letter-spacing: 1px; color: var(--white); }
+        .brand-name span { color: var(--red); }
+        .nav-links { display: none; align-items: center; gap: 6px; }
+        .nav-link { padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; border: 1px solid var(--border); background: var(--surface2); color: var(--muted); cursor: pointer; white-space: nowrap; transition: all 0.15s; text-transform: uppercase; text-decoration: none; }
+        .nav-link.active, .nav-link:hover { background: var(--red); border-color: var(--red); color: #fff; }
+        .blog-nav-link { padding: 6px 14px; border-radius: 8px; font-size: 12px; font-weight: 700; letter-spacing: 0.5px; border: 1px solid var(--border); background: var(--surface2); color: var(--muted); white-space: nowrap; transition: all 0.15s; text-transform: uppercase; text-decoration: none; }
+        .blog-nav-link:hover { background: var(--red); border-color: var(--red); color: #fff; }
+        .topbar-right { display: flex; align-items: center; gap: 10px; flex-shrink: 0; }
+        .tiktok-badge-top { display: flex; align-items: center; gap: 5px; background: var(--surface2); border: 1px solid var(--border); border-radius: 100px; padding: 6px 12px; font-size: 11px; font-weight: 600; color: var(--muted); }
+        .live-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--red); animation: pulse 1.8s infinite; }
+        @keyframes pulse { 0%, 100% { opacity: 1; transform: scale(1); } 50% { opacity: 0.4; transform: scale(0.7); } }
+        .ticker-wrap { overflow: hidden; background: var(--red); height: 32px; display: flex; align-items: center; }
+        .ticker-track { display: flex; animation: slide 28s linear infinite; width: max-content; }
+        .ticker-item { font-family: var(--font-display); font-size: 10px; letter-spacing: 2.5px; color: rgba(255,255,255,0.9); padding: 0 32px; white-space: nowrap; }
+        @keyframes slide { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+        .page-layout { max-width: 1400px; margin: 0 auto; padding: 24px 24px 60px; display: grid; grid-template-columns: 1fr; gap: 24px; }
+        .filter-wrap { overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; padding-bottom: 4px; }
+        .filter-wrap::-webkit-scrollbar { display: none; }
+        .filter-row { display: flex; gap: 6px; width: max-content; }
+        .filter-btn { padding: 8px 14px; border-radius: 8px; font-size: 11px; font-weight: 700; letter-spacing: 0.3px; border: 1px solid var(--border); background: var(--surface2); color: var(--muted); cursor: pointer; white-space: nowrap; transition: all 0.15s; outline: none; text-transform: uppercase; }
+        .filter-btn.active { background: var(--red); border-color: var(--red); color: #fff; }
+        .filter-btn:active { transform: scale(0.96); }
+        .sidebar { display: none; flex-direction: column; gap: 6px; position: sticky; top: 92px; height: fit-content; }
+        .sidebar-title { font-family: var(--font-display); font-size: 11px; letter-spacing: 3px; color: var(--muted2); text-transform: uppercase; margin-bottom: 8px; padding-left: 4px; }
+        .sidebar-btn { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-radius: 10px; font-size: 12px; font-weight: 700; border: 1px solid var(--border); background: var(--surface); color: var(--muted); cursor: pointer; transition: all 0.15s; text-align: left; width: 100%; }
+        .sidebar-btn:hover { border-color: var(--border-hover); color: var(--white); }
+        .sidebar-btn.active { background: var(--red-dim); border-color: rgba(232,52,26,0.3); color: var(--white); }
+        .sidebar-btn .btn-emoji { font-size: 16px; }
+        .sidebar-social { margin-top: 16px; display: flex; flex-direction: column; gap: 6px; }
+        .sidebar-blog-link { display: flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 10px; text-decoration: none; font-size: 11px; font-weight: 700; transition: opacity 0.15s; background: var(--surface2); border: 1px solid var(--border); color: var(--white); }
+        .sidebar-blog-link:hover { border-color: var(--red); color: var(--red); }
+        .sidebar-soc { display: flex; align-items: center; gap: 8px; padding: 9px 14px; border-radius: 10px; text-decoration: none; font-size: 11px; font-weight: 700; transition: opacity 0.15s; }
+        .sidebar-soc:hover { opacity: 0.85; }
+        .sidebar-soc svg { width: 14px; height: 14px; flex-shrink: 0; }
+        .sidebar-soc.yt { background: #FF0000; color: #fff; }
+        .sidebar-soc.tt { background: #fff; color: #000; }
+        .sidebar-soc.ig { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color: #fff; }
+        .shop-wrap { min-height: 400px; }
+        .cat-header { display: flex; align-items: center; gap: 12px; margin: 28px 0 16px; }
+        .cat-line { flex: 1; height: 1px; background: var(--border); }
+        .cat-label { font-family: var(--font-display); font-size: 13px; letter-spacing: 3px; color: var(--muted2); white-space: nowrap; }
+        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .prod-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; text-decoration: none; color: inherit; display: flex; flex-direction: column; position: relative; transition: border-color 0.2s, transform 0.18s, box-shadow 0.2s; }
+        .prod-card:hover { border-color: var(--border-hover); transform: translateY(-2px); box-shadow: 0 8px 32px rgba(0,0,0,0.4); }
+        .prod-card:active { transform: scale(0.97); }
+        .prod-img-wrap { position: relative; aspect-ratio: 1 / 1; overflow: hidden; background: var(--surface2); }
+        .prod-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.45s; }
+        .prod-card:hover .prod-img { transform: scale(1.06); }
+        .stamp { position: absolute; top: 0; left: 0; right: 0; background: linear-gradient(to bottom, rgba(232,52,26,0.85) 0%, transparent 100%); padding: 8px 10px 18px; display: flex; align-items: center; gap: 4px; }
+        .stamp-dot { width: 5px; height: 5px; border-radius: 50%; background: #fff; flex-shrink: 0; }
+        .stamp-text { font-size: 8px; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; }
+        .discount-badge { position: absolute; bottom: 8px; right: 8px; background: var(--gold); color: #000; font-size: 9px; font-weight: 700; padding: 3px 7px; border-radius: 5px; letter-spacing: 0.3px; display: none; }
+        .discount-badge.show { display: block; }
+        .prod-body { padding: 12px 13px 14px; flex: 1; display: flex; flex-direction: column; gap: 6px; }
+        .prod-name { font-size: 12px; font-weight: 600; line-height: 1.4; color: var(--white); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; min-height: 34px; }
+        .prod-price-row { display: flex; align-items: baseline; gap: 6px; margin-top: auto; flex-wrap: wrap; }
+        .prod-price { font-family: var(--font-display); font-size: 20px; font-weight: 600; color: var(--gold); letter-spacing: 0.3px; }
+        .prod-price-old { font-size: 12px; color: var(--muted); text-decoration: line-through; }
+        .prod-buy { display: flex; align-items: center; justify-content: center; gap: 6px; background: var(--red); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.5px; padding: 10px 14px; border-radius: 9px; margin-top: 10px; text-transform: uppercase; transition: background 0.15s, opacity 0.15s; }
+        .prod-buy:hover { opacity: 0.88; }
+        .prod-buy svg { width: 12px; height: 12px; fill: #fff; flex-shrink: 0; }
+        .skel-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+        .skel { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); aspect-ratio: 0.75; overflow: hidden; position: relative; }
+        .skel::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%); animation: shimmer 1.5s ease-in-out infinite; }
+        @keyframes shimmer { 0% { transform: translateX(-100%); } 100% { transform: translateX(100%); } }
+        .empty { padding: 80px 22px; text-align: center; color: var(--muted); font-size: 14px; line-height: 1.7; }
+        .social-bar { display: flex; gap: 10px; padding: 28px 0 0; }
+        .soc { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; padding: 12px; border-radius: 10px; text-decoration: none; font-size: 12px; font-weight: 700; transition: transform 0.15s, opacity 0.15s; }
+        .soc:active { transform: scale(0.96); opacity: 0.85; }
+        .soc svg { width: 15px; height: 15px; flex-shrink: 0; }
+        .soc.yt { background: #FF0000; color: #fff; }
+        .soc.tt { background: #fff; color: #000; }
+        .soc.ig { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color: #fff; }
+        .footer { border-top: 1px solid var(--border); padding: 32px 24px 40px; text-align: center; margin-top: 40px; }
+        .footer-inner { max-width: 1400px; margin: 0 auto; }
+        .footer-brand { font-family: var(--font-display); font-size: 24px; letter-spacing: 2px; color: var(--surface3); }
+        .footer-brand span { color: var(--red); }
+        .footer-sub { font-size: 11px; color: var(--muted2); margin-top: 6px; letter-spacing: 1.5px; text-transform: uppercase; }
+        .footer-links { display: flex; gap: 16px; justify-content: center; margin-top: 16px; flex-wrap: wrap; }
+        .footer-links a { font-size: 12px; color: var(--muted2); text-decoration: none; transition: color 0.15s; }
+        .footer-links a:hover { color: var(--white); }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .fade-in { opacity: 0; animation: fadeUp 0.3s forwards; }
+        @media (min-width: 640px) { .products-grid { grid-template-columns: repeat(3, 1fr); } .skel-grid { grid-template-columns: repeat(3, 1fr); } }
+        @media (min-width: 1024px) {
+            body { background: #050505; }
+            .page-layout { grid-template-columns: 220px 1fr; align-items: start; }
+            .filter-wrap { display: none; }
+            .sidebar { display: flex; }
+            .social-bar { display: none; }
+            .products-grid { grid-template-columns: repeat(3, 1fr); }
+            .skel-grid { grid-template-columns: repeat(3, 1fr); }
+            .nav-links { display: flex; }
+        }
+        @media (min-width: 1280px) { .products-grid { grid-template-columns: repeat(4, 1fr); } .skel-grid { grid-template-columns: repeat(4, 1fr); } }
+    </style>
+</head>
+<body>
+
+<header class="topbar">
+    <div class="topbar-inner">
+        <a class="brand" href="#">
+            <div class="brand-icon"><svg viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg></div>
+            <span class="brand-name">Minimal<span>TechRo</span></span>
+        </a>
+        <nav class="nav-links" id="nav-links">
+            <button class="nav-link active" data-cat="all">Toate</button>
+        </nav>
+        <div class="topbar-right">
+            <a href="blog.html" class="blog-nav-link">✍️ Blog</a>
+            <div class="tiktok-badge-top">
+                <span class="live-dot"></span>
+                20.4K urmăritori
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="ticker-wrap">
+    <div class="ticker-track">
+        <span class="ticker-item">⚡ PREMIUM TECH IDENTITY</span>
+        <span class="ticker-item">📱 VĂZUT PE TIKTOK</span>
+        <span class="ticker-item">🔥 PREȚURI IMBATABILE</span>
+        <span class="ticker-item">🚀 LIVRARE RAPIDĂ</span>
+        <span class="ticker-item">⭐ SELECTATE MANUAL</span>
+        <span class="ticker-item">⚡ PREMIUM TECH IDENTITY</span>
+        <span class="ticker-item">📱 VĂZUT PE TIKTOK</span>
+        <span class="ticker-item">🔥 PREȚURI IMBATABILE</span>
+        <span class="ticker-item">🚀 LIVRARE RAPIDĂ</span>
+        <span class="ticker-item">⭐ SELECTATE MANUAL</span>
+    </div>
+</div>
+
+<div style="padding: 12px 16px 0; display: block;" class="mobile-filter-container">
+    <div class="filter-wrap">
+        <div class="filter-row" id="filter-row-mobile">
+            <button class="filter-btn active" data-cat="all">Toate</button>
+        </div>
+    </div>
+</div>
+
+<div class="page-layout">
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-title">Categorii</div>
+        <a href="blog.html" class="sidebar-blog-link">✍️ Blog & Recenzii</a>
+        <div class="sidebar-social">
+            <a class="sidebar-soc yt" href="https://www.youtube.com/@AdrianGrsOfficial" target="_blank">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2c-.3-1.1-1.1-1.9-2.2-2.2C19.3 3.5 12 3.5 12 3.5s-7.3 0-9.3.5c-1.1.3-1.9 1.1-2.2 2.2C0 8.2 0 12 0 12s0 3.8.5 5.8c.3 1.1 1.1 1.9 2.2 2.2 2 .5 9.3.5 9.3.5s7.3 0 9.3-.5c1.1-.3 1.9-1.1 2.2-2.2C24 15.8 24 12 24 12s0-3.8-.5-5.8zM9.5 15.5V8.5l6.5 3.5-6.5 3.5z"/></svg>
+                YouTube
+            </a>
+            <a class="sidebar-soc tt" href="https://www.tiktok.com/@adriangrs1" target="_blank">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.86-.6-4.12-1.31a8.6 8.6 0 0 1-1.87-1.42v7.14c0 1.9-.53 3.8-1.63 5.34-1.29 1.85-3.5 2.94-5.74 2.84-2.2-.05-4.32-1.2-5.46-3.07-1.29-2.07-1.36-4.8-.18-6.93 1.05-1.93 3.12-3.17 5.32-3.3v4.05c-1.12.1-2.22.7-2.85 1.65-.67 1-1 2.37-.53 3.49.43 1.1 1.57 1.87 2.75 1.87 1.3 0 2.45-1.05 2.5-2.35l.02-14.1z"/></svg>
+                TikTok
+            </a>
+            <a class="sidebar-soc ig" href="https://www.instagram.com/adriangrsofficial/" target="_blank">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                Instagram
+            </a>
+        </div>
+    </aside>
+
+    <main>
+        <div class="social-bar">
+            <a class="soc yt" href="https://www.youtube.com/@AdrianGrsOfficial" target="_blank">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.5 6.2c-.3-1.1-1.1-1.9-2.2-2.2C19.3 3.5 12 3.5 12 3.5s-7.3 0-9.3.5c-1.1.3-1.9 1.1-2.2 2.2C0 8.2 0 12 0 12s0 3.8.5 5.8c.3 1.1 1.1 1.9 2.2 2.2 2 .5 9.3.5 9.3.5s7.3 0 9.3-.5c1.1-.3 1.9-1.1 2.2-2.2C24 15.8 24 12 24 12s0-3.8-.5-5.8zM9.5 15.5V8.5l6.5 3.5-6.5 3.5z"/></svg>
+                YouTube
+            </a>
+            <a class="soc tt" href="https://www.tiktok.com/@adriangrs1" target="_blank">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.17-2.86-.6-4.12-1.31a8.6 8.6 0 0 1-1.87-1.42v7.14c0 1.9-.53 3.8-1.63 5.34-1.29 1.85-3.5 2.94-5.74 2.84-2.2-.05-4.32-1.2-5.46-3.07-1.29-2.07-1.36-4.8-.18-6.93 1.05-1.93 3.12-3.17 5.32-3.3v4.05c-1.12.1-2.22.7-2.85 1.65-.67 1-1 2.37-.53 3.49.43 1.1 1.57 1.87 2.75 1.87 1.3 0 2.45-1.05 2.5-2.35l.02-14.1z"/></svg>
+                TikTok
+            </a>
+            <a class="soc ig" href="https://www.instagram.com/adriangrsofficial/" target="_blank">
+                <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069z"/></svg>
+                Instagram
+            </a>
+        </div>
+        <div class="shop-wrap" id="shop"></div>
+    </main>
+</div>
+
+<footer class="footer">
+    <div class="footer-inner">
+        <div class="footer-brand">MINIMAL<span>TechRo</span></div>
+        <div class="footer-sub">© 2026 • Toate drepturile rezervate</div>
+        <div class="footer-links">
+            <a href="blog.html">Blog</a>
+            <a href="despre.html">Despre</a>
+            <a href="contact.html">Contact</a>
+            <a href="confidentialitate.html">Confidențialitate</a>
+            <a href="termeni.html">Termeni</a>
+            <a href="cookies.html">Cookies</a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const SUPABASE_URL = "https://sysheihugyeuvwxbpvxc.supabase.co";
+    const SUPABASE_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5c2hlaWh1Z3lldXZ3eGJwdnhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxMTMzMTIsImV4cCI6MjA4ODY4OTMxMn0.jYwwm5BR30Nj_5naoK1XMw6wRwxdrqco5ydbFBgAIFY";
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    function escapeHtml(str) {
+        const d = document.createElement('div');
+        d.textContent = str == null ? '' : String(str);
+        return d.innerHTML;
+    }
+    function safeUrl(url) {
+        try {
+            const u = new URL(url);
+            return (u.protocol === 'https:' || u.protocol === 'http:') ? url : '#';
+        } catch { return '#'; }
+    }
+    const catMeta = {
+        "SmartTech": { emoji: "⌚", label: "SmartTech" },
+        "Gaming": { emoji: "🎮", label: "Gaming" },
+        "Gadgets": { emoji: "🚀", label: "Gadgets" },
+        "Fashion": { emoji: "👕", label: "Fashion" },
+        "Jucarii": { emoji: "🧸", label: "Jucării" },
+        "Gradina": { emoji: "🏡", label: "Grădină" },
+        "Bucatarie": { emoji: "🍳", label: "Bucătărie" },
+        "Sport": { emoji: "💪", label: "Sport" },
+        "Health And Beauty": { emoji: "✨", label: "Beauty" },
+        "Auto": { emoji: "🚗", label: "Auto" },
+        "Carti": { emoji: "📚", label: "Cărți" },
+        "Animale": { emoji: "🐾", label: "Animale" },
+    };
+    let allData = [];
+    let activeFilter = "all";
+    async function loadProducts() {
+        const shop = document.getElementById("shop");
+        const cols = window.innerWidth >= 1280 ? 8 : window.innerWidth >= 640 ? 6 : 4;
+        shop.innerHTML = `<div class="skel-grid">${"<div class=\"skel\"></div>".repeat(cols)}</div>`;
+        const { data, error } = await _supabase.from("produse").select("*").order("created_at", { ascending: false });
+        if (error || !data || data.length === 0) {
+            shop.innerHTML = `<div class="empty">Nicio ofertă activă momentan.<br>Revino în curând! 🔥</div>`;
+            return;
+        }
+        allData = data;
+        const cats = [...new Set(data.map(p => p.categorie).filter(Boolean))];
+        const mobileRow = document.getElementById("filter-row-mobile");
+        cats.forEach(cat => {
+            const meta = catMeta[cat];
+            const btn = document.createElement("button");
+            btn.className = "filter-btn";
+            btn.dataset.cat = cat;
+            btn.textContent = meta ? `${meta.emoji} ${meta.label}` : cat;
+            mobileRow.appendChild(btn);
+        });
+        const sidebar = document.getElementById("sidebar");
+        const allBtn = document.createElement("button");
+        allBtn.className = "sidebar-btn active";
+        allBtn.dataset.cat = "all";
+        allBtn.innerHTML = `<span class="btn-emoji">🔥</span> Toate produsele`;
+        sidebar.insertBefore(allBtn, sidebar.children[1]);
+        cats.forEach(cat => {
+            const meta = catMeta[cat] || { emoji: "🔥", label: cat };
+            const btn = document.createElement("button");
+            btn.className = "sidebar-btn";
+            btn.dataset.cat = cat;
+            btn.innerHTML = `<span class="btn-emoji">${meta.emoji}</span> ${meta.label}`;
+            sidebar.insertBefore(btn, sidebar.querySelector(".sidebar-social"));
+        });
+        const navLinks = document.getElementById("nav-links");
+        cats.slice(0, 5).forEach(cat => {
+            const meta = catMeta[cat];
+            const btn = document.createElement("button");
+            btn.className = "nav-link";
+            btn.dataset.cat = cat;
+            btn.textContent = meta ? `${meta.emoji} ${meta.label}` : cat;
+            navLinks.appendChild(btn);
+        });
+        renderProducts("all");
+        document.addEventListener("click", e => {
+            const btn = e.target.closest("[data-cat]");
+            if (!btn) return;
+            const cat = btn.dataset.cat;
+            activeFilter = cat;
+            document.querySelectorAll("[data-cat]").forEach(b => {
+                b.classList.remove("active");
+                if (b.dataset.cat === cat) b.classList.add("active");
+            });
+            renderProducts(cat);
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    }
+    function renderProducts(filter) {
+        const shop = document.getElementById("shop");
+        shop.innerHTML = "";
+        const filtered = filter === "all" ? allData : allData.filter(p => p.categorie === filter);
+        if (filter === "all") {
+            const grouped = {};
+            const order = Object.keys(catMeta);
+            filtered.forEach(p => {
+                const cat = p.categorie || "Altele";
+                if (!grouped[cat]) grouped[cat] = [];
+                grouped[cat].push(p);
+            });
+            order.forEach(cat => { if (grouped[cat]) { renderSection(shop, cat, grouped[cat]); delete grouped[cat]; } });
+            Object.keys(grouped).forEach(cat => renderSection(shop, cat, grouped[cat]));
+        } else {
+            renderSection(shop, filter, filtered);
+        }
+    }
+    function renderSection(container, cat, items) {
+        const meta = catMeta[cat] || { emoji: "🔥", label: cat.toUpperCase() };
+        const header = document.createElement("div");
+        header.className = "cat-header";
+        header.innerHTML = `<div class="cat-line"></div><div class="cat-label">${meta.emoji} ${meta.label}</div><div class="cat-line"></div>`;
+        container.appendChild(header);
+        const grid = document.createElement("div");
+        grid.className = "products-grid";
+        items.forEach((p, i) => {
+            const img = safeUrl(p.imagine_url || "https://via.placeholder.com/300x300/181818/333?text=•");
+            const name = escapeHtml(p.nume || "Produs");
+            const price = escapeHtml(p.pret || "Vezi Oferta");
+            const link = safeUrl(p.link_afiliat || "#");
+            const hasOld = p.pret_vechi;
+            const card = document.createElement("a");
+            card.href = link;
+            card.target = "_blank";
+            card.rel = "noopener noreferrer";
+            card.className = "prod-card fade-in";
+            card.style.animationDelay = `${Math.min(i * 0.04, 0.4)}s`;
+            card.innerHTML = `<div class="prod-img-wrap"><img src="${img}" alt="${name}" class="prod-img" loading="lazy"><div class="stamp"><span class="stamp-dot"></span><span class="stamp-text">Văzut pe TikTok</span></div>${hasOld ? '<div class="discount-badge show">OFERTĂ</div>' : ""}</div><div class="prod-body"><div class="prod-name">${name}</div><div class="prod-price-row"><span class="prod-price">${price}</span>${hasOld ? `<span class="prod-price-old">${escapeHtml(p.pret_vechi)}</span>` : ""}</div><div class="prod-buy"><svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4zM3 6h18M16 10a4 4 0 01-8 0"/></svg>Cumpără Acum</div></div>`;
+            grid.appendChild(card);
+        });
+        container.appendChild(grid);
+    }
+    loadProducts();
+</script>
+</body>
+</html>

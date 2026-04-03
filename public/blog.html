@@ -5,6 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blog Tech | MinimalTechRo</title>
   <meta name="description" content="Recenzii și recomandări de produse tech testate. Ghiduri de cumpărare, comparații și sfaturi pentru gadgeturi în România." />
+  <meta property="og:title" content="Blog Tech | MinimalTechRo" />
+  <meta property="og:description" content="Recenzii reale pentru gadgeturi pe care le-am folosit. Fără bullshit, fără copy-paste de pe fișa de produs." />
+  <meta property="og:image" content="https://www.adriangsofficial.shop/minimaltechro-logo.jpeg" />
+  <meta property="og:url" content="https://www.adriangsofficial.shop/blog.html" />
+  <meta property="og:type" content="website" />
+  <link rel="canonical" href="https://www.adriangsofficial.shop/blog.html" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
   <style>
@@ -21,9 +27,7 @@
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     html { scroll-behavior: smooth; }
-
     body {
       background: var(--bg);
       color: var(--text);
@@ -32,7 +36,6 @@
       overflow-x: hidden;
     }
 
-    /* NOISE OVERLAY */
     body::before {
       content: '';
       position: fixed;
@@ -43,514 +46,108 @@
       opacity: 0.4;
     }
 
-    /* HEADER */
     header {
-      position: sticky;
-      top: 0;
-      z-index: 100;
+      position: sticky; top: 0; z-index: 100;
       background: rgba(10,10,10,0.92);
       backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
       padding: 0 clamp(16px, 4vw, 48px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+      display: flex; align-items: center; justify-content: space-between;
       height: 60px;
     }
 
-    .logo {
-      font-family: 'Space Mono', monospace;
-      font-size: 14px;
-      font-weight: 700;
-      color: var(--accent);
-      text-decoration: none;
-      letter-spacing: 0.05em;
-    }
+    .logo { font-family: 'Space Mono', monospace; font-size: 14px; font-weight: 700; color: var(--accent); text-decoration: none; letter-spacing: 0.05em; }
 
-    nav {
-      display: flex;
-      gap: 28px;
-      align-items: center;
-    }
-
-    nav a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      transition: color 0.2s;
-    }
-
+    nav { display: flex; gap: 28px; align-items: center; }
+    nav a { color: var(--muted); text-decoration: none; font-size: 13px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; transition: color 0.2s; }
     nav a:hover, nav a.active { color: var(--text); }
     nav a.active { color: var(--accent); }
 
-    /* HERO */
     .hero {
       padding: clamp(48px, 8vw, 96px) clamp(16px, 4vw, 48px) clamp(32px, 5vw, 64px);
-      position: relative;
-      z-index: 1;
-      max-width: 1200px;
-      margin: 0 auto;
+      position: relative; z-index: 1;
+      max-width: 1200px; margin: 0 auto;
     }
 
     .hero-tag {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      background: rgba(0,255,135,0.08);
-      border: 1px solid rgba(0,255,135,0.2);
-      color: var(--accent);
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      padding: 6px 14px;
-      border-radius: 2px;
-      margin-bottom: 24px;
-      letter-spacing: 0.1em;
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(0,255,135,0.08); border: 1px solid rgba(0,255,135,0.2);
+      color: var(--accent); font-family: 'Space Mono', monospace; font-size: 11px;
+      padding: 6px 14px; border-radius: 2px; margin-bottom: 24px; letter-spacing: 0.1em;
     }
+    .hero-tag::before { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; animation: pulse 2s infinite; }
+    @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
 
-    .hero-tag::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      animation: pulse 2s infinite;
-    }
-
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.3; }
-    }
-
-    h1 {
-      font-size: clamp(36px, 6vw, 72px);
-      font-weight: 800;
-      line-height: 1.05;
-      letter-spacing: -0.03em;
-      margin-bottom: 16px;
-    }
-
+    h1 { font-size: clamp(36px, 6vw, 72px); font-weight: 800; line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 16px; }
     h1 span { color: var(--accent); }
+    .hero p { font-size: clamp(15px, 2vw, 18px); color: var(--muted); max-width: 480px; line-height: 1.7; }
 
-    .hero p {
-      font-size: clamp(15px, 2vw, 18px);
-      color: var(--muted);
-      max-width: 480px;
-      line-height: 1.7;
-    }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0 clamp(16px, 4vw, 48px); }
 
-    /* DIVIDER */
-    .divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 0 clamp(16px, 4vw, 48px);
-    }
+    .blog-section { max-width: 1200px; margin: 0 auto; padding: clamp(32px, 5vw, 64px) clamp(16px, 4vw, 48px); position: relative; z-index: 1; }
 
-    /* GRID */
-    .blog-section {
-      max-width: 1200px;
-      margin: 0 auto;
-      padding: clamp(32px, 5vw, 64px) clamp(16px, 4vw, 48px);
-      position: relative;
-      z-index: 1;
-    }
+    .section-header { display: flex; align-items: baseline; justify-content: space-between; margin-bottom: 32px; }
+    .section-title { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); letter-spacing: 0.15em; text-transform: uppercase; }
+    .article-count { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); }
 
-    .section-header {
-      display: flex;
-      align-items: baseline;
-      justify-content: space-between;
-      margin-bottom: 32px;
-    }
+    .blog-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 1px; background: var(--border); border: 1px solid var(--border); }
 
-    .section-title {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-    }
-
-    .article-count {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .blog-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-      gap: 1px;
-      background: var(--border);
-      border: 1px solid var(--border);
-    }
-
-    /* CARD */
-    .card {
-      background: var(--surface);
-      cursor: pointer;
-      transition: background 0.2s;
-      position: relative;
-      overflow: hidden;
-      display: flex;
-      flex-direction: column;
-    }
-
+    .card { background: var(--surface); cursor: pointer; transition: background 0.2s; position: relative; overflow: hidden; display: flex; flex-direction: column; text-decoration: none; color: inherit; }
     .card:hover { background: var(--card-hover); }
-
     .card:hover .card-arrow { transform: translate(3px, -3px); }
 
-    .card-img {
-      width: 100%;
-      aspect-ratio: 16/9;
-      object-fit: cover;
-      display: block;
-      filter: grayscale(20%);
-      transition: filter 0.3s;
-    }
+    .card-img-placeholder { width: 100%; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; font-size: 48px; background: var(--surface2); }
 
-    .card:hover .card-img { filter: grayscale(0%); }
+    .card-body { padding: 24px; flex: 1; display: flex; flex-direction: column; }
+    .card-meta { display: flex; align-items: center; gap: 12px; margin-bottom: 14px; }
 
-    .card-img-placeholder {
-      width: 100%;
-      aspect-ratio: 16/9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 48px;
-      background: var(--surface2);
-    }
-
-    .card-body {
-      padding: 24px;
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .card-meta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 14px;
-    }
-
-    .tag {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 3px 8px;
-      border-radius: 2px;
-    }
-
+    .tag { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; }
     .tag-review { background: rgba(0,255,135,0.1); color: var(--accent); }
     .tag-guide { background: rgba(255,60,60,0.1); color: var(--accent2); }
     .tag-compare { background: rgba(100,100,255,0.1); color: #7c7cff; }
 
-    .read-time {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      color: var(--muted);
-    }
+    .read-time { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted); }
 
-    .card h2 {
-      font-size: 18px;
-      font-weight: 700;
-      line-height: 1.3;
-      letter-spacing: -0.01em;
-      margin-bottom: 10px;
-    }
+    .card h2 { font-size: 18px; font-weight: 700; line-height: 1.3; letter-spacing: -0.01em; margin-bottom: 10px; }
+    .card-excerpt { font-size: 14px; color: var(--muted); line-height: 1.65; flex: 1; }
 
-    .card-excerpt {
-      font-size: 14px;
-      color: var(--muted);
-      line-height: 1.65;
-      flex: 1;
-    }
+    .card-footer { display: flex; align-items: center; justify-content: space-between; margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border); }
+    .card-date { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--muted); }
+    .card-arrow { font-size: 18px; color: var(--accent); transition: transform 0.2s; line-height: 1; }
 
-    .card-footer {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 20px;
-      padding-top: 16px;
-      border-top: 1px solid var(--border);
-    }
-
-    .card-date {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      color: var(--muted);
-    }
-
-    .card-arrow {
-      font-size: 18px;
-      color: var(--accent);
-      transition: transform 0.2s;
-      line-height: 1;
-    }
-
-    /* RATING STARS */
-    .rating {
-      display: flex;
-      gap: 2px;
-      margin-bottom: 12px;
-    }
-
+    .rating { display: flex; gap: 2px; margin-bottom: 12px; }
     .star { color: var(--accent); font-size: 13px; }
     .star.empty { color: var(--border); }
 
-    /* MODAL */
-    .modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.88);
-      z-index: 1000;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding: 20px;
-      overflow-y: auto;
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.25s;
-    }
-
-    .modal-overlay.open {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    .modal {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      max-width: 720px;
-      width: 100%;
-      margin: auto;
-      transform: translateY(24px);
-      transition: transform 0.3s;
-      position: relative;
-    }
-
-    .modal-overlay.open .modal {
-      transform: translateY(0);
-    }
-
-    .modal-close {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      color: var(--muted);
-      width: 32px;
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      font-size: 18px;
-      z-index: 10;
-      transition: color 0.2s;
-      font-family: 'Space Mono', monospace;
-    }
-
-    .modal-close:hover { color: var(--text); }
-
-    .modal-img-placeholder {
-      width: 100%;
-      aspect-ratio: 16/7;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 72px;
-      background: var(--surface2);
-      border-bottom: 1px solid var(--border);
-    }
-
-    .modal-content {
-      padding: 32px;
-    }
-
-    .modal-meta {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 16px;
-      flex-wrap: wrap;
-    }
-
-    .modal-content h2 {
-      font-size: clamp(22px, 4vw, 32px);
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.2;
-      margin-bottom: 12px;
-    }
-
-    .modal-rating { margin-bottom: 20px; }
-
-    .modal-body {
-      color: #c0c0c0;
-      font-size: 15px;
-      line-height: 1.8;
-    }
-
-    .modal-body h3 {
-      color: var(--text);
-      font-size: 17px;
-      font-weight: 700;
-      margin: 24px 0 10px;
-      letter-spacing: -0.01em;
-    }
-
-    .modal-body p { margin-bottom: 14px; }
-
-    .modal-body ul {
-      margin: 0 0 14px 20px;
-    }
-
-    .modal-body ul li { margin-bottom: 6px; }
-
-    .pros-cons {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      margin: 24px 0;
-    }
-
-    .pros, .cons {
-      padding: 16px;
-      border-radius: 2px;
-    }
-
-    .pros {
-      background: rgba(0,255,135,0.05);
-      border: 1px solid rgba(0,255,135,0.15);
-    }
-
-    .cons {
-      background: rgba(255,60,60,0.05);
-      border: 1px solid rgba(255,60,60,0.15);
-    }
-
-    .pros h4 { color: var(--accent); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; font-family: 'Space Mono', monospace; }
-    .cons h4 { color: var(--accent2); font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 10px; font-family: 'Space Mono', monospace; }
-
-    .pros li, .cons li { font-size: 13px; line-height: 1.6; margin-bottom: 4px; }
-
-    .verdict-box {
-      background: var(--surface2);
-      border: 1px solid var(--border);
-      border-left: 3px solid var(--accent);
-      padding: 20px;
-      margin: 24px 0;
-    }
-
-    .verdict-label {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      color: var(--accent);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .verdict-text {
-      font-size: 15px;
-      color: var(--text);
-      font-weight: 600;
-      line-height: 1.5;
-    }
-
-    .affiliate-cta {
-      display: block;
-      background: var(--accent);
-      color: #000;
-      text-align: center;
-      padding: 16px 24px;
-      font-weight: 700;
-      font-size: 14px;
-      letter-spacing: 0.05em;
-      text-decoration: none;
-      margin-top: 28px;
-      transition: opacity 0.2s;
-      text-transform: uppercase;
-    }
-
-    .affiliate-cta:hover { opacity: 0.85; }
-
-    .affiliate-disclaimer {
-      font-family: 'Space Mono', monospace;
-      font-size: 10px;
-      color: var(--muted);
-      text-align: center;
-      margin-top: 10px;
-    }
-
-    /* FOOTER */
     footer {
       border-top: 1px solid var(--border);
       padding: 32px clamp(16px, 4vw, 48px);
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      flex-wrap: gap;
-      position: relative;
-      z-index: 1;
-      gap: 16px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: relative; z-index: 1; gap: 16px; flex-wrap: wrap;
     }
-
-    .footer-left {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 20px;
-    }
-
-    .footer-links a {
-      font-family: 'Space Mono', monospace;
-      font-size: 11px;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
-    }
-
+    .footer-left { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); }
+    .footer-links { display: flex; gap: 20px; }
+    .footer-links a { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--muted); text-decoration: none; transition: color 0.2s; }
     .footer-links a:hover { color: var(--accent); }
 
-    @media (max-width: 600px) {
-      .blog-grid { grid-template-columns: 1fr; }
-      .pros-cons { grid-template-columns: 1fr; }
-      nav { gap: 16px; }
-    }
+    @media (max-width: 600px) { .blog-grid { grid-template-columns: 1fr; } nav { gap: 16px; } }
 
-    /* ANIMATIONS */
-    .card {
-      animation: fadeUp 0.5s ease both;
-    }
-
+    .card { animation: fadeUp 0.5s ease both; }
     .card:nth-child(1) { animation-delay: 0.05s; }
     .card:nth-child(2) { animation-delay: 0.1s; }
     .card:nth-child(3) { animation-delay: 0.15s; }
     .card:nth-child(4) { animation-delay: 0.2s; }
     .card:nth-child(5) { animation-delay: 0.25s; }
     .card:nth-child(6) { animation-delay: 0.3s; }
+    .card:nth-child(7) { animation-delay: 0.35s; }
+    .card:nth-child(8) { animation-delay: 0.4s; }
+    .card:nth-child(9) { animation-delay: 0.45s; }
 
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
   </style>
 </head>
 <body>
 
-<!-- HEADER -->
 <header>
   <a href="/" class="logo">MINIMALTECHRO</a>
   <nav>
@@ -561,7 +158,6 @@
   </nav>
 </header>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-tag">Recenzii & Ghiduri Tech</div>
   <h1>Tech testat.<br /><span>Scris sincer.</span></h1>
@@ -570,17 +166,14 @@
 
 <hr class="divider" />
 
-<!-- BLOG GRID -->
 <section class="blog-section">
   <div class="section-header">
     <span class="section-title">// Articole</span>
-    <span class="article-count">6 recenzii</span>
+    <span class="article-count" id="article-count">9 recenzii</span>
   </div>
-
   <div class="blog-grid" id="blogGrid"></div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-left">© 2026 MinimalTechRo • Conținut afiliat</div>
   <div class="footer-links">
@@ -590,329 +183,77 @@
   </div>
 </footer>
 
-<!-- MODAL -->
-<div class="modal-overlay" id="modalOverlay" onclick="closeModalOnBg(event)">
-  <div class="modal" id="modal">
-    <button class="modal-close" onclick="closeModal()">✕</button>
-    <div id="modalInner"></div>
-  </div>
-</div>
-
 <script>
 const articles = [
   {
-    id: 1,
-    url: "/blog/hollyland-lark-a1-review-romana.html",
-    emoji: "🎙️",
-    tag: "review",
-    tagLabel: "Recenzie",
-    readTime: "5 min",
-    date: "28 Mar 2026",
-    rating: 5,
+    url: "./blog/hollyland-lark-a1-review-romana.html",
+    emoji: "🎙️", tag: "review", tagLabel: "Recenzie",
+    readTime: "6 min", date: "31 Mar 2026", rating: 5,
     title: "Hollyland Lark A1 — Cel mai bun microfon wireless sub 400 lei",
-    excerpt: "Am testat Lark A1 timp de 3 săptămâni pentru podcast și TikTok. Spoiler: l-am recomandat tuturor creatorilor de conținut pe care îi cunosc.",
-    affiliate: "https://www.profitshare.ro",
-    body: `
-      <h3>De ce am luat Hollyland Lark A1</h3>
-      <p>Căutam un microfon wireless care să funcționeze fără să am un telefon blocat în aplicație, fără să îmi mănânce bateria și fără să producă zgomot de fond. Lista scurtă: Rode Wireless GO II (prea scump), DJI Mic Mini (stoc 0 în România) și Hollyland Lark A1. L-am ales pe acesta din urmă.</p>
-      
-      <h3>Ce am testat</h3>
-      <p>L-am folosit pentru înregistrări de podcast interior, vloguri în aer liber și clipuri TikTok de tip "talking head". Total: aproximativ 14 ore de înregistrare în 3 săptămâni.</p>
-
-      <h3>Calitatea sunetului</h3>
-      <p>Impresionant pentru prețul lui. Capsulele omnidirectionele prind vocea clar de la 1-1.5 metri distanță. Reducerea de zgomot de fond funcționează decent — nu la nivelul unui Rode, dar suficient pentru înregistrări casual și social media.</p>
-      <p>Am comparat înregistrări Lark A1 vs iPhone cu microfon intern: diferența e semnificativă. Vocea sună mai caldă, mai centrată, fără ecoul camerei.</p>
-
-      <h3>Autonomie și conectivitate</h3>
-      <p>Producătorul spune 8 ore cu case + 24 total. În testul meu: 7.5 ore pe un transmițător înainte să apară indicatorul de baterie scăzută — consistent cu promisiunea. Carcasa de încărcare funcționează și ca dock, practic.</p>
-      <p>Conexiunea Bluetooth/2.4GHz hibridă n-a picat niciodată. Am mers și la 20 de metri distanță fără dropout.</p>
-
-      <div class="pros-cons">
-        <div class="pros">
-          <h4>✓ Pro</h4>
-          <ul>
-            <li>Sunet clar, voce naturală</li>
-            <li>Autonomie excelentă</li>
-            <li>Clip magnetic solid</li>
-            <li>Compatibil iOS + Android + PC</li>
-            <li>Carcasă compactă de încărcare</li>
-          </ul>
-        </div>
-        <div class="cons">
-          <h4>✗ Contra</h4>
-          <ul>
-            <li>Fără ecran pe transmițător</li>
-            <li>App limitat funcțional</li>
-            <li>Cablu USB-C inclus e scurt</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="verdict-box">
-        <div class="verdict-label">// Verdict final</div>
-        <div class="verdict-text">Dacă ești creator de conținut în România și ai buget sub 400 lei pentru un microfon wireless, Lark A1 e alegerea clară. Raport calitate-preț imbatabil în segmentul lui.</div>
-      </div>
-    `
+    excerpt: "Am testat Lark A1 timp de 3 săptămâni pentru podcast și TikTok. Spoiler: l-am recomandat tuturor creatorilor de conținut pe care îi cunosc."
   },
   {
-    id: 2,
-    url: "/blog/zeblaze-stratos-4-review-romana.html",
-    emoji: "⌚",
-    tag: "review",
-    tagLabel: "Recenzie",
-    readTime: "4 min",
-    date: "25 Mar 2026",
-    rating: 4,
-    title: "Zeblaze Stratos 4 — Smartwatch de 200 lei cu ambiții de flagship",
-    excerpt: "GPS integrat, AMOLED, 20 de zile autonomie. Pe hârtie pare prea bun să fie real. Am verificat.",
-    affiliate: "https://www.profitshare.ro",
-    body: `
-      <h3>Contextul</h3>
-      <p>Zeblaze Stratos 4 a apărut pe radarul meu după ce am văzut spec sheet-ul: AMOLED 1.43", GPS integrat, 20 de zile autonomie promisă, waterproofing 5ATM. La 200 de lei, suna ca un marketing claim imposibil. Am comandat unul să verific.</p>
-
-      <h3>Design și display</h3>
-      <p>Carcasă aluminiu, curea silicon confortabilă. Nu arată ca un ceas de 200 lei — asta e primul lucru pe care l-am observat. AMOLED-ul e vibrant, cu culori bune și vizibilitate acceptabilă în soare direct (nu la nivelul unui Apple Watch, dar decent pentru preț).</p>
-      <p>Bezels există și sunt vizibile, dar ecranul ocupă ~80% din față — acceptabil.</p>
-
-      <h3>GPS și tracking sportiv</h3>
-      <p>GPS-ul prinde semnal în 15-30 secunde. Am testat cu o alergare de 5km în paralel cu Garmin Forerunner 55 — distanța diferă cu ~120 metri, ceea ce e ok pentru un ceas de buget. Harta traseului e fidelă.</p>
-      <p>Are 20+ moduri sport, dar calitatea tracking-ului variază. Alergat și ciclism: bun. Înot: nu am testat serios.</p>
-
-      <h3>Autonomie</h3>
-      <p>Realitate vs promisiune: 12-14 zile cu GPS folosit zilnic, 18-20 zile cu GPS ocazional. Nu 20 de zile în uz normal, dar tot impresionant față de concurență.</p>
-
-      <div class="pros-cons">
-        <div class="pros">
-          <h4>✓ Pro</h4>
-          <ul>
-            <li>Display AMOLED calitativ</li>
-            <li>GPS integrat funcțional</li>
-            <li>Autonomie 12-14 zile reale</li>
-            <li>Design solid pentru preț</li>
-            <li>5ATM waterproofing</li>
-          </ul>
-        </div>
-        <div class="cons">
-          <h4>✗ Contra</h4>
-          <ul>
-            <li>App Zeblaze — mediocru</li>
-            <li>HR nu e medical-grade</li>
-            <li>Nu are NFC/plăți</li>
-            <li>Autonomie sub promisiunea marketing</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="verdict-box">
-        <div class="verdict-label">// Verdict final</div>
-        <div class="verdict-text">Pentru 200 lei, Zeblaze Stratos 4 e o achiziție inteligentă dacă vrei GPS și AMOLED fără să cheltui 1000+. Nu înlocuiește un Garmin sau Samsung, dar nici nu costă cât unul.</div>
-      </div>
-    `
+    url: "./blog/hollyland-lark-a1-vs-rode-wireless-go.html",
+    emoji: "🎙️", tag: "compare", tagLabel: "Comparație",
+    readTime: "5 min", date: "31 Mar 2026", rating: null,
+    title: "Hollyland Lark A1 vs Rode Wireless GO II — Care merită banii în 2026?",
+    excerpt: "Hollyland costă ~380 lei. Rode costă ~1.100 lei. Diferența e aproape 3x. Merită Rode de 3 ori mai mult? Răspuns sincer."
   },
   {
-    id: 3,
-    url: "/blog/logitech-g402-review-romana.html",
-    emoji: "🖱️",
-    tag: "review",
-    tagLabel: "Recenzie",
-    readTime: "4 min",
-    date: "22 Mar 2026",
-    rating: 4,
-    title: "Logitech G402 în 2026 — Merită sau a îmbătrânit prea mult?",
-    excerpt: "Mouse lansat în 2014, vândut în continuare. Am folosit G402 câteva luni și am un răspuns clar.",
-    affiliate: "https://www.profitshare.ro",
-    body: `
-      <h3>Un mouse din 2014 în 2026</h3>
-      <p>Logitech G402 Hyperion Fury a apărut în 2014 cu un senzor hibrid și promisiunea de 500 IPS tracking speed. 12 ani mai târziu e încă disponibil la raft. M-am întrebat dacă asta înseamnă că e bun sau că Logitech pur și simplu nu l-a retras din producție.</p>
-
-      <h3>Ergonomie</h3>
-      <p>Design palmrest, potrivit pentru mâini medii spre mari. Plasticul e calitativ — nu ieftin, nu glossy. Greutatea e ok: 144g fără cablu, se simte solid fără să obosești după ore întregi.</p>
-      <p>Cablul împletit e un plus real față de ce vine la mouse-uri de buget. Nu se bâlbâie, nu se răsucește.</p>
-
-      <h3>Senzorul și performanța</h3>
-      <p>Senzorul hibrid (optic + accelerometru) funcționează între 240-4000 DPI. În testele mele cu CS2 și Valorant: tracking stabil, fără acceleration vizibilă în mișcări normale. La viteze foarte mari există o ușoară imprecizie — moștenire a tehnologiei hibride.</p>
-      <p>Pentru gaming casual și productivitate: perfect. Pentru esports competitiv la nivel înalt: mai bine caută un G Pro X Superlight.</p>
-
-      <h3>Butoane și software</h3>
-      <p>8 butoane programabile, G HUB funcționează decent. DPI on-the-fly cu indicator LED colorat — util practic. Click-urile sunt ferme, satisfăcătoare.</p>
-
-      <div class="pros-cons">
-        <div class="pros">
-          <h4>✓ Pro</h4>
-          <ul>
-            <li>Ergonomie excelentă pentru mâini mari</li>
-            <li>Cablu împletit calitativ</li>
-            <li>8 butoane programabile</li>
-            <li>Preț accesibil în 2026</li>
-            <li>Brand de încredere, garanție</li>
-          </ul>
-        </div>
-        <div class="cons">
-          <h4>✗ Contra</h4>
-          <ul>
-            <li>Senzor depășit vs competiția 2024+</li>
-            <li>Cu fir (nu wireless)</li>
-            <li>Nu e ideal pentru palmuri mici</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="verdict-box">
-        <div class="verdict-label">// Verdict final</div>
-        <div class="verdict-text">G402 e un mouse solid pentru gaming casual și birou. Dacă nu ești un jucător competitiv serios, prețul actual îl face o alegere inteligentă. Dacă ești, investește în ceva mai nou.</div>
-      </div>
-    `
+    url: "./blog/microfon-wireless-ieftin-tiktok.html",
+    emoji: "🎤", tag: "guide", tagLabel: "Ghid",
+    readTime: "5 min", date: "31 Mar 2026", rating: null,
+    title: "Cel mai bun microfon wireless ieftin pentru TikTok în România 2026",
+    excerpt: "Top 3 microfoane wireless testate sub 400 lei. Dacă filmezi TikTok cu microfonul intern al telefonului, pierzi urmăritori."
   },
   {
-    id: 4,
-    url: "/blog/hollyland-lark-a1-vs-rode-wireless-go.html",
-    emoji: "🎧",
-    tag: "review",
-    tagLabel: "Recenzie",
-    readTime: "5 min",
-    date: "19 Mar 2026",
-    rating: 5,
-    title: "Anker Soundcore P40i — Căști wireless sub 200 lei care bat concurența",
-    excerpt: "ANC activ, 60 ore autonomie, încărcare rapidă. Am purtat Soundcore P40i zilnic timp de o lună — iată ce am găsit.",
-    affiliate: "https://www.profitshare.ro",
-    body: `
-      <h3>Problema cu căștile de buget</h3>
-      <p>Piața de căști wireless sub 200 lei e plină de produse cu promisiuni mari și performanță dezamăgitoare. Anker e un brand care în ultimii ani a schimbat ecuația — Soundcore P40i e cel mai recent exemplu.</p>
-
-      <h3>ANC — funcționează sau e marketing?</h3>
-      <p>Funcționează. Nu la nivelul Sony WH-1000XM5 sau Bose QC45, dar reduce semnificativ zgomotul de fundal: aer condiționat, zgomot de stradă, conversații în birou. Am testat în metrou — ANC taie frecvențele joase ale motorului bine, vocile mai puțin.</p>
-      <p>Sunt 4 moduri: ANC High, ANC Low, Normal, Transparency. Transparency mode e natural și util dacă vrei să auzi traficul.</p>
-
-      <h3>Autonomie — 60 ore reale?</h3>
-      <p>Am obținut ~42 de ore cu ANC activ și volum la 70%. Cu ANC off: ~55 ore. Nu 60 de ore, dar tot excepțional pentru segment. Și se încarcă rapid: 10 minute = 5 ore de ascultare.</p>
-
-      <h3>Sunetul</h3>
-      <p>Bas present, mids clare, înalte care nu obosesc urechile. Egalizator customizabil din aplicație. Soundstage nu e extraordinar, dar nici îngust. Pentru muzică pop, hip-hop, podcast: excelent.</p>
-
-      <div class="pros-cons">
-        <div class="pros">
-          <h4>✓ Pro</h4>
-          <ul>
-            <li>ANC funcțional la prețul ăsta</li>
-            <li>Autonomie enormă (40+ ore real)</li>
-            <li>Încărcare rapidă</li>
-            <li>Aplicație bine făcută</li>
-            <li>Confort în purtare îndelungată</li>
-          </ul>
-        </div>
-        <div class="cons">
-          <h4>✗ Contra</h4>
-          <ul>
-            <li>Plastic, nu arată premium</li>
-            <li>ANC sub flagship-uri</li>
-            <li>Microfon mediocru pentru call-uri</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="verdict-box">
-        <div class="verdict-label">// Verdict final</div>
-        <div class="verdict-text">Soundcore P40i e probabil cel mai bun raport calitate-preț din categoria căști wireless cu ANC sub 200 lei în România. Recomandat fără rezerve dacă bugetul e limitat.</div>
-      </div>
-    `
+    url: "./blog/zeblaze-stratos-4-review-romana.html",
+    emoji: "⌚", tag: "review", tagLabel: "Recenzie",
+    readTime: "5 min", date: "31 Mar 2026", rating: 4,
+    title: "Zeblaze Stratos 4 — Smartwatch AMOLED + GPS la 200 lei",
+    excerpt: "GPS integrat, AMOLED, 20 de zile autonomie. Pe hârtie pare prea bun să fie real. Am testat 4 săptămâni."
   },
   {
-    id: 5,
-    url: "/blog/mouse-gaming-sub-200-lei.html",
-    emoji: "💡",
-    tag: "guide",
-    tagLabel: "Ghid",
-    readTime: "6 min",
-    date: "15 Mar 2026",
-    rating: null,
-    title: "5 accesorii tech sub 100 lei care chiar merită cumpărate în 2026",
-    excerpt: "Nu îți trebuie un buget mare ca să îți îmbunătățești setup-ul. Iată 5 produse pe care le recomand activ.",
-    affiliate: "https://www.profitshare.ro",
-    body: `
-      <h3>Filozofia din spatele listei</h3>
-      <p>Există o grămadă de ghiduri de genul "top X produse" care sunt de fapt liste de articole scumpe cu linkuri afiliate. Eu am făcut invers: am pornit de la un buget de 100 lei per produs și am selectat doar ce folosesc sau am testat personal.</p>
-
-      <h3>1. Hub USB-C 7-în-1 — ~80 lei</h3>
-      <p>Dacă ai un laptop modern cu puține porturi (MacBook, orice ultrabook din 2022+), un hub USB-C e esențial. Recomand variante cu HDMI 4K, USB-A 3.0, card reader SD și PD passthrough. Găsești la ~80 lei pe eMAG branduri ca Ugreen sau Vention — ambele solide.</p>
-
-      <h3>2. Suport laptop reglabil — ~60 lei</h3>
-      <p>Ergonomia contează. Un suport care ridică laptopul la nivelul ochilor reduce durerile de gât după câteva luni de muncă. Modelele pliabile din aluminiu la 60-80 lei funcționează la fel ca cele de 300 lei.</p>
-
-      <h3>3. Cablu USB-C la USB-C 240W — ~25 lei</h3>
-      <p>Mulți oameni au cabluri care nu suportă 100W+. Un cablu certificat 240W de la Ugreen sau Baseus costă 20-30 lei și e compatibil cu orice standard de încărcare rapidă din 2024+.</p>
-
-      <h3>4. Ringlight mini pentru birou — ~45 lei</h3>
-      <p>Dacă faci video call-uri sau filmezi content, o ringlight mică cu clip pentru laptop sau monitor transformă instant calitatea imaginii. La 45-60 lei găsești modele cu intensitate reglabilă și temperatură de culoare.</p>
-
-      <h3>5. Sticky cable management strips — ~15 lei</h3>
-      <p>Cel mai ieftin produs de pe listă și probabil cel cu cel mai mare impact vizual. Câteva strip-uri pentru managementul cablurilor transformă un birou haotic într-unul aranjat. Sună banal, dar diferența e enormă.</p>
-
-      <div class="verdict-box">
-        <div class="verdict-label">// Concluzie</div>
-        <div class="verdict-text">Total pentru toate 5: ~225 lei. Impactul asupra productivității și confortului zilnic: mult peste prețul plătit. Niciun produs de pe această listă nu e un compromis — sunt recomandări reale.</div>
-      </div>
-    `
+    url: "./blog/zeblaze-stratos-4-vs-xiaomi-band.html",
+    emoji: "⌚", tag: "compare", tagLabel: "Comparație",
+    readTime: "4 min", date: "31 Mar 2026", rating: null,
+    title: "Zeblaze Stratos 4 vs Xiaomi Smart Band 8 Pro — Care e mai bun?",
+    excerpt: "Ambele costă sub 250 lei. Ambele au AMOLED. Dar diferența cheie e GPS integrat vs GPS conectat — și asta schimbă totul."
   },
   {
-    id: 6,
-    url: "/blog/logitech-g402-vs-g502.html",
-    emoji: "📱",
-    tag: "compare",
-    tagLabel: "Comparație",
-    readTime: "5 min",
-    date: "10 Mar 2026",
-    rating: null,
-    title: "Powerbank 20.000 mAh: Anker vs Xiaomi vs Baseus — Pe care îl cumpăr?",
-    excerpt: "Trei powerbank-uri populare în România, testate cu aceleași dispozitive. Rezultatele sunt mai apropiate decât te-ai aștepta.",
-    affiliate: "https://www.profitshare.ro",
-    body: `
-      <h3>Cum am testat</h3>
-      <p>Am descărcat un iPhone 14 și un Samsung S23 de la 100% la 0% de trei ori fiecare și am numărat câte încărcări complete dă fiecare powerbank. Am măsurat și viteza de încărcare cu un USB tester.</p>
-
-      <h3>Anker 737 PowerCore 26.800mAh</h3>
-      <p>Cel mai scump din test (~350 lei). Încărcare la 140W, display integrat cu procente exacte, formă ergonomică. iPhone 14: 5.8 încărcări complete. Samsung S23: 4.9 încărcări. Viteză de ieșire: constantă la 65W pe USB-C. Cel mai rapid din test.</p>
-
-      <h3>Xiaomi Power Bank 3 Ultra Compact 20.000</h3>
-      <p>La ~180 lei, cel mai compact din test. 50W maxim pe ieșire, încărcare proprie la 50W. iPhone 14: 4.6 încărcări. Samsung S23: 3.9 încărcări. Pierdere de eficiență mai mare decât Anker — capacitatea reală e ~17.000mAh util. Dar e mic și ușor.</p>
-
-      <h3>Baseus Bipow Pro 20.000mAh</h3>
-      <p>Prețul mediu (~220 lei) cu echilibru bun. 22.5W pe ieșire USB-A, 20W USB-C. iPhone 14: 4.9 încărcări. Samsung S23: 4.1 încărcări. Afișaj LED cu procente, construcție solidă. Nu e cel mai rapid, dar e consistent.</p>
-
-      <div class="pros-cons">
-        <div class="pros">
-          <h4>Anker 737</h4>
-          <ul>
-            <li>Cel mai rapid (140W)</li>
-            <li>Eficiență maximă</li>
-            <li>Display precis</li>
-            <li>Ideal pentru laptopuri</li>
-          </ul>
-        </div>
-        <div class="cons">
-          <h4>Xiaomi Ultra Compact</h4>
-          <ul>
-            <li>Cel mai compact/ușor</li>
-            <li>Preț bun</li>
-            <li>Eficiență mai slabă</li>
-            <li>Nu merge bine cu laptopuri</li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="verdict-box">
-        <div class="verdict-label">// Verdict comparație</div>
-        <div class="verdict-text">Dacă încarci și laptop: Anker 737. Dacă vrei ceva mic pentru telefon: Xiaomi. Pentru echilibru general la preț mediu: Baseus Bipow Pro. Nu există un câștigător absolut — depinde de use case.</div>
-      </div>
-    `
+    url: "./blog/smartwatch-ieftin-gps-2026.html",
+    emoji: "⌚", tag: "guide", tagLabel: "Ghid",
+    readTime: "4 min", date: "31 Mar 2026", rating: null,
+    title: "Cel mai bun smartwatch ieftin cu GPS în România 2026",
+    excerpt: "Top 3 smartwatch-uri cu GPS real sub 300 lei. GPS integrat pe un smartwatch ieftin nu mai e un privilegiu."
+  },
+  {
+    url: "./blog/logitech-g402-review-romana.html",
+    emoji: "🖱️", tag: "review", tagLabel: "Recenzie",
+    readTime: "5 min", date: "31 Mar 2026", rating: 4,
+    title: "Logitech G402 în 2026 — Mouse din 2014 care încă bate concurența",
+    excerpt: "Mouse lansat în 2014, vândut în continuare. Am folosit G402 câteva luni și am un răspuns clar despre dacă merită."
+  },
+  {
+    url: "./blog/logitech-g402-vs-g502.html",
+    emoji: "🖱️", tag: "compare", tagLabel: "Comparație",
+    readTime: "4 min", date: "31 Mar 2026", rating: null,
+    title: "Logitech G402 vs G502 HERO — Diferența de 150 lei merită?",
+    excerpt: "G402 costă ~160 lei. G502 HERO costă ~310 lei. G502 are senzorul HERO 25K. Dar asta îl face de 2 ori mai bun?"
+  },
+  {
+    url: "./blog/mouse-gaming-sub-200-lei.html",
+    emoji: "🖱️", tag: "guide", tagLabel: "Ghid",
+    readTime: "4 min", date: "31 Mar 2026", rating: null,
+    title: "Cel mai bun mouse gaming sub 200 lei în România 2026",
+    excerpt: "Top 3 mouse-uri gaming sub 200 lei testate. Nu ai nevoie de un mouse de 500 lei ca să joci bine."
   }
 ];
 
 function stars(rating) {
   if (!rating) return '';
   let s = '';
-  for (let i = 1; i <= 5; i++) {
-    s += `<span class="star${i > rating ? ' empty' : ''}">★</span>`;
-  }
+  for (let i = 1; i <= 5; i++) s += `<span class="star${i > rating ? ' empty' : ''}">★</span>`;
   return `<div class="rating">${s}</div>`;
 }
 
@@ -924,8 +265,9 @@ function tagClass(tag) {
 
 function renderGrid() {
   const grid = document.getElementById('blogGrid');
+  document.getElementById('article-count').textContent = articles.length + ' articole';
   grid.innerHTML = articles.map(a => `
-    <article class="card" onclick="window.location.href='${a.url}'" style="cursor:pointer;">
+    <a class="card" href="${a.url}">
       <div class="card-img-placeholder">${a.emoji}</div>
       <div class="card-body">
         <div class="card-meta">
@@ -940,44 +282,9 @@ function renderGrid() {
           <span class="card-arrow">↗</span>
         </div>
       </div>
-    </article>
+    </a>
   `).join('');
 }
-
-function openModal(id) {
-  const a = articles.find(x => x.id === id);
-  if (!a) return;
-  document.getElementById('modalInner').innerHTML = `
-    <div class="modal-img-placeholder">${a.emoji}</div>
-    <div class="modal-content">
-      <div class="modal-meta">
-        <span class="tag ${tagClass(a.tag)}">${a.tagLabel}</span>
-        <span class="read-time">${a.readTime} citire</span>
-        <span class="card-date">${a.date}</span>
-      </div>
-      <h2>${a.title}</h2>
-      ${a.rating ? `<div class="modal-rating">${stars(a.rating)}</div>` : ''}
-      <div class="modal-body">${a.body}</div>
-      <a href="${a.affiliate}" target="_blank" rel="noopener sponsored" class="affiliate-cta">
-        Vezi prețul cel mai bun →
-      </a>
-      <p class="affiliate-disclaimer">* Link afiliat — susții MinimalTechRo fără cost suplimentar pentru tine.</p>
-    </div>
-  `;
-  document.getElementById('modalOverlay').classList.add('open');
-  document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-  document.getElementById('modalOverlay').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function closeModalOnBg(e) {
-  if (e.target === document.getElementById('modalOverlay')) closeModal();
-}
-
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModal(); });
 
 renderGrid();
 </script>

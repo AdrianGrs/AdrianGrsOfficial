@@ -1,340 +1,754 @@
 <!doctype html>
 <html lang="ro">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>MinimalTechRo — Admin</title>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #080808; --surface: #101010; --surface2: #181818; --surface3: #222;
-            --border: rgba(255,255,255,0.08); --white: #f0f0f0; --muted: #666;
-            --red: #e8341a; --gold: #f0a500; --green: #22c55e;
-            --font: 'Space Grotesk', sans-serif; --font-display: 'Oswald', sans-serif;
-        }
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: var(--bg); color: var(--white); font-family: var(--font); min-height: 100vh; -webkit-font-smoothing: antialiased; }
-        #login-screen { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 999; flex-direction: column; align-items: center; justify-content: center; }
-        .login-box { width: 320px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 36px 28px; display: flex; flex-direction: column; gap: 20px; }
-        .login-brand { text-align: center; }
-        .login-brand-name { font-family: var(--font-display); font-size: 26px; letter-spacing: 2px; color: var(--white); }
-        .login-brand-name span { color: var(--red); }
-        .login-brand-sub { font-size: 10px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 5px; }
-        .login-field { display: flex; flex-direction: column; gap: 6px; }
-        .login-field label { font-size: 10px; font-weight: 600; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; }
-        .login-field input { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; color: var(--white); font-family: var(--font); font-size: 14px; padding: 12px 14px; outline: none; transition: border-color 0.15s; width: 100%; }
-        .login-field input:focus { border-color: var(--red); }
-        .login-error { background: rgba(232,52,26,0.1); border: 1px solid rgba(232,52,26,0.3); border-radius: 8px; padding: 10px 12px; font-size: 12px; color: var(--red); display: none; text-align: center; }
-        .btn-login { width: 100%; background: var(--red); color: #fff; border: none; border-radius: 10px; font-family: var(--font); font-size: 13px; font-weight: 700; padding: 13px; cursor: pointer; transition: opacity 0.15s; letter-spacing: 0.3px; }
-        .btn-login:hover { opacity: 0.88; }
-        .btn-login:disabled { opacity: 0.5; pointer-events: none; }
-        #admin-ui { display: none; }
-        .header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
-        .header-brand { font-family: var(--font-display); font-size: 18px; letter-spacing: 1px; }
-        .header-brand span { color: var(--red); }
-        .header-right { display: flex; align-items: center; gap: 10px; }
-        .user-pill { background: var(--surface2); border: 1px solid var(--border); border-radius: 100px; padding: 5px 12px; font-size: 11px; color: var(--muted); font-weight: 600; }
-        .btn-logout { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--muted); font-family: var(--font); font-size: 11px; font-weight: 700; padding: 6px 12px; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
-        .btn-logout:hover { border-color: var(--red); color: var(--red); }
-        .main { max-width: 860px; margin: 0 auto; padding: 28px 16px 60px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
-        @media (max-width: 640px) { .main { grid-template-columns: 1fr; } }
-        .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
-        .panel-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
-        .panel-icon { width: 30px; height: 30px; border-radius: 8px; background: var(--red); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 14px; }
-        .panel-title { font-weight: 700; font-size: 14px; }
-        .panel-body { padding: 20px; }
-        .field { margin-bottom: 14px; }
-        .field label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; }
-        .field input, .field select { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--white); font-family: var(--font); font-size: 13px; padding: 10px 12px; outline: none; transition: border-color 0.15s; -webkit-appearance: none; }
-        .field input:focus, .field select:focus { border-color: var(--red); }
-        .field select option { background: #1a1a1a; }
-        .ai-row { display: flex; gap: 8px; align-items: flex-end; }
-        .ai-row .field { flex: 1; margin-bottom: 0; }
-        .btn-ai { background: var(--surface3); border: 1px solid var(--border); border-radius: 8px; color: var(--white); font-family: var(--font); font-size: 11px; font-weight: 700; padding: 10px 12px; cursor: pointer; white-space: nowrap; display: flex; align-items: center; gap: 5px; transition: background 0.15s, border-color 0.15s; }
-        .btn-ai:hover { border-color: var(--red); }
-        .btn-ai.loading { opacity: 0.5; pointer-events: none; }
-        .cat-badge { display: none; align-items: center; gap: 6px; background: rgba(232,52,26,0.1); border: 1px solid rgba(232,52,26,0.25); border-radius: 6px; padding: 5px 10px; font-size: 11px; font-weight: 600; color: var(--red); margin-top: 8px; }
-        .btn-submit { width: 100%; background: var(--red); color: #fff; border: none; border-radius: 10px; font-family: var(--font); font-size: 13px; font-weight: 700; padding: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; transition: opacity 0.15s; margin-top: 4px; }
-        .btn-submit:hover { opacity: 0.88; }
-        .btn-submit:disabled { opacity: 0.5; pointer-events: none; }
-        .preview-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; display: none; margin-bottom: 16px; }
-        .preview-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--surface3); }
-        .preview-body { padding: 12px; }
-        .preview-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
-        .preview-price { font-family: var(--font-display); font-size: 18px; color: var(--gold); }
-        .prod-list { display: flex; flex-direction: column; gap: 10px; }
-        .prod-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px; display: flex; gap: 12px; align-items: center; }
-        .prod-item-img { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; background: var(--surface3); flex-shrink: 0; }
-        .prod-item-body { flex: 1; min-width: 0; }
-        .prod-item-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .prod-item-meta { display: flex; gap: 8px; margin-top: 3px; align-items: center; }
-        .prod-item-price { font-family: var(--font-display); font-size: 13px; color: var(--gold); }
-        .prod-item-cat { font-size: 9px; font-weight: 700; letter-spacing: 1px; background: var(--surface3); border-radius: 4px; padding: 2px 6px; color: var(--muted); text-transform: uppercase; }
-        .btn-delete { background: none; border: 1px solid var(--border); border-radius: 7px; color: var(--muted); cursor: pointer; padding: 6px 8px; font-size: 14px; transition: border-color 0.15s, color 0.15s; flex-shrink: 0; }
-        .btn-delete:hover { border-color: var(--red); color: var(--red); }
-        .empty-list { text-align: center; color: var(--muted); font-size: 12px; padding: 30px 0; }
-        .list-count { font-size: 11px; color: var(--muted); margin-bottom: 12px; font-weight: 600; }
-        .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 20px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; z-index: 9999; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; }
-        .toast.show { transform: translateX(-50%) translateY(0); }
-        .toast.success { border-color: var(--green); color: var(--green); }
-        .toast.error { border-color: var(--red); color: var(--red); }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>MinimalTechRo — Admin</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #080808; --surface: #101010; --surface2: #181818; --surface3: #222;
+      --border: rgba(255,255,255,0.08); --white: #f0f0f0; --muted: #666;
+      --red: #e8341a; --gold: #f0a500; --green: #22c55e; --blue: #3b82f6;
+      --font: 'Space Grotesk', sans-serif; --font-display: 'Oswald', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background: var(--bg); color: var(--white); font-family: var(--font); min-height: 100vh; -webkit-font-smoothing: antialiased; }
+
+    /* LOGIN */
+    #login-screen { display: none; position: fixed; inset: 0; background: var(--bg); z-index: 999; flex-direction: column; align-items: center; justify-content: center; }
+    .login-box { width: 340px; background: var(--surface); border: 1px solid var(--border); border-radius: 20px; padding: 40px 32px; display: flex; flex-direction: column; gap: 20px; }
+    .login-brand { text-align: center; }
+    .login-brand-name { font-family: var(--font-display); font-size: 28px; letter-spacing: 2px; }
+    .login-brand-name span { color: var(--red); }
+    .login-brand-sub { font-size: 11px; color: var(--muted); letter-spacing: 2px; text-transform: uppercase; margin-top: 6px; }
+    .field label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 1px; color: var(--muted); text-transform: uppercase; margin-bottom: 6px; }
+    .field input { width: 100%; background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; color: var(--white); font-family: var(--font); font-size: 14px; padding: 12px 14px; outline: none; transition: border-color 0.15s; }
+    .field input:focus { border-color: var(--red); }
+    .login-error { background: rgba(232,52,26,0.1); border: 1px solid rgba(232,52,26,0.3); border-radius: 8px; padding: 10px 12px; font-size: 12px; color: var(--red); display: none; text-align: center; }
+    .btn-login { width: 100%; background: var(--red); color: #fff; border: none; border-radius: 10px; font-family: var(--font); font-size: 13px; font-weight: 700; padding: 14px; cursor: pointer; transition: opacity 0.15s; }
+    .btn-login:hover { opacity: 0.88; }
+    .btn-login:disabled { opacity: 0.5; pointer-events: none; }
+
+    /* HEADER */
+    #admin-ui { display: none; }
+    .header { background: var(--surface); border-bottom: 1px solid var(--border); padding: 14px 24px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 50; }
+    .header-brand { font-family: var(--font-display); font-size: 20px; letter-spacing: 1px; }
+    .header-brand span { color: var(--red); }
+    .header-right { display: flex; align-items: center; gap: 10px; }
+    .user-pill { background: var(--surface2); border: 1px solid var(--border); border-radius: 100px; padding: 5px 14px; font-size: 11px; color: var(--muted); font-weight: 600; }
+    .btn-logout { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--muted); font-family: var(--font); font-size: 11px; font-weight: 700; padding: 6px 14px; cursor: pointer; transition: border-color 0.15s, color 0.15s; }
+    .btn-logout:hover { border-color: var(--red); color: var(--red); }
+
+    /* TABS */
+    .tabs-bar { background: var(--surface); border-bottom: 1px solid var(--border); padding: 0 24px; display: flex; gap: 0; overflow-x: auto; }
+    .tab-btn { padding: 14px 20px; font-family: var(--font); font-size: 13px; font-weight: 600; color: var(--muted); background: none; border: none; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; transition: color 0.15s, border-color 0.15s; }
+    .tab-btn.active { color: var(--white); border-bottom-color: var(--red); }
+    .tab-btn:hover:not(.active) { color: var(--white); }
+
+    /* MAIN LAYOUT */
+    .main { max-width: 1100px; margin: 0 auto; padding: 28px 20px 60px; }
+    .tab-panel { display: none; }
+    .tab-panel.active { display: block; }
+
+    /* PRODUSE TAB */
+    .produse-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+    @media (max-width: 768px) { .produse-layout { grid-template-columns: 1fr; } }
+
+    /* PANELS */
+    .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; overflow: hidden; }
+    .panel-header { padding: 16px 20px; border-bottom: 1px solid var(--border); display: flex; align-items: center; gap: 10px; }
+    .panel-icon { width: 32px; height: 32px; border-radius: 8px; background: var(--red); display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 15px; }
+    .panel-title { font-weight: 700; font-size: 14px; }
+    .panel-body { padding: 20px; }
+
+    /* FORM */
+    .form-field { margin-bottom: 14px; }
+    .form-field label { display: block; font-size: 11px; font-weight: 600; letter-spacing: 0.5px; color: var(--muted); margin-bottom: 6px; text-transform: uppercase; }
+    .form-field input, .form-field select, .form-field textarea {
+      width: 100%; background: var(--surface2); border: 1px solid var(--border);
+      border-radius: 8px; color: var(--white); font-family: var(--font); font-size: 13px;
+      padding: 10px 12px; outline: none; transition: border-color 0.15s; -webkit-appearance: none;
+    }
+    .form-field input:focus, .form-field select:focus, .form-field textarea:focus { border-color: var(--red); }
+    .form-field select option { background: #1a1a1a; }
+    .form-field textarea { resize: vertical; min-height: 70px; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+
+    /* AI ROW */
+    .ai-row { display: flex; gap: 8px; align-items: flex-end; }
+    .ai-row .form-field { flex: 1; margin-bottom: 0; }
+    .btn-ai { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--white); font-family: var(--font); font-size: 11px; font-weight: 700; padding: 10px 12px; cursor: pointer; white-space: nowrap; display: flex; align-items: center; gap: 5px; transition: background 0.15s, border-color 0.15s; height: 40px; }
+    .btn-ai:hover { border-color: var(--red); }
+    .btn-ai:disabled { opacity: 0.5; pointer-events: none; }
+    .cat-badge { display: none; align-items: center; gap: 6px; background: rgba(232,52,26,0.1); border: 1px solid rgba(232,52,26,0.25); border-radius: 6px; padding: 5px 10px; font-size: 11px; font-weight: 600; color: var(--red); margin-top: 8px; }
+
+    /* PREVIEW */
+    .preview-card { background: var(--surface2); border: 1px solid var(--border); border-radius: 12px; overflow: hidden; display: none; margin-bottom: 16px; }
+    .preview-img { width: 100%; aspect-ratio: 16/9; object-fit: cover; background: var(--surface3); }
+    .preview-body { padding: 12px; }
+    .preview-name { font-size: 13px; font-weight: 600; margin-bottom: 4px; }
+    .preview-price { font-family: var(--font-display); font-size: 18px; color: var(--gold); }
+
+    /* BUTTONS */
+    .btn-primary { width: 100%; background: var(--red); color: #fff; border: none; border-radius: 10px; font-family: var(--font); font-size: 13px; font-weight: 700; padding: 13px; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 7px; transition: opacity 0.15s; margin-top: 4px; }
+    .btn-primary:hover { opacity: 0.88; }
+    .btn-primary:disabled { opacity: 0.5; pointer-events: none; }
+    .btn-secondary { background: var(--surface2); color: var(--white); border: 1px solid var(--border); border-radius: 10px; font-family: var(--font); font-size: 13px; font-weight: 700; padding: 11px 20px; cursor: pointer; transition: border-color 0.15s; }
+    .btn-secondary:hover { border-color: var(--red); color: var(--red); }
+    .btn-secondary:disabled { opacity: 0.5; pointer-events: none; }
+
+    /* PRODUCT LIST */
+    .list-count { font-size: 11px; color: var(--muted); margin-bottom: 14px; font-weight: 600; }
+    .prod-list { display: flex; flex-direction: column; gap: 8px; max-height: 600px; overflow-y: auto; }
+    .prod-item { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 12px; display: flex; gap: 12px; align-items: center; }
+    .prod-item-img { width: 48px; height: 48px; border-radius: 8px; object-fit: cover; background: var(--surface3); flex-shrink: 0; }
+    .prod-item-body { flex: 1; min-width: 0; }
+    .prod-item-name { font-size: 12px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .prod-item-meta { display: flex; gap: 8px; margin-top: 3px; align-items: center; flex-wrap: wrap; }
+    .prod-item-price { font-family: var(--font-display); font-size: 13px; color: var(--gold); }
+    .prod-item-cat { font-size: 9px; font-weight: 700; letter-spacing: 1px; background: var(--surface3); border-radius: 4px; padding: 2px 6px; color: var(--muted); text-transform: uppercase; }
+    .btn-delete { background: none; border: 1px solid var(--border); border-radius: 7px; color: var(--muted); cursor: pointer; padding: 6px 8px; font-size: 14px; transition: border-color 0.15s, color 0.15s; flex-shrink: 0; }
+    .btn-delete:hover { border-color: var(--red); color: var(--red); }
+    .empty-list { text-align: center; color: var(--muted); font-size: 13px; padding: 40px 0; }
+
+    /* SYNC TAB */
+    .sync-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 16px; margin-bottom: 24px; }
+    .sync-card { background: var(--surface); border: 1px solid var(--border); border-radius: 14px; padding: 20px; }
+    .sync-card-title { font-size: 13px; font-weight: 700; margin-bottom: 6px; display: flex; align-items: center; gap: 8px; }
+    .sync-card-desc { font-size: 12px; color: var(--muted); line-height: 1.6; margin-bottom: 16px; }
+    .sync-options { display: flex; flex-direction: column; gap: 10px; margin-bottom: 16px; }
+    .sync-log { background: var(--surface2); border: 1px solid var(--border); border-radius: 10px; padding: 16px; font-family: 'Courier New', monospace; font-size: 12px; color: var(--muted); min-height: 120px; max-height: 300px; overflow-y: auto; white-space: pre-wrap; display: none; margin-top: 16px; }
+    .sync-log.show { display: block; }
+    .log-line { margin-bottom: 4px; }
+    .log-ok { color: var(--green); }
+    .log-err { color: var(--red); }
+    .log-info { color: var(--blue); }
+
+    /* STATS */
+    .stats-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; margin-bottom: 24px; }
+    .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 18px; }
+    .stat-num { font-family: var(--font-display); font-size: 32px; color: var(--red); }
+    .stat-label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+
+    /* COMMISSIONS */
+    .comm-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+    .comm-table th { background: var(--surface2); color: var(--muted); font-size: 11px; font-weight: 600; letter-spacing: 0.5px; text-transform: uppercase; padding: 10px 14px; text-align: left; border-bottom: 1px solid var(--border); }
+    .comm-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); color: var(--white); }
+    .comm-table tr:last-child td { border-bottom: none; }
+    .comm-table tr:hover td { background: var(--surface2); }
+    .status-badge { display: inline-block; font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.5px; }
+    .status-pending { background: rgba(240,165,0,0.15); color: var(--gold); }
+    .status-approved { background: rgba(34,197,94,0.15); color: var(--green); }
+    .status-rejected { background: rgba(232,52,26,0.15); color: var(--red); }
+    .filter-row { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+    .filter-select { background: var(--surface2); border: 1px solid var(--border); border-radius: 8px; color: var(--white); font-family: var(--font); font-size: 12px; padding: 8px 12px; outline: none; cursor: pointer; }
+    .filter-select:focus { border-color: var(--red); }
+
+    /* TOAST */
+    .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 12px 20px; font-size: 13px; font-weight: 600; display: flex; align-items: center; gap: 8px; z-index: 9999; transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; }
+    .toast.show { transform: translateX(-50%) translateY(0); }
+    .toast.success { border-color: var(--green); color: var(--green); }
+    .toast.error { border-color: var(--red); color: var(--red); }
+    .toast.info { border-color: var(--blue); color: var(--blue); }
+
+    /* LOADING */
+    .spinner { display: inline-block; width: 14px; height: 14px; border: 2px solid rgba(255,255,255,0.2); border-top-color: #fff; border-radius: 50%; animation: spin 0.6s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    .section-divider { height: 1px; background: var(--border); margin: 20px 0; }
+  </style>
 </head>
 <body>
 
+<!-- LOGIN -->
 <div id="login-screen">
-    <div class="login-box">
-        <div class="login-brand">
-            <div class="login-brand-name">MINIMAL<span>TECHRO</span></div>
-            <div class="login-brand-sub">Admin Panel</div>
-        </div>
-        <div class="login-field">
-            <label>Email</label>
-            <input type="email" id="login-email" placeholder="email@exemplu.ro" autocomplete="email">
-        </div>
-        <div class="login-field">
-            <label>Parolă</label>
-            <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
-        </div>
-        <div class="login-error" id="login-error">Email sau parolă incorectă.</div>
-        <button class="btn-login" id="btn-login" onclick="doLogin()">Intră în Admin</button>
+  <div class="login-box">
+    <div class="login-brand">
+      <div class="login-brand-name">MINIMAL<span>TECHRO</span></div>
+      <div class="login-brand-sub">Admin Panel</div>
     </div>
+    <div class="field">
+      <label>Email</label>
+      <input type="email" id="login-email" placeholder="email@exemplu.ro" autocomplete="email">
+    </div>
+    <div class="field">
+      <label>Parolă</label>
+      <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+    </div>
+    <div class="login-error" id="login-error">Email sau parolă incorectă.</div>
+    <button class="btn-login" id="btn-login" onclick="doLogin()">Intră în Admin</button>
+  </div>
 </div>
 
+<!-- ADMIN UI -->
 <div id="admin-ui">
-    <header class="header">
-        <div class="header-brand">MINIMAL<span>TECHRO</span></div>
-        <div class="header-right">
-            <div class="user-pill" id="user-email">—</div>
-            <button class="btn-logout" onclick="doLogout()">Ieși</button>
-        </div>
-    </header>
-    <div class="main">
-        <div class="panel">
-            <div class="panel-header">
-                <div class="panel-icon">➕</div>
-                <div class="panel-title">Adaugă Produs</div>
-            </div>
-            <div class="panel-body">
-                <div class="preview-card" id="preview-card">
-                    <img class="preview-img" id="preview-img" src="" alt="">
-                    <div class="preview-body">
-                        <div class="preview-name" id="preview-name"></div>
-                        <div class="preview-price" id="preview-price"></div>
-                    </div>
-                </div>
-                <div class="field">
-                    <label>Nume Produs *</label>
-                    <input type="text" id="f-name" placeholder="ex: Zeblaze Stratos 4">
-                </div>
-                <div class="field">
-                    <label>Link Afiliat *</label>
-                    <input type="url" id="f-link" placeholder="https://profitshare.ro/...">
-                </div>
-                <div class="field">
-                    <label>Imagine URL</label>
-                    <input type="url" id="f-img" placeholder="https://..." oninput="updatePreview()">
-                </div>
-                <div class="field">
-                    <label>Preț</label>
-                    <input type="text" id="f-pret" placeholder="ex: 358 lei" oninput="updatePreview()">
-                </div>
-                <div class="field">
-                    <label>Preț Vechi (opțional)</label>
-                    <input type="text" id="f-pret-vechi" placeholder="ex: 377 lei">
-                </div>
-                <div class="field">
-                    <label>Categorie</label>
-                    <div class="ai-row">
-                        <div class="field">
-                            <select id="f-cat">
-                                <option value="">— Selectează sau detectează AI —</option>
-                                <option value="SmartTech">⌚ SmartTech</option>
-                                <option value="Gaming">🎮 Gaming</option>
-                                <option value="Gadgets">🚀 Gadgets</option>
-                                <option value="Fashion">👕 Fashion</option>
-                                <option value="Jucarii">🧸 Jucării</option>
-                                <option value="Gradina">🏡 Grădină</option>
-                                <option value="Bucatarie">🍳 Bucătărie</option>
-                                <option value="Sport">💪 Sport</option>
-                                <option value="Health And Beauty">✨ Health & Beauty</option>
-                                <option value="Auto">🚗 Auto</option>
-                                <option value="Carti">📚 Cărți</option>
-                                <option value="Animale">🐾 Animale</option>
-                            </select>
-                        </div>
-                        <button class="btn-ai" id="btn-ai" onclick="detectCategory()">✨ AI</button>
-                    </div>
-                    <div class="cat-badge" id="cat-badge"></div>
-                </div>
-                <button class="btn-submit" id="btn-submit" onclick="saveProduct()">💾 Salvează Produs</button>
-            </div>
-        </div>
-        <div class="panel">
-            <div class="panel-header">
-                <div class="panel-icon">📦</div>
-                <div class="panel-title">Produse Active</div>
-            </div>
-            <div class="panel-body">
-                <div class="list-count" id="list-count">Se încarcă...</div>
-                <div class="prod-list" id="prod-list">
-                    <div class="empty-list">Se încarcă...</div>
-                </div>
-            </div>
-        </div>
+  <header class="header">
+    <div class="header-brand">MINIMAL<span>TECHRO</span></div>
+    <div class="header-right">
+      <div class="user-pill" id="user-email">—</div>
+      <button class="btn-logout" onclick="doLogout()">Ieși</button>
     </div>
-</div>
+  </header>
+
+  <nav class="tabs-bar">
+    <button class="tab-btn active" onclick="switchTab('produse')">📦 Produse</button>
+    <button class="tab-btn" onclick="switchTab('sync')">🔄 Sync Profitshare</button>
+    <button class="tab-btn" onclick="switchTab('comisioane')">💰 Comisioane</button>
+    <button class="tab-btn" onclick="switchTab('campanii')">📢 Campanii</button>
+  </nav>
+
+  <div class="main">
+
+    <!-- TAB: PRODUSE -->
+    <div class="tab-panel active" id="tab-produse">
+      <div class="produse-layout">
+
+        <!-- ADAUGĂ PRODUS -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-icon">➕</div>
+            <div class="panel-title">Adaugă Produs Manual</div>
+          </div>
+          <div class="panel-body">
+
+            <!-- Preview -->
+            <div class="preview-card" id="preview-card">
+              <img class="preview-img" id="preview-img" src="" alt="">
+              <div class="preview-body">
+                <div class="preview-name" id="preview-name"></div>
+                <div class="preview-price" id="preview-price"></div>
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label>Nume Produs *</label>
+              <input type="text" id="f-name" placeholder="ex: Zeblaze Stratos 4" oninput="updatePreview()">
+            </div>
+
+            <div class="form-field">
+              <label>Link Afiliat *</label>
+              <input type="url" id="f-link" placeholder="https://l.profitshare.ro/l/...">
+            </div>
+
+            <div class="form-field">
+              <label>Imagine URL</label>
+              <input type="url" id="f-img" placeholder="https://..." oninput="updatePreview()">
+            </div>
+
+            <div class="form-row">
+              <div class="form-field">
+                <label>Preț</label>
+                <input type="text" id="f-pret" placeholder="ex: 358 lei" oninput="updatePreview()">
+              </div>
+              <div class="form-field">
+                <label>Preț Vechi</label>
+                <input type="text" id="f-pret-vechi" placeholder="ex: 420 lei">
+              </div>
+            </div>
+
+            <div class="form-field">
+              <label>Categorie</label>
+              <div class="ai-row">
+                <div class="form-field" style="margin:0; flex:1;">
+                  <select id="f-cat">
+                    <option value="">— Selectează sau detectează AI —</option>
+                    <option value="SmartTech">⌚ SmartTech</option>
+                    <option value="Gaming">🎮 Gaming</option>
+                    <option value="Gadgets">🚀 Gadgets</option>
+                    <option value="Fashion">👕 Fashion</option>
+                    <option value="Jucarii">🧸 Jucării</option>
+                    <option value="Gradina">🏡 Grădină</option>
+                    <option value="Bucatarie">🍳 Bucătărie</option>
+                    <option value="Sport">💪 Sport</option>
+                    <option value="Health And Beauty">✨ Health & Beauty</option>
+                    <option value="Auto">🚗 Auto</option>
+                    <option value="Carti">📚 Cărți</option>
+                    <option value="Animale">🐾 Animale</option>
+                  </select>
+                </div>
+                <button class="btn-ai" id="btn-ai" onclick="detectCategory()">✨ AI</button>
+              </div>
+              <div class="cat-badge" id="cat-badge"></div>
+            </div>
+
+            <button class="btn-primary" id="btn-submit" onclick="saveProduct()">
+              💾 Salvează Produs
+            </button>
+          </div>
+        </div>
+
+        <!-- LISTA PRODUSE -->
+        <div class="panel">
+          <div class="panel-header">
+            <div class="panel-icon">📦</div>
+            <div class="panel-title">Produse Active</div>
+          </div>
+          <div class="panel-body">
+            <div style="display:flex; gap:8px; margin-bottom:12px;">
+              <input type="text" id="search-prod" placeholder="Caută produs..." style="flex:1; background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--white); font-family:var(--font); font-size:13px; padding:8px 12px; outline:none;" oninput="filterList()">
+              <select id="filter-cat" style="background:var(--surface2); border:1px solid var(--border); border-radius:8px; color:var(--white); font-family:var(--font); font-size:12px; padding:8px 10px; outline:none; cursor:pointer;" onchange="filterList()">
+                <option value="">Toate categoriile</option>
+                <option value="SmartTech">SmartTech</option>
+                <option value="Gaming">Gaming</option>
+                <option value="Gadgets">Gadgets</option>
+                <option value="Fashion">Fashion</option>
+                <option value="Jucarii">Jucării</option>
+                <option value="Gradina">Grădină</option>
+                <option value="Bucatarie">Bucătărie</option>
+                <option value="Sport">Sport</option>
+                <option value="Health And Beauty">Beauty</option>
+                <option value="Auto">Auto</option>
+                <option value="Carti">Cărți</option>
+                <option value="Animale">Animale</option>
+              </select>
+            </div>
+            <div class="list-count" id="list-count">Se încarcă...</div>
+            <div class="prod-list" id="prod-list">
+              <div class="empty-list">Se încarcă...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: SYNC -->
+    <div class="tab-panel" id="tab-sync">
+      <div class="sync-grid">
+        <div class="sync-card">
+          <div class="sync-card-title">🔄 Sync Produse din Profitshare</div>
+          <div class="sync-card-desc">Importă produse direct din API-ul Profitshare în baza de date. Poți filtra după advertiser și limita numărul de produse importate.</div>
+          <div class="sync-options">
+            <div class="form-field" style="margin:0;">
+              <label>Advertiser ID (opțional)</label>
+              <input type="text" id="sync-advertiser" placeholder="ex: 1234 (lasă gol pentru toți)">
+            </div>
+            <div class="form-field" style="margin:0;">
+              <label>Limite produse</label>
+              <select id="sync-limit">
+                <option value="10">10 produse</option>
+                <option value="20" selected>20 produse</option>
+                <option value="30">30 produse</option>
+                <option value="50">50 produse (max)</option>
+              </select>
+            </div>
+          </div>
+          <button class="btn-primary" id="btn-sync" onclick="doSync()" style="margin-top:0;">
+            🔄 Pornește Sync
+          </button>
+          <div class="sync-log" id="sync-log"></div>
+        </div>
+
+        <div class="sync-card">
+          <div class="sync-card-title">📋 Advertisers disponibili</div>
+          <div class="sync-card-desc">Listează toți advertiserii la care ești afiliat pe Profitshare. Copiază ID-ul pentru sync selectiv.</div>
+          <button class="btn-secondary" onclick="loadAdvertisers()">📋 Încarcă Advertisers</button>
+          <div class="sync-log" id="adv-log" style="margin-top:12px;"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: COMISIOANE -->
+    <div class="tab-panel" id="tab-comisioane">
+      <div class="stats-row" id="comm-stats">
+        <div class="stat-card"><div class="stat-num" id="stat-total">—</div><div class="stat-label">Total comisioane</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-pending">—</div><div class="stat-label">În așteptare</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-approved">—</div><div class="stat-label">Aprobate</div></div>
+        <div class="stat-card"><div class="stat-num" id="stat-value">—</div><div class="stat-label">Valoare totală</div></div>
+      </div>
+
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon">💰</div>
+          <div class="panel-title">Comisioane Profitshare</div>
+        </div>
+        <div class="panel-body">
+          <div class="filter-row">
+            <select class="filter-select" id="comm-status">
+              <option value="">Toate statusurile</option>
+              <option value="pending">Pending</option>
+              <option value="approved">Aprobate</option>
+              <option value="rejected">Respinse</option>
+            </select>
+            <input type="date" id="comm-from" class="filter-select" placeholder="De la">
+            <input type="date" id="comm-to" class="filter-select" placeholder="Până la">
+            <button class="btn-secondary" onclick="loadCommissions()">🔍 Filtrează</button>
+          </div>
+          <div id="comm-content"><div class="empty-list">Apasă Filtrează pentru a încărca comisioanele.</div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB: CAMPANII -->
+    <div class="tab-panel" id="tab-campanii">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-icon">📢</div>
+          <div class="panel-title">Campanii Active Profitshare</div>
+        </div>
+        <div class="panel-body">
+          <button class="btn-secondary" onclick="loadCampaigns()" style="margin-bottom:16px;">📢 Încarcă Campanii</button>
+          <div id="camp-content"><div class="empty-list">Apasă butonul pentru a vedea campaniile active.</div></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main -->
+</div><!-- /admin-ui -->
 
 <div class="toast" id="toast"></div>
 
 <script>
-    const SUPABASE_URL = 'https://sysheihugyeuvwxbpvxc.supabase.co';
-    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5c2hlaWh1Z3lldXZ3eGJwdnhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxMTMzMTIsImV4cCI6MjA4ODY4OTMxMn0.jYwwm5BR30Nj_5naoK1XMw6wRwxdrqco5ydbFBgAIFY';
-    const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const SUPABASE_URL = 'https://sysheihugyeuvwxbpvxc.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5c2hlaWh1Z3lldXZ3eGJwdnhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxMTMzMTIsImV4cCI6MjA4ODY4OTMxMn0.jYwwm5BR30Nj_5naoK1XMw6wRwxdrqco5ydbFBgAIFY';
+const db = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-    function escapeHtml(str) {
-        const d = document.createElement('div');
-        d.textContent = str == null ? '' : String(str);
-        return d.innerHTML;
+const CATEGORIES = ['SmartTech','Gaming','Gadgets','Fashion','Jucarii','Gradina','Bucatarie','Sport','Health And Beauty','Auto','Carti','Animale'];
+const EMOJI_MAP = {'SmartTech':'⌚','Gaming':'🎮','Gadgets':'🚀','Fashion':'👕','Jucarii':'🧸','Gradina':'🏡','Bucatarie':'🍳','Sport':'💪','Health And Beauty':'✨','Auto':'🚗','Carti':'📚','Animale':'🐾'};
+
+let allProducts = [];
+
+function escapeHtml(str) {
+  const d = document.createElement('div');
+  d.textContent = str == null ? '' : String(str);
+  return d.innerHTML;
+}
+
+// ── AUTH ──────────────────────────────────────────────────
+async function initAuth() {
+  const { data: { session } } = await db.auth.getSession();
+  if (session) showAdmin(session.user.email);
+  else showLogin();
+}
+
+function showLogin() {
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('admin-ui').style.display = 'none';
+}
+
+function showAdmin(email) {
+  document.getElementById('login-screen').style.display = 'none';
+  document.getElementById('admin-ui').style.display = 'block';
+  document.getElementById('user-email').textContent = email;
+  loadProducts();
+}
+
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const btn = document.getElementById('btn-login');
+  const err = document.getElementById('login-error');
+  if (!email || !password) { err.style.display = 'block'; err.textContent = 'Completează emailul și parola.'; return; }
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Se conectează...';
+  err.style.display = 'none';
+  const { data, error } = await db.auth.signInWithPassword({ email, password });
+  if (error) {
+    err.style.display = 'block'; err.textContent = 'Email sau parolă incorectă.';
+    btn.disabled = false; btn.textContent = 'Intră în Admin';
+  } else { showAdmin(data.user.email); }
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && document.getElementById('login-screen').style.display === 'flex') doLogin();
+});
+
+async function doLogout() { await db.auth.signOut(); showLogin(); }
+
+// ── TABS ──────────────────────────────────────────────────
+function switchTab(name) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  event.currentTarget.classList.add('active');
+  document.getElementById('tab-' + name).classList.add('active');
+}
+
+// ── PREVIEW ───────────────────────────────────────────────
+function updatePreview() {
+  const img = document.getElementById('f-img').value;
+  const name = document.getElementById('f-name').value;
+  const pret = document.getElementById('f-pret').value;
+  const card = document.getElementById('preview-card');
+  if (img || name) {
+    card.style.display = 'block';
+    const imgEl = document.getElementById('preview-img');
+    imgEl.src = img || '';
+    imgEl.style.display = img ? 'block' : 'none';
+    document.getElementById('preview-name').textContent = name || '—';
+    document.getElementById('preview-price').textContent = pret || '';
+  } else { card.style.display = 'none'; }
+}
+
+// ── AI CATEGORIZE ─────────────────────────────────────────
+async function detectCategory() {
+  const name = document.getElementById('f-name').value.trim();
+  if (!name) { showToast('Introdu mai întâi numele produsului!', 'error'); return; }
+  const btn = document.getElementById('btn-ai');
+  btn.disabled = true; btn.textContent = '⏳';
+  try {
+    const res = await fetch(`/api/profitshare?action=categorize&name=${encodeURIComponent(name)}`);
+    const data = await res.json();
+    const detected = data.category;
+    if (detected && CATEGORIES.includes(detected)) {
+      document.getElementById('f-cat').value = detected;
+      const badge = document.getElementById('cat-badge');
+      badge.textContent = `${EMOJI_MAP[detected]} ${detected} — detectat de AI`;
+      badge.style.display = 'inline-flex';
+      showToast(`Categorie: ${detected} ✅`, 'success');
+    } else { showToast('Nu am detectat categoria. Selectează manual.', 'error'); }
+  } catch { showToast('Eroare la detectare.', 'error'); }
+  btn.disabled = false; btn.textContent = '✨ AI';
+}
+
+// ── SAVE PRODUCT ──────────────────────────────────────────
+async function saveProduct() {
+  const name = document.getElementById('f-name').value.trim();
+  const link = document.getElementById('f-link').value.trim();
+  const img  = document.getElementById('f-img').value.trim();
+  const pret = document.getElementById('f-pret').value.trim();
+  const pretVechi = document.getElementById('f-pret-vechi').value.trim();
+  const cat  = document.getElementById('f-cat').value;
+
+  if (!name) { showToast('Completează Numele produsului!', 'error'); document.getElementById('f-name').focus(); return; }
+  if (!link) { showToast('Completează Linkul afiliat!', 'error'); document.getElementById('f-link').focus(); return; }
+  if (!link.startsWith('http')) { showToast('Linkul trebuie să înceapă cu https://', 'error'); return; }
+
+  const btn = document.getElementById('btn-submit');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Se salvează...';
+
+  const row = { nume: name, link_afiliat: link, imagine_url: img || null, pret: pret || null, pret_vechi: pretVechi || null, categorie: cat || null };
+
+  const { error } = await db.from('produse').insert([row]);
+  if (error) {
+    showToast('Eroare: ' + error.message, 'error');
+  } else {
+    showToast('Produs salvat! 🎉', 'success');
+    ['f-name','f-link','f-img','f-pret','f-pret-vechi'].forEach(id => document.getElementById(id).value = '');
+    document.getElementById('f-cat').value = '';
+    document.getElementById('cat-badge').style.display = 'none';
+    document.getElementById('preview-card').style.display = 'none';
+    await loadProducts();
+  }
+  btn.disabled = false; btn.textContent = '💾 Salvează Produs';
+}
+
+// ── LOAD & FILTER PRODUCTS ────────────────────────────────
+async function loadProducts() {
+  const list = document.getElementById('prod-list');
+  const count = document.getElementById('list-count');
+  list.innerHTML = '<div class="empty-list">Se încarcă...</div>';
+  const { data, error } = await db.from('produse').select('*').order('created_at', { ascending: false });
+  if (error || !data) { list.innerHTML = '<div class="empty-list">Eroare la încărcare.</div>'; return; }
+  allProducts = data;
+  renderProductList(data);
+}
+
+function filterList() {
+  const q = document.getElementById('search-prod').value.toLowerCase();
+  const cat = document.getElementById('filter-cat').value;
+  let filtered = allProducts;
+  if (q) filtered = filtered.filter(p => (p.nume || '').toLowerCase().includes(q));
+  if (cat) filtered = filtered.filter(p => p.categorie === cat);
+  renderProductList(filtered);
+}
+
+function renderProductList(data) {
+  const list = document.getElementById('prod-list');
+  const count = document.getElementById('list-count');
+  count.textContent = `${data.length} produs${data.length !== 1 ? 'e' : ''}`;
+  if (data.length === 0) { list.innerHTML = '<div class="empty-list">Niciun produs găsit.</div>'; return; }
+  list.innerHTML = data.map(p => `
+    <div class="prod-item" id="item-${escapeHtml(String(p.id))}">
+      <img class="prod-item-img" src="${escapeHtml(p.imagine_url || 'https://via.placeholder.com/48x48/181818/444?text=•')}" alt="${escapeHtml(p.nume || '')}" onerror="this.src='https://via.placeholder.com/48x48/181818/444?text=•'">
+      <div class="prod-item-body">
+        <div class="prod-item-name" title="${escapeHtml(p.nume || '')}">${escapeHtml(p.nume || '')}</div>
+        <div class="prod-item-meta">
+          <span class="prod-item-price">${escapeHtml(p.pret || '—')}</span>
+          ${p.categorie ? `<span class="prod-item-cat">${EMOJI_MAP[p.categorie] || ''} ${escapeHtml(p.categorie)}</span>` : ''}
+          <a href="${escapeHtml(p.link_afiliat || '#')}" target="_blank" style="font-size:10px; color:#3b82f6; text-decoration:none;">↗ Link</a>
+        </div>
+      </div>
+      <button class="btn-delete" onclick="deleteProduct('${escapeHtml(String(p.id))}')" title="Șterge">🗑</button>
+    </div>`).join('');
+}
+
+async function deleteProduct(id) {
+  if (!confirm('Ștergi acest produs? Acțiunea nu poate fi anulată.')) return;
+  const { error } = await db.from('produse').delete().eq('id', id);
+  if (error) { showToast('Eroare la ștergere.', 'error'); return; }
+  allProducts = allProducts.filter(p => String(p.id) !== id);
+  filterList();
+  showToast('Produs șters.', 'success');
+}
+
+// ── SYNC ──────────────────────────────────────────────────
+function logSync(msg, type = 'info') {
+  const log = document.getElementById('sync-log');
+  log.classList.add('show');
+  const line = document.createElement('div');
+  line.className = `log-line log-${type}`;
+  const ts = new Date().toLocaleTimeString('ro-RO');
+  line.textContent = `[${ts}] ${msg}`;
+  log.appendChild(line);
+  log.scrollTop = log.scrollHeight;
+}
+
+async function doSync() {
+  const btn = document.getElementById('btn-sync');
+  const log = document.getElementById('sync-log');
+  log.innerHTML = ''; log.classList.add('show');
+  btn.disabled = true; btn.innerHTML = '<span class="spinner"></span> Se sincronizează...';
+
+  const advertiser = document.getElementById('sync-advertiser').value.trim();
+  const limit = document.getElementById('sync-limit').value;
+
+  logSync('Pornesc sincronizarea...', 'info');
+
+  try {
+    let url = `/api/profitshare?action=sync&limit=${limit}`;
+    if (advertiser) url += `&advertiser=${advertiser}`;
+
+    const res = await fetch(url, { method: 'POST' });
+    const data = await res.json();
+
+    if (!data.ok) { logSync('Eroare: ' + (data.error || 'Necunoscută'), 'err'); }
+    else {
+      const s = data.summary;
+      logSync(`Total din API: ${s.total_from_api}`, 'info');
+      logSync(`Adăugate: ${s.added} | Skip (duplicat): ${s.skipped} | Erori: ${s.errors}`, s.errors > 0 ? 'err' : 'ok');
+      if (data.results) {
+        data.results.forEach(r => {
+          if (r.status === 'added') logSync(`✅ ${r.name} → ${r.category || 'fără categorie'}`, 'ok');
+          else if (r.status === 'error') logSync(`❌ ${r.name}: ${r.error}`, 'err');
+        });
+      }
+      logSync('Sincronizare completă!', 'ok');
+      await loadProducts();
     }
-    const CATEGORIES = ['SmartTech','Gaming','Gadgets','Fashion','Jucarii','Gradina','Bucatarie','Sport','Health And Beauty','Auto','Carti','Animale'];
+  } catch (e) { logSync('Eroare de rețea: ' + e.message, 'err'); }
 
-    async function initAuth() {
-        const { data: { session } } = await db.auth.getSession();
-        if (session) { showAdmin(session.user.email); } else { showLogin(); }
+  btn.disabled = false; btn.textContent = '🔄 Pornește Sync';
+}
+
+async function loadAdvertisers() {
+  const log = document.getElementById('adv-log');
+  log.innerHTML = ''; log.classList.add('show');
+  log.innerHTML = '<div class="log-line log-info">Se încarcă advertisers...</div>';
+  try {
+    const res = await fetch('/api/profitshare?action=advertisers');
+    const data = await res.json();
+    if (!data.ok) { log.innerHTML = `<div class="log-line log-err">Eroare: ${data.error}</div>`; return; }
+    const advertisers = data.data || [];
+    if (advertisers.length === 0) { log.innerHTML = '<div class="log-line log-info">Niciun advertiser găsit.</div>'; return; }
+    log.innerHTML = advertisers.map(a => `<div class="log-line log-ok">ID: ${a.id || '—'} | ${a.name || a.title || 'Fără nume'}</div>`).join('');
+  } catch (e) { log.innerHTML = `<div class="log-line log-err">Eroare: ${e.message}</div>`; }
+}
+
+// ── COMMISSIONS ───────────────────────────────────────────
+async function loadCommissions() {
+  const content = document.getElementById('comm-content');
+  content.innerHTML = '<div class="empty-list">Se încarcă...</div>';
+  const status = document.getElementById('comm-status').value;
+  const from = document.getElementById('comm-from').value;
+  const to = document.getElementById('comm-to').value;
+
+  let url = '/api/profitshare?action=commissions&page=1';
+  if (status) url += `&status=${status}`;
+  if (from) url += `&date_from=${from}`;
+  if (to) url += `&date_to=${to}`;
+
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    if (!data.ok) { content.innerHTML = `<div class="empty-list">Eroare: ${data.error}</div>`; return; }
+
+    const result = data.data || {};
+    const comms = result.commissions || result.items || result || [];
+
+    if (!Array.isArray(comms) || comms.length === 0) {
+      content.innerHTML = '<div class="empty-list">Niciun comision găsit pentru filtrele selectate.</div>';
+      // update stats with zeros
+      document.getElementById('stat-total').textContent = '0';
+      document.getElementById('stat-pending').textContent = '0';
+      document.getElementById('stat-approved').textContent = '0';
+      document.getElementById('stat-value').textContent = '0 lei';
+      return;
     }
 
-    function showLogin() {
-        document.getElementById('login-screen').style.display = 'flex';
-        document.getElementById('admin-ui').style.display = 'none';
+    // Stats
+    const pending = comms.filter(c => c.status === 'pending').length;
+    const approved = comms.filter(c => c.status === 'approved').length;
+    const totalVal = comms.reduce((sum, c) => sum + parseFloat(c.amount || c.commission || 0), 0);
+    document.getElementById('stat-total').textContent = comms.length;
+    document.getElementById('stat-pending').textContent = pending;
+    document.getElementById('stat-approved').textContent = approved;
+    document.getElementById('stat-value').textContent = totalVal.toFixed(2) + ' lei';
+
+    const statusClass = s => s === 'approved' ? 'status-approved' : s === 'pending' ? 'status-pending' : 'status-rejected';
+
+    content.innerHTML = `
+      <div style="overflow-x:auto;">
+        <table class="comm-table">
+          <thead><tr>
+            <th>Produs</th>
+            <th>Advertiser</th>
+            <th>Comision</th>
+            <th>Data</th>
+            <th>Status</th>
+          </tr></thead>
+          <tbody>
+            ${comms.map(c => `<tr>
+              <td>${escapeHtml(c.product_name || c.name || '—')}</td>
+              <td>${escapeHtml(c.advertiser_name || c.advertiser || '—')}</td>
+              <td style="color:var(--gold); font-family:var(--font-display);">${escapeHtml(String(c.amount || c.commission || '—'))}</td>
+              <td style="color:var(--muted); font-size:12px;">${escapeHtml(c.date || c.created_at || '—')}</td>
+              <td><span class="status-badge ${statusClass(c.status)}">${escapeHtml(c.status || '—')}</span></td>
+            </tr>`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+  } catch (e) { content.innerHTML = `<div class="empty-list">Eroare: ${e.message}</div>`; }
+}
+
+// ── CAMPAIGNS ─────────────────────────────────────────────
+async function loadCampaigns() {
+  const content = document.getElementById('camp-content');
+  content.innerHTML = '<div class="empty-list">Se încarcă...</div>';
+  try {
+    const res = await fetch('/api/profitshare?action=campaigns&page=1');
+    const data = await res.json();
+    if (!data.ok) { content.innerHTML = `<div class="empty-list">Eroare: ${data.error}</div>`; return; }
+
+    const result = data.data || {};
+    const camps = result.campaigns || result.items || result || [];
+
+    if (!Array.isArray(camps) || camps.length === 0) {
+      content.innerHTML = '<div class="empty-list">Nicio campanie activă găsită.</div>'; return;
     }
 
-    function showAdmin(email) {
-        document.getElementById('login-screen').style.display = 'none';
-        document.getElementById('admin-ui').style.display = 'block';
-        document.getElementById('user-email').textContent = email;
-        loadProducts();
-    }
+    content.innerHTML = `
+      <div style="display:grid; grid-template-columns:repeat(auto-fill,minmax(280px,1fr)); gap:12px;">
+        ${camps.map(c => `
+          <div style="background:var(--surface2); border:1px solid var(--border); border-radius:12px; padding:16px;">
+            <div style="font-weight:700; font-size:14px; margin-bottom:6px;">${escapeHtml(c.name || c.title || '—')}</div>
+            <div style="font-size:12px; color:var(--muted); line-height:1.6; margin-bottom:10px;">${escapeHtml(c.description || c.desc || '')}</div>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              ${c.commission ? `<span style="font-size:11px; background:rgba(34,197,94,0.1); color:var(--green); padding:2px 8px; border-radius:4px; font-weight:600;">💰 ${escapeHtml(String(c.commission))}</span>` : ''}
+              ${c.status ? `<span style="font-size:11px; background:var(--surface3); color:var(--muted); padding:2px 8px; border-radius:4px;">${escapeHtml(c.status)}</span>` : ''}
+            </div>
+          </div>`).join('')}
+      </div>`;
+  } catch (e) { content.innerHTML = `<div class="empty-list">Eroare: ${e.message}</div>`; }
+}
 
-    async function doLogin() {
-        const email = document.getElementById('login-email').value.trim();
-        const password = document.getElementById('login-password').value;
-        const btn = document.getElementById('btn-login');
-        const err = document.getElementById('login-error');
-        if (!email || !password) { err.style.display = 'block'; err.textContent = 'Completează emailul și parola.'; return; }
-        btn.disabled = true; btn.textContent = 'Se conectează...'; err.style.display = 'none';
-        const { data, error } = await db.auth.signInWithPassword({ email, password });
-        if (error) { err.style.display = 'block'; err.textContent = 'Email sau parolă incorectă.'; btn.disabled = false; btn.textContent = 'Intră în Admin'; }
-        else { showAdmin(data.user.email); }
-    }
+// ── TOAST ─────────────────────────────────────────────────
+function showToast(msg, type = 'success') {
+  const t = document.getElementById('toast');
+  t.textContent = (type === 'success' ? '✅ ' : type === 'error' ? '❌ ' : 'ℹ️ ') + msg;
+  t.className = `toast ${type} show`;
+  setTimeout(() => t.classList.remove('show'), 3200);
+}
 
-    document.addEventListener('keydown', e => {
-        if (e.key === 'Enter' && document.getElementById('login-screen').style.display === 'flex') doLogin();
-    });
-
-    async function doLogout() { await db.auth.signOut(); showLogin(); }
-
-    function updatePreview() {
-        const img = document.getElementById('f-img').value;
-        const name = document.getElementById('f-name').value;
-        const pret = document.getElementById('f-pret').value;
-        const card = document.getElementById('preview-card');
-        if (img || name) {
-            card.style.display = 'block';
-            document.getElementById('preview-img').src = img || '';
-            document.getElementById('preview-name').textContent = name || '—';
-            document.getElementById('preview-price').textContent = pret || '';
-        } else { card.style.display = 'none'; }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        document.getElementById('f-name').addEventListener('input', updatePreview);
-    });
-
-    async function detectCategory() {
-        const name = document.getElementById('f-name').value.trim();
-        if (!name) { showToast('Introdu mai întâi numele produsului!', 'error'); return; }
-        const btn = document.getElementById('btn-ai');
-        btn.classList.add('loading'); btn.textContent = '⏳';
-        try {
-            const res = await fetch(`/api/profitshare?action=categorize&name=${encodeURIComponent(name)}`);
-            const data = await res.json();
-            const detected = data.category;
-            if (detected && CATEGORIES.includes(detected)) {
-                document.getElementById('f-cat').value = detected;
-                const emojiMap = {'SmartTech':'⌚','Gaming':'🎮','Gadgets':'🚀','Fashion':'👕','Jucarii':'🧸','Gradina':'🏡','Bucatarie':'🍳','Sport':'💪','Health And Beauty':'✨','Auto':'🚗','Carti':'📚','Animale':'🐾'};
-                const badge = document.getElementById('cat-badge');
-                badge.textContent = `${emojiMap[detected]} ${detected} — detectat de AI`;
-                badge.style.display = 'inline-flex';
-                showToast(`Categorie: ${detected} ✅`, 'success');
-            } else { showToast('Nu am detectat categoria. Selectează manual.', 'error'); }
-        } catch(err) { showToast('Eroare la detectare.', 'error'); }
-        btn.classList.remove('loading'); btn.textContent = '✨ AI';
-    }
-
-    async function saveProduct() {
-        const name = document.getElementById('f-name').value.trim();
-        const link = document.getElementById('f-link').value.trim();
-        const img = document.getElementById('f-img').value.trim();
-        const pret = document.getElementById('f-pret').value.trim();
-        const pretVechi = document.getElementById('f-pret-vechi').value.trim();
-        const cat = document.getElementById('f-cat').value;
-        if (!name || !link) { showToast('Completează Numele și Linkul!', 'error'); return; }
-        const btn = document.getElementById('btn-submit');
-        btn.disabled = true; btn.textContent = '⏳ Se salvează...';
-        const { error } = await db.from('produse').insert([{ nume: name, link_afiliat: link, imagine_url: img || null, pret: pret || null, pret_vechi: pretVechi || null, categorie: cat || null }]);
-        if (error) { showToast('Eroare: ' + error.message, 'error'); }
-        else {
-            showToast('Produs salvat! 🎉', 'success');
-            ['f-name','f-link','f-img','f-pret','f-pret-vechi'].forEach(id => document.getElementById(id).value = '');
-            document.getElementById('f-cat').value = '';
-            document.getElementById('cat-badge').style.display = 'none';
-            document.getElementById('preview-card').style.display = 'none';
-            loadProducts();
-        }
-        btn.disabled = false; btn.textContent = '💾 Salvează Produs';
-    }
-
-    async function loadProducts() {
-        const list = document.getElementById('prod-list');
-        const count = document.getElementById('list-count');
-        const { data, error } = await db.from('produse').select('*').order('created_at', { ascending: false });
-        if (error || !data) { list.innerHTML = '<div class="empty-list">Eroare la încărcare.</div>'; return; }
-        count.textContent = `${data.length} produs${data.length !== 1 ? 'e' : ''}`;
-        if (data.length === 0) { list.innerHTML = '<div class="empty-list">Niciun produs adăugat încă.</div>'; return; }
-        list.innerHTML = data.map(p => `
-            <div class="prod-item" id="item-${escapeHtml(String(p.id))}">
-                <img class="prod-item-img" src="${escapeHtml(p.imagine_url || 'https://via.placeholder.com/48x48/181818/444?text=•')}" alt="${escapeHtml(p.nume || '')}" onerror="this.src='https://via.placeholder.com/48x48/181818/444?text=•'">
-                <div class="prod-item-body">
-                    <div class="prod-item-name">${escapeHtml(p.nume || '')}</div>
-                    <div class="prod-item-meta">
-                        <span class="prod-item-price">${escapeHtml(p.pret || '—')}</span>
-                        ${p.categorie ? `<span class="prod-item-cat">${escapeHtml(p.categorie)}</span>` : ''}
-                    </div>
-                </div>
-                <button class="btn-delete" onclick="deleteProduct('${escapeHtml(String(p.id))}')">🗑</button>
-            </div>`).join('');
-    }
-
-    async function deleteProduct(id) {
-        if (!confirm('Ștergi acest produs?')) return;
-        const { error } = await db.from('produse').delete().eq('id', id);
-        if (error) { showToast('Eroare la ștergere.', 'error'); return; }
-        document.getElementById(`item-${id}`)?.remove();
-        showToast('Produs șters.', 'success');
-        const items = document.querySelectorAll('.prod-item').length;
-        document.getElementById('list-count').textContent = `${items} produs${items !== 1 ? 'e' : ''}`;
-    }
-
-    function showToast(msg, type = 'success') {
-        const t = document.getElementById('toast');
-        t.textContent = (type === 'success' ? '✅ ' : '❌ ') + msg;
-        t.className = `toast ${type} show`;
-        setTimeout(() => t.classList.remove('show'), 3000);
-    }
-
-    initAuth();
+initAuth();
 </script>
 </body>
 </html>

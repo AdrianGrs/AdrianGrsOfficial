@@ -5,12 +5,9 @@
       "destination": "/admin.html"
     },
     {
-      "source": "/((?!admin|blog|despre|contact|confidentialitate|termeni|cookies|sitemap).*\\.html)",
-      "destination": "/index.html"
-    },
-    {
-      "source": "/((?!admin|blog|despre|contact|confidentialitate|termeni|cookies|sitemap|_next|api|favicon|background|minimaltechro).*)",
-      "destination": "/index.html"
+      "source": "/blog-articol",
+      "destination": "/blog-articol.html"
     }
   ]
 }
+

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>MinimalTechRo — Admin</title>
+  <title>MinimalTechRo Admin</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Oswald:wght@500;600&display=swap" rel="stylesheet">
   <style>
@@ -31,7 +31,7 @@
     .user-pill{background:var(--surface2);border:1px solid var(--border);border-radius:100px;padding:5px 14px;font-size:11px;color:var(--muted);font-weight:600;}
     .btn-logout{background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--muted);font-family:var(--font);font-size:11px;font-weight:700;padding:6px 14px;cursor:pointer;transition:border-color .15s,color .15s;}
     .btn-logout:hover{border-color:var(--red);color:var(--red);}
-    .tabs-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;display:flex;gap:0;overflow-x:auto;}
+    .tabs-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 24px;display:flex;overflow-x:auto;}
     .tab-btn{padding:14px 20px;font-family:var(--font);font-size:13px;font-weight:600;color:var(--muted);background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;white-space:nowrap;transition:color .15s,border-color .15s;}
     .tab-btn.active{color:var(--white);border-bottom-color:var(--red);}
     .tab-btn:hover:not(.active){color:var(--white);}
@@ -54,17 +54,13 @@
     .editor-toolbar{display:flex;gap:4px;flex-wrap:wrap;padding:8px;background:var(--surface3);border:1px solid var(--border);border-bottom:none;border-radius:8px 8px 0 0;}
     .editor-btn{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--white);font-family:var(--font);font-size:12px;font-weight:600;padding:5px 10px;cursor:pointer;transition:background .15s;}
     .editor-btn:hover{background:var(--red);border-color:var(--red);}
-    #editor-content{width:100%;min-height:320px;background:var(--surface2);border:1px solid var(--border);border-radius:0 0 8px 8px;color:var(--white);font-family:var(--font);font-size:14px;padding:16px;outline:none;line-height:1.7;resize:vertical;}
+    #editor-content{width:100%;min-height:320px;background:var(--surface2);border:1px solid var(--border);border-radius:0 0 8px 8px;color:var(--white);font-family:var(--font);font-size:14px;padding:16px;outline:none;line-height:1.7;resize:vertical;overflow-y:auto;}
     #editor-content:focus{border-color:var(--red);}
-    #editor-content h2{font-size:20px;font-weight:700;margin:20px 0 10px;color:var(--white);}
-    #editor-content p{margin-bottom:12px;color:#bbb;}
-    .img-preview-wrap{position:relative;margin-top:10px;}
-    .img-preview{width:100%;height:180px;object-fit:cover;border-radius:8px;display:none;border:1px solid var(--border);}
+    .img-preview{width:100%;height:180px;object-fit:cover;border-radius:8px;display:none;border:1px solid var(--border);margin-top:10px;}
     .img-preview.show{display:block;}
-    .img-preview-placeholder{width:100%;height:180px;background:var(--surface2);border:2px dashed var(--border);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:border-color .15s;color:var(--muted);font-size:13px;}
+    .img-preview-placeholder{width:100%;height:180px;background:var(--surface2);border:2px dashed var(--border);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:border-color .15s;color:var(--muted);font-size:13px;margin-top:10px;}
     .img-preview-placeholder:hover{border-color:var(--red);}
     .img-preview-placeholder .icon{font-size:32px;}
-    .prod-img-preview{width:100%;height:120px;object-fit:contain;background:#fff;border-radius:8px;margin-top:8px;display:none;border:1px solid var(--border);}
     .btn-primary{background:var(--red);color:#fff;border:none;border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;padding:12px 24px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:opacity .15s;}
     .btn-primary:hover{opacity:.88;}
     .btn-primary:disabled{opacity:.5;pointer-events:none;}
@@ -100,7 +96,6 @@
     .toast.show{transform:translateX(-50%) translateY(0);}
     .toast.success{border-color:var(--green);color:var(--green);}
     .toast.error{border-color:var(--red);color:var(--red);}
-    .toast.info{border-color:var(--blue);color:#60a5fa;}
     .spinner{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.2);border-top-color:#fff;border-radius:50%;animation:spin .6s linear infinite;}
     @keyframes spin{to{transform:rotate(360deg)}}
     .modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.85);z-index:200;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .2s;}
@@ -113,30 +108,48 @@
     .modal-close:hover{color:var(--white);}
     .modal-body{padding:24px;}
     .modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;}
-    .rating-stars{color:#f0a500;font-size:12px;}
-    .produs-box{border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:12px;background:var(--surface);}
-    .produs-box-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
-    .produs-box-label.p1{color:var(--red);}
-    .produs-box-label.p2{color:#7c7cff;}
-    @media(max-width:640px){.form-row,.form-row-3{grid-template-columns:1fr;}.article-item{flex-direction:column;}.article-img{width:100%;height:120px;}}
+
+    /* DYNAMIC PRODUCTS */
+    .products-section{background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;}
+    .products-section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;}
+    .products-section-label{font-size:12px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;}
+    .prod-count-pill{font-size:11px;color:var(--muted);background:var(--surface3);padding:3px 10px;border-radius:20px;}
+    .product-row{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:10px;}
+    .product-row-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;}
+    .product-row-num{font-size:11px;font-weight:700;color:var(--red);letter-spacing:1px;text-transform:uppercase;}
+    .product-row-btns{display:flex;gap:6px;align-items:center;}
+    .btn-move{background:var(--surface2);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:13px;width:28px;height:28px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:color .15s,border-color .15s;}
+    .btn-move:hover{color:var(--white);border-color:var(--white);}
+    .product-row-fields{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+    .product-img-thumb{width:100%;height:80px;object-fit:contain;background:#fff;border-radius:6px;margin-top:6px;display:none;border:1px solid var(--border);}
+    .btn-add-prod{width:100%;background:transparent;border:2px dashed rgba(255,255,255,0.12);border-radius:10px;color:var(--muted);font-family:var(--font);font-size:13px;font-weight:700;padding:14px;cursor:pointer;transition:border-color .2s,color .2s;display:flex;align-items:center;justify-content:center;gap:8px;margin-top:4px;}
+    .btn-add-prod:hover{border-color:var(--green);color:var(--green);}
+
+    @media(max-width:640px){.form-row,.form-row-3,.product-row-fields{grid-template-columns:1fr;}.article-item{flex-direction:column;}.article-img{width:100%;height:120px;}}
   </style>
 </head>
 <body>
 
 <div id="login-screen">
   <div class="login-box">
-    <div class="login-brand"><div class="login-brand-name">MINIMAL<span>TECHRO</span></div><div class="login-brand-sub">Admin Panel</div></div>
+    <div class="login-brand">
+      <div class="login-brand-name">MINIMAL<span>TECHRO</span></div>
+      <div class="login-brand-sub">Admin Panel</div>
+    </div>
     <div class="field"><label>Email</label><input type="email" id="login-email" placeholder="email@exemplu.ro" autocomplete="email"></div>
-    <div class="field"><label>Parolă</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"></div>
-    <div class="login-error" id="login-error">Email sau parolă incorectă.</div>
-    <button class="btn-login" id="btn-login" onclick="doLogin()">Intră în Admin</button>
+    <div class="field"><label>Parola</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"></div>
+    <div class="login-error" id="login-error"></div>
+    <button class="btn-login" id="btn-login" onclick="doLogin()">Intra in Admin</button>
   </div>
 </div>
 
 <div id="admin-ui">
   <header class="header">
     <div class="header-brand">MINIMAL<span>TECHRO</span></div>
-    <div class="header-right"><div class="user-pill" id="user-email">—</div><button class="btn-logout" onclick="doLogout()">Ieși</button></div>
+    <div class="header-right">
+      <div class="user-pill" id="user-email">—</div>
+      <button class="btn-logout" onclick="doLogout()">Iesi</button>
+    </div>
   </header>
   <nav class="tabs-bar">
     <button class="tab-btn active" onclick="switchTab('blog',this)">✍️ Blog</button>
@@ -144,9 +157,10 @@
     <button class="tab-btn" onclick="switchTab('sync',this)">🔄 Sync</button>
     <button class="tab-btn" onclick="switchTab('comisioane',this)">💰 Comisioane</button>
   </nav>
+
   <div class="main">
 
-    <!-- BLOG TAB -->
+    <!-- BLOG -->
     <div class="tab-panel active" id="tab-blog">
       <div class="stats-row">
         <div class="stat-card"><div class="stat-num" id="stat-total-art">—</div><div class="stat-label">Total articole</div></div>
@@ -160,81 +174,82 @@
         </div>
         <div class="panel-body">
           <div class="search-bar">
-            <input class="search-input" id="art-search" placeholder="Caută articol..." oninput="filterArticles()">
-            <select style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:var(--font);font-size:12px;padding:8px 12px;outline:none;cursor:pointer;" onchange="filterArticles()" id="art-tag-filter">
+            <input class="search-input" id="art-search" placeholder="Cauta articol..." oninput="filterArticles()">
+            <select style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:var(--font);font-size:12px;padding:8px 12px;outline:none;" onchange="filterArticles()" id="art-tag-filter">
               <option value="">Toate tipurile</option>
               <option value="review">Recenzii</option>
               <option value="guide">Ghiduri</option>
-              <option value="compare">Comparații</option>
+              <option value="compare">Comparatii</option>
             </select>
           </div>
-          <div class="article-list" id="article-list"><div style="text-align:center;color:var(--muted);padding:40px;">Se încarcă...</div></div>
+          <div class="article-list" id="article-list"><div style="text-align:center;color:var(--muted);padding:40px;">Se incarca...</div></div>
         </div>
       </div>
     </div>
 
-    <!-- PRODUSE TAB -->
+    <!-- PRODUSE -->
     <div class="tab-panel" id="tab-produse">
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start;">
         <div class="panel">
-          <div class="panel-header"><div class="panel-header-left"><div class="panel-icon">➕</div><div class="panel-title">Adaugă Produs Manual</div></div></div>
+          <div class="panel-header"><div class="panel-header-left"><div class="panel-icon">➕</div><div class="panel-title">Adauga Produs Manual</div></div></div>
           <div class="panel-body">
-            <div class="img-preview-wrap"><div class="img-preview-placeholder" onclick="document.getElementById('f-img').focus()"><span class="icon">🖼️</span><span>Paste URL imagine</span></div><img class="img-preview" id="prod-preview-img" src="" alt=""></div>
-            <div style="margin-top:14px;">
+            <div style="margin-top:0;">
               <div class="form-field"><label>Nume Produs *</label><input type="text" id="f-name" placeholder="ex: Zeblaze Stratos 4" oninput="updateProdPreview()"></div>
               <div class="form-field"><label>Link Afiliat *</label><input type="url" id="f-link" placeholder="https://l.profitshare.ro/l/..."></div>
-              <div class="form-field"><label>Imagine URL</label><input type="url" id="f-img" placeholder="https://..." oninput="updateProdPreview()"></div>
+              <div class="form-field"><label>Imagine URL</label><input type="url" id="f-img" placeholder="https://..." oninput="updateProdPreview()">
+                <img id="prod-preview-img" style="width:100%;height:120px;object-fit:contain;background:#fff;border-radius:8px;display:none;border:1px solid var(--border);margin-top:8px;" src="" alt="" onerror="this.style.display='none'">
+              </div>
               <div class="form-row">
-                <div class="form-field"><label>Preț</label><input type="text" id="f-pret" placeholder="ex: 358 lei"></div>
-                <div class="form-field"><label>Preț Vechi</label><input type="text" id="f-pret-vechi" placeholder="ex: 420 lei"></div>
+                <div class="form-field"><label>Pret</label><input type="text" id="f-pret" placeholder="ex: 358 lei"></div>
+                <div class="form-field"><label>Pret Vechi</label><input type="text" id="f-pret-vechi" placeholder="ex: 420 lei"></div>
               </div>
               <div class="form-field"><label>Categorie</label>
                 <div style="display:flex;gap:8px;">
                   <select id="f-cat" style="flex:1;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:var(--font);font-size:13px;padding:10px 12px;outline:none;">
-                    <option value="">— Selectează —</option>
-                    <option value="SmartTech">⌚ SmartTech</option><option value="Gaming">🎮 Gaming</option><option value="Gadgets">🚀 Gadgets</option><option value="Fashion">👕 Fashion</option><option value="Jucarii">🧸 Jucării</option><option value="Gradina">🏡 Grădină</option><option value="Bucatarie">🍳 Bucătărie</option><option value="Sport">💪 Sport</option><option value="Health And Beauty">✨ Health & Beauty</option><option value="Auto">🚗 Auto</option><option value="Carti">📚 Cărți</option><option value="Animale">🐾 Animale</option>
+                    <option value="">— Selecteaza —</option>
+                    <option value="SmartTech">⌚ SmartTech</option><option value="Gaming">🎮 Gaming</option><option value="Gadgets">🚀 Gadgets</option><option value="Fashion">👕 Fashion</option><option value="Jucarii">🧸 Jucarii</option><option value="Gradina">🏡 Gradina</option><option value="Bucatarie">🍳 Bucatarie</option><option value="Sport">💪 Sport</option><option value="Health And Beauty">✨ Health & Beauty</option><option value="Auto">🚗 Auto</option><option value="Carti">📚 Carti</option><option value="Animale">🐾 Animale</option>
                   </select>
                   <button class="btn-secondary" id="btn-ai-cat" onclick="detectCategory()" style="white-space:nowrap;padding:10px 14px;font-size:12px;">✨ AI</button>
                 </div>
               </div>
-              <button class="btn-primary" id="btn-save-prod" onclick="saveProduct()" style="width:100%;">💾 Salvează Produs</button>
+              <button class="btn-primary" id="btn-save-prod" onclick="saveProduct()" style="width:100%;">💾 Salveaza Produs</button>
             </div>
           </div>
         </div>
         <div class="panel">
           <div class="panel-header"><div class="panel-header-left"><div class="panel-icon">📦</div><div class="panel-title">Produse Active</div></div></div>
           <div class="panel-body">
-            <input class="search-input" style="width:100%;margin-bottom:12px;" placeholder="Caută produs..." oninput="filterProds(this.value)">
+            <input class="search-input" style="width:100%;margin-bottom:12px;" placeholder="Cauta produs..." oninput="filterProds(this.value)">
             <div style="font-size:11px;color:var(--muted);margin-bottom:10px;font-weight:600;" id="prod-count">—</div>
-            <div style="display:flex;flex-direction:column;gap:8px;max-height:520px;overflow-y:auto;" id="prod-list"><div style="text-align:center;color:var(--muted);padding:30px;">Se încarcă...</div></div>
+            <div style="display:flex;flex-direction:column;gap:8px;max-height:520px;overflow-y:auto;" id="prod-list"><div style="text-align:center;color:var(--muted);padding:30px;">Se incarca...</div></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- SYNC TAB -->
+    <!-- SYNC -->
     <div class="tab-panel" id="tab-sync">
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
         <div class="panel">
           <div class="panel-header"><div class="panel-header-left"><div class="panel-icon">🔄</div><div class="panel-title">Sync Profitshare</div></div></div>
           <div class="panel-body">
-            <div class="form-field"><label>Advertiser ID (opțional)</label><input type="text" id="sync-adv" placeholder="lasă gol pentru toți"></div>
+            <div class="form-field"><label>Advertiser ID (optional)</label><input type="text" id="sync-adv" placeholder="lasa gol pentru toti"></div>
             <div class="form-field"><label>Limite produse</label><select id="sync-limit" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:var(--font);font-size:13px;padding:10px 12px;outline:none;"><option value="10">10</option><option value="20" selected>20</option><option value="50">50 (max)</option></select></div>
-            <button class="btn-primary" id="btn-sync" onclick="doSync()" style="width:100%;">🔄 Pornește Sync</button>
+            <button class="btn-primary" id="btn-sync" onclick="doSync()" style="width:100%;">🔄 Porneste Sync</button>
             <div id="sync-log" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;font-family:'Courier New',monospace;font-size:12px;color:var(--muted);min-height:100px;max-height:300px;overflow-y:auto;white-space:pre-wrap;display:none;margin-top:14px;"></div>
           </div>
         </div>
         <div class="panel">
           <div class="panel-header"><div class="panel-header-left"><div class="panel-icon">📋</div><div class="panel-title">Advertisers</div></div></div>
           <div class="panel-body">
-            <button class="btn-secondary" onclick="loadAdvertisers()" style="width:100%;margin-bottom:12px;">📋 Încarcă Advertisers</button>
+            <button class="btn-secondary" onclick="loadAdvertisers()" style="width:100%;margin-bottom:12px;">📋 Incarca Advertisers</button>
             <div id="adv-log" style="background:var(--surface2);border:1px solid var(--border);border-radius:10px;padding:14px;font-family:'Courier New',monospace;font-size:12px;color:var(--muted);min-height:80px;max-height:300px;overflow-y:auto;white-space:pre-wrap;display:none;"></div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- COMISIOANE TAB -->
+    <!-- COMISIOANE -->
     <div class="tab-panel" id="tab-comisioane">
       <div class="stats-row">
         <div class="stat-card"><div class="stat-num" id="c-total">—</div><div class="stat-label">Total</div></div>
@@ -249,9 +264,9 @@
             <select id="comm-status" style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:var(--font);font-size:12px;padding:8px 12px;outline:none;cursor:pointer;"><option value="">Toate</option><option value="pending">Pending</option><option value="approved">Aprobate</option><option value="rejected">Respinse</option></select>
             <input type="date" id="comm-from" style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:var(--font);font-size:12px;padding:8px 12px;outline:none;">
             <input type="date" id="comm-to" style="background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:var(--font);font-size:12px;padding:8px 12px;outline:none;">
-            <button class="btn-secondary" onclick="loadCommissions()">🔍 Filtrează</button>
+            <button class="btn-secondary" onclick="loadCommissions()">🔍 Filtreaza</button>
           </div>
-          <div id="comm-content"><div style="text-align:center;color:var(--muted);padding:40px;">Apasă Filtrează.</div></div>
+          <div id="comm-content"><div style="text-align:center;color:var(--muted);padding:40px;">Apasa Filtreaza.</div></div>
         </div>
       </div>
     </div>
@@ -268,104 +283,66 @@
     </div>
     <div class="modal-body">
 
-      <!-- TITLU + SLUG -->
       <div class="form-row" style="margin-bottom:16px;">
-        <div class="form-field" style="margin:0;"><label>Titlu articol *</label><input type="text" id="art-titlu" placeholder="ex: Hollyland Lark A1 — Recenzie 2026" oninput="autoSlug()"></div>
-        <div class="form-field" style="margin:0;"><label>Slug URL *</label><input type="text" id="art-slug" placeholder="ex: hollyland-lark-a1-review"></div>
+        <div class="form-field" style="margin:0;"><label>Titlu articol *</label><input type="text" id="art-titlu" placeholder="ex: Top 3 Mouse Gaming Sub 200 Lei" oninput="autoSlug()"></div>
+        <div class="form-field" style="margin:0;"><label>Slug URL *</label><input type="text" id="art-slug" placeholder="ex: top-3-mouse-gaming-sub-200-lei"></div>
       </div>
 
-      <!-- IMAGINE HEADER ARTICOL -->
       <div class="form-field">
         <label>🖼️ Imagine Header Articol (URL)</label>
-        <input type="url" id="art-img" placeholder="https://... imagine principala articol (banner)" oninput="updateArtImgPreview()">
-        <div class="img-preview-wrap" style="margin-top:10px;">
-          <img class="img-preview" id="art-img-preview" src="" alt="">
-          <div class="img-preview-placeholder" id="art-img-placeholder" onclick="document.getElementById('art-img').focus()"><span class="icon">🖼️</span><span>Nicio imagine — paste URL mai sus</span></div>
-        </div>
-        <div style="margin-top:8px;font-size:11px;color:var(--muted);">
-          Surse rapide imagini:
-          <a href="https://unsplash.com" target="_blank" style="color:var(--blue);text-decoration:none;margin-left:6px;">Unsplash (gratuit)</a>
-          <a href="https://www.hollyland.com/product/lark-a1" target="_blank" style="color:var(--blue);text-decoration:none;margin-left:6px;">Hollyland Lark A1</a>
-          <a href="https://www.zeblaze.com/products/zeblaze-stratos-4" target="_blank" style="color:var(--blue);text-decoration:none;margin-left:6px;">Zeblaze Stratos 4</a>
-        </div>
+        <input type="url" id="art-img" placeholder="https://... imagine banner (optional — se ia automat din primul produs daca lipseste)" oninput="updateArtImgPreview()">
+        <img class="img-preview" id="art-img-preview" src="" alt="" onerror="this.style.display='none'">
+        <div class="img-preview-placeholder" id="art-img-placeholder" onclick="document.getElementById('art-img').focus()"><span class="icon">🖼️</span><span>Optional — paste URL imagine banner</span></div>
       </div>
 
-      <!-- TIP / RATING / TIMP -->
       <div class="form-row-3" style="margin-bottom:16px;">
         <div class="form-field" style="margin:0;"><label>Tip articol</label>
           <select id="art-tag" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:var(--font);font-size:13px;padding:10px 12px;outline:none;">
-            <option value="review">📝 Recenzie</option><option value="guide">💡 Ghid</option><option value="compare">⚖️ Comparație</option>
+            <option value="review">📝 Recenzie</option><option value="guide">💡 Ghid</option><option value="compare">⚖️ Comparatie</option>
           </select>
         </div>
         <div class="form-field" style="margin:0;"><label>Rating (1-5)</label>
           <select id="art-rating" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:var(--font);font-size:13px;padding:10px 12px;outline:none;">
-            <option value="">— Fără rating —</option><option value="5">★★★★★ 5/5</option><option value="4">★★★★☆ 4/5</option><option value="3">★★★☆☆ 3/5</option><option value="2">★★☆☆☆ 2/5</option><option value="1">★☆☆☆☆ 1/5</option>
+            <option value="">— Fara rating —</option><option value="5">★★★★★ 5/5</option><option value="4">★★★★☆ 4/5</option><option value="3">★★★☆☆ 3/5</option><option value="2">★★☆☆☆ 2/5</option><option value="1">★☆☆☆☆ 1/5</option>
           </select>
         </div>
         <div class="form-field" style="margin:0;"><label>Timp citire</label><input type="text" id="art-readtime" placeholder="5 min" value="5 min"></div>
       </div>
 
-      <!-- PRODUSE SI LINKURI -->
-      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">
-        <div style="font-size:12px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;">🛒 Produse Recomandate &amp; Linkuri Afiliate</div>
-
-        <!-- PRODUS 1 -->
-        <div class="produs-box">
-          <div class="produs-box-label p1">Produs Principal #1</div>
-          <div class="form-field" style="margin-bottom:10px;">
-            <label>Link Afiliat Principal</label>
-            <input type="url" id="art-link1" placeholder="https://l.profitshare.ro/l/...">
-            <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
-              <button onclick="setLink('https://l.profitshare.ro/l/15522290')" style="background:var(--surface3);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;padding:4px 10px;cursor:pointer;">🎙️ Lark A1</button>
-              <button onclick="setLink('https://l.profitshare.ro/l/15521891')" style="background:var(--surface3);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;padding:4px 10px;cursor:pointer;">⌚ Zeblaze</button>
-              <button onclick="setLink('https://l.profitshare.ro/l/15511749')" style="background:var(--surface3);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;padding:4px 10px;cursor:pointer;">🖱️ G402</button>
-            </div>
-          </div>
-          <div class="form-field" style="margin:0;">
-            <label>🖼️ Imagine Produs #1 (URL)</label>
-            <input type="url" id="art-prod-img1" placeholder="https://... imagine produs principal (eMAG, Hollyland, etc.)" oninput="updateProdImg1Preview()">
-            <img id="art-prod-img1-preview" class="prod-img-preview" src="" alt="Preview produs 1">
-          </div>
+      <!-- ===== PRODUSE DINAMICE ===== -->
+      <div class="products-section">
+        <div class="products-section-header">
+          <span class="products-section-label">🛒 Produse Recomandate</span>
+          <span class="prod-count-pill" id="prod-count-pill">0 produse</span>
         </div>
-
-        <!-- PRODUS 2 -->
-        <div class="produs-box" style="margin-bottom:0;">
-          <div class="produs-box-label p2">Produs Comparat #2 (opțional — pentru comparații)</div>
-          <div class="form-field" style="margin-bottom:10px;">
-            <label>Link Afiliat Secundar</label>
-            <input type="url" id="art-link2" placeholder="https://l.profitshare.ro/l/... al doilea produs">
-          </div>
-          <div class="form-field" style="margin:0;">
-            <label>🖼️ Imagine Produs #2 (URL)</label>
-            <input type="url" id="art-prod-img2" placeholder="https://... imagine produs comparat (DJI, Rode, etc.)" oninput="updateProdImg2Preview()">
-            <img id="art-prod-img2-preview" class="prod-img-preview" src="" alt="Preview produs 2">
-          </div>
-        </div>
+        <div id="dyn-products-list"></div>
+        <button class="btn-add-prod" onclick="dynAddProduct()">
+          ➕ Adauga Produs
+        </button>
+        <div style="font-size:11px;color:var(--muted);margin-top:8px;text-align:center;">Poti adauga oricate produse — 1, 3, 5, 10 — fara limita</div>
       </div>
 
-      <!-- EXCERPT -->
       <div class="form-field">
-        <label>Excerpt — rezumat scurt (apare în lista blog &amp; Google)</label>
+        <label>Excerpt — rezumat scurt (apare in lista blog si Google)</label>
         <textarea id="art-excerpt" rows="2" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:var(--font);font-size:13px;padding:10px 12px;outline:none;resize:vertical;" placeholder="Max 160 caractere..."></textarea>
       </div>
 
-      <!-- EDITOR CONTINUT -->
       <div class="form-field">
-        <label>Conținut articol</label>
+        <label>Continut articol</label>
         <div class="editor-toolbar">
           <button class="editor-btn" onclick="fmt('bold')"><b>B</b></button>
           <button class="editor-btn" onclick="fmt('italic')"><i>I</i></button>
           <button class="editor-btn" onclick="insertTag('h2')">H2</button>
           <button class="editor-btn" onclick="insertTag('h3')">H3</button>
-          <button class="editor-btn" onclick="insertUL()">• Listă</button>
+          <button class="editor-btn" onclick="insertUL()">• Lista</button>
           <button class="editor-btn" onclick="insertLink()">🔗 Link</button>
-          <button class="editor-btn" onclick="insertCTA()">🛒 CTA buton</button>
+          <button class="editor-btn" onclick="insertCTA()">🛒 CTA</button>
           <button class="editor-btn" onclick="insertProsCons()">✓/✗ Pro/Contra</button>
           <button class="editor-btn" onclick="insertVerdict()">🏆 Verdict</button>
           <button class="editor-btn" onclick="insertScore()">⭐ Scor</button>
           <button class="editor-btn" onclick="insertCompareTable()">⚖️ Tabel VS</button>
         </div>
-        <div id="editor-content" contenteditable="true" spellcheck="false" style="width:100%;min-height:320px;background:var(--surface2);border:1px solid var(--border);border-radius:0 0 8px 8px;color:var(--white);font-family:var(--font);font-size:14px;padding:16px;outline:none;line-height:1.7;resize:vertical;overflow-y:auto;"></div>
+        <div id="editor-content" contenteditable="true" spellcheck="false"></div>
       </div>
 
       <label style="display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--muted);margin-top:8px;">
@@ -374,8 +351,8 @@
       </label>
     </div>
     <div class="modal-footer">
-      <button class="btn-secondary" onclick="closeModal()">Anulează</button>
-      <button class="btn-primary" id="btn-save-art" onclick="saveArticle()">💾 Salvează</button>
+      <button class="btn-secondary" onclick="closeModal()">Anuleaza</button>
+      <button class="btn-primary" id="btn-save-art" onclick="saveArticle()">💾 Salveaza</button>
     </div>
   </div>
 </div>
@@ -388,69 +365,169 @@ const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZ
 const db=supabase.createClient(SB_URL,SB_KEY);
 const CATS=['SmartTech','Gaming','Gadgets','Fashion','Jucarii','Gradina','Bucatarie','Sport','Health And Beauty','Auto','Carti','Animale'];
 let allArticles=[],allProds=[],editingId=null;
-function esc(s){const d=document.createElement('div');d.textContent=s??'';return d.innerHTML;}
 
-// AUTH
+// ===== DYNAMIC PRODUCTS ENGINE =====
+let dynProds = []; // [{id, nume, pret, link, imagine}]
+let dynNextId = 1;
+
+function dynAddProduct(data={}) {
+  const id = dynNextId++;
+  dynProds.push({ id, nume: data.nume||'', pret: data.pret||'', link: data.link||'', imagine: data.imagine||'' });
+  dynRender();
+}
+
+function dynRemove(id) {
+  dynProds = dynProds.filter(p => p.id !== id);
+  dynRender();
+}
+
+function dynMove(id, dir) {
+  const i = dynProds.findIndex(p => p.id === id);
+  if (dir === 'up' && i > 0) [dynProds[i-1], dynProds[i]] = [dynProds[i], dynProds[i-1]];
+  if (dir === 'down' && i < dynProds.length-1) [dynProds[i], dynProds[i+1]] = [dynProds[i+1], dynProds[i]];
+  dynRender();
+}
+
+function dynUpdate(id, field, val) {
+  const p = dynProds.find(x => x.id === id);
+  if (!p) return;
+  p[field] = val;
+  if (field === 'imagine') {
+    const img = document.getElementById('dyn-img-'+id);
+    if (img) { img.src = val; img.style.display = val ? 'block' : 'none'; }
+  }
+  dynUpdateCount();
+}
+
+function dynUpdateCount() {
+  const el = document.getElementById('prod-count-pill');
+  if (el) el.textContent = dynProds.length + (dynProds.length === 1 ? ' produs' : ' produse');
+}
+
+function dynRender() {
+  const container = document.getElementById('dyn-products-list');
+  if (!container) return;
+  container.innerHTML = '';
+  dynProds.forEach((p, idx) => {
+    const div = document.createElement('div');
+    div.className = 'product-row';
+    div.innerHTML = `
+      <div class="product-row-top">
+        <span class="product-row-num"># ${idx + 1}</span>
+        <div class="product-row-btns">
+          ${idx > 0 ? `<button class="btn-move" onclick="dynMove(${p.id},'up')">↑</button>` : ''}
+          ${idx < dynProds.length-1 ? `<button class="btn-move" onclick="dynMove(${p.id},'down')">↓</button>` : ''}
+          <button class="btn-danger" onclick="dynRemove(${p.id})">🗑 Sterge</button>
+        </div>
+      </div>
+      <div class="product-row-fields">
+        <div class="form-field" style="margin:0;">
+          <label>Nume Produs</label>
+          <input type="text" value="${esc(p.nume)}" placeholder="ex: Redragon M711 Cobra"
+            oninput="dynUpdate(${p.id},'nume',this.value)">
+        </div>
+        <div class="form-field" style="margin:0;">
+          <label>Pret (optional)</label>
+          <input type="text" value="${esc(p.pret)}" placeholder="ex: 130 lei"
+            oninput="dynUpdate(${p.id},'pret',this.value)">
+        </div>
+        <div class="form-field" style="margin:0;">
+          <label>Link Afiliat Profitshare *</label>
+          <input type="url" value="${esc(p.link)}" placeholder="https://l.profitshare.ro/l/..."
+            oninput="dynUpdate(${p.id},'link',this.value)">
+        </div>
+        <div class="form-field" style="margin:0;">
+          <label>Imagine Produs (URL)</label>
+          <input type="url" value="${esc(p.imagine)}" placeholder="https://... imagine de pe eMAG"
+            oninput="dynUpdate(${p.id},'imagine',this.value)">
+          <img id="dyn-img-${p.id}" class="product-img-thumb"
+            src="${esc(p.imagine)}" alt=""
+            style="display:${p.imagine?'block':'none'};"
+            onerror="this.style.display='none'">
+        </div>
+      </div>`;
+    container.appendChild(div);
+  });
+  dynUpdateCount();
+}
+
+function dynReset() {
+  dynProds = [];
+  dynNextId = 1;
+  dynRender();
+}
+
+function dynLoad(arr) {
+  dynReset();
+  if (!arr || !Array.isArray(arr)) return;
+  arr.forEach(p => dynAddProduct(p));
+}
+
+// ===== AUTH =====
+function esc(s){const d=document.createElement('div');d.textContent=s??'';return d.innerHTML;}
 async function initAuth(){const{data:{session}}=await db.auth.getSession();if(session)showAdmin(session.user.email);else showLogin();}
 function showLogin(){document.getElementById('login-screen').style.display='flex';document.getElementById('admin-ui').style.display='none';}
-function showAdmin(email){document.getElementById('login-screen').style.display='none';document.getElementById('admin-ui').style.display='block';document.getElementById('user-email').textContent=email;loadArticles();loadProducts();}
+function showAdmin(e){document.getElementById('login-screen').style.display='none';document.getElementById('admin-ui').style.display='block';document.getElementById('user-email').textContent=e;loadArticles();loadProducts();}
 async function doLogin(){
   const email=document.getElementById('login-email').value.trim(),pass=document.getElementById('login-password').value;
   const btn=document.getElementById('btn-login'),err=document.getElementById('login-error');
-  if(!email||!pass){err.style.display='block';err.textContent='Completează emailul și parola.';return;}
-  btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Se conectează...';err.style.display='none';
+  if(!email||!pass){err.style.display='block';err.textContent='Completeaza emailul si parola.';return;}
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Se conecteaza...';err.style.display='none';
   const{data,error}=await db.auth.signInWithPassword({email,password:pass});
-  if(error){err.style.display='block';err.textContent='Email sau parolă incorectă.';btn.disabled=false;btn.textContent='Intră în Admin';}
+  if(error){err.style.display='block';err.textContent='Email sau parola incorecta.';btn.disabled=false;btn.textContent='Intra in Admin';}
   else showAdmin(data.user.email);
 }
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&document.getElementById('login-screen').style.display==='flex')doLogin();});
 async function doLogout(){await db.auth.signOut();showLogin();}
 
-// TABS
+// ===== TABS =====
 function switchTab(name,btn){
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('tab-'+name).classList.add('active');
+  btn.classList.add('active');document.getElementById('tab-'+name).classList.add('active');
 }
 
-// ARTICLES
+// ===== ARTICLES =====
 async function loadArticles(){
   const{data,error}=await db.from('articole').select('*').order('created_at',{ascending:false});
-  if(error||!data){document.getElementById('article-list').innerHTML='<div style="color:var(--red);padding:20px;">Eroare la încărcare.</div>';return;}
+  if(error||!data){document.getElementById('article-list').innerHTML='<div style="color:var(--red);padding:20px;">Eroare.</div>';return;}
   allArticles=data;
   document.getElementById('stat-total-art').textContent=data.length;
   document.getElementById('stat-pub-art').textContent=data.filter(a=>a.publicat).length;
   document.getElementById('stat-draft-art').textContent=data.filter(a=>!a.publicat).length;
   renderArticles(data);
 }
+
 function renderArticles(list){
   const el=document.getElementById('article-list');
-  if(!list.length){el.innerHTML='<div style="text-align:center;color:var(--muted);padding:40px;">Niciun articol găsit.</div>';return;}
+  if(!list.length){el.innerHTML='<div style="text-align:center;color:var(--muted);padding:40px;">Niciun articol.</div>';return;}
   const tc=t=>t==='review'?'tag-review':t==='guide'?'tag-guide':'tag-compare';
-  const tl=t=>t==='review'?'Recenzie':t==='guide'?'Ghid':'Comparație';
+  const tl=t=>t==='review'?'Recenzie':t==='guide'?'Ghid':'Comparatie';
   const st=r=>r?'★'.repeat(r)+'☆'.repeat(5-r):'';
-  el.innerHTML=list.map(a=>`
-    <div class="article-item" id="art-item-${esc(a.id)}">
-      <img class="article-img" src="${esc(a.imagine_url||a.imagine_produs1||'')}" alt="" onerror="this.style.background='#222';this.src='';">
+  el.innerHTML=list.map(a=>{
+    const prods=Array.isArray(a.produse_lista)?a.produse_lista:[];
+    const thumb=a.imagine_url||(prods[0]?.imagine)||'';
+    return `<div class="article-item">
+      <img class="article-img" src="${esc(thumb)}" alt="" onerror="this.style.background='#222';this.src='';">
       <div class="article-body">
         <div class="article-title" title="${esc(a.titlu)}">${esc(a.titlu)}</div>
         <div class="article-meta">
           <span class="article-tag ${tc(a.tag)}">${tl(a.tag)}</span>
           <span class="published-badge ${a.publicat?'badge-pub':'badge-draft'}">${a.publicat?'Publicat':'Draft'}</span>
-          ${a.rating?`<span class="rating-stars">${st(a.rating)}</span>`:''}
+          ${a.rating?`<span style="color:#f0a500;font-size:12px;">${st(a.rating)}</span>`:''}
           <span style="font-size:11px;color:var(--muted);">${a.read_time||'5 min'}</span>
-          ${a.imagine_produs1?'<span style="font-size:10px;background:rgba(0,255,135,.1);color:#00ff87;padding:2px 6px;border-radius:4px;">IMG1 ✓</span>':''}
-          ${a.imagine_produs2?'<span style="font-size:10px;background:rgba(100,100,255,.1);color:#7c7cff;padding:2px 6px;border-radius:4px;">IMG2 ✓</span>':''}
+          ${prods.length>0?`<span style="font-size:10px;background:rgba(0,255,135,.1);color:#00ff87;padding:2px 8px;border-radius:4px;">📦 ${prods.length} produse</span>`:''}
         </div>
         <div class="article-slug">/blog/${esc(a.slug)}.html</div>
       </div>
       <div class="article-actions">
-        <button class="btn-edit" onclick="openArticleModal('${esc(a.id)}')">✏️ Editează</button>
+        <button class="btn-edit" onclick="openArticleModal('${esc(a.id)}')">✏️ Editeaza</button>
         <button class="btn-danger" onclick="deleteArticle('${esc(a.id)}')">🗑</button>
       </div>
-    </div>`).join('');
+    </div>`;
+  }).join('');
 }
+
 function filterArticles(){
   const q=document.getElementById('art-search').value.toLowerCase();
   const tag=document.getElementById('art-tag-filter').value;
@@ -460,20 +537,21 @@ function filterArticles(){
   renderArticles(list);
 }
 
-// ARTICLE MODAL
+// ===== MODAL =====
 function openArticleModal(id){
   editingId=id;
-  document.getElementById('modal-title').textContent=id?'Editează articol':'Articol nou';
-  ['art-titlu','art-slug','art-img','art-excerpt','art-link1','art-link2','art-prod-img1','art-prod-img2'].forEach(i=>document.getElementById(i).value='');
+  dynReset();
+  document.getElementById('modal-title').textContent=id?'Editeaza articol':'Articol nou';
+  ['art-titlu','art-slug','art-img','art-excerpt'].forEach(i=>document.getElementById(i).value='');
   document.getElementById('art-readtime').value='5 min';
   document.getElementById('art-tag').value='review';
   document.getElementById('art-rating').value='';
   document.getElementById('art-publicat').checked=false;
   document.getElementById('editor-content').innerHTML='';
-  document.getElementById('art-img-preview').classList.remove('show');
+  const imgPrev=document.getElementById('art-img-preview');
+  imgPrev.classList.remove('show');imgPrev.style.display='none';
   document.getElementById('art-img-placeholder').style.display='flex';
-  document.getElementById('art-prod-img1-preview').style.display='none';
-  document.getElementById('art-prod-img2-preview').style.display='none';
+
   if(id){
     const a=allArticles.find(x=>x.id===id);
     if(a){
@@ -481,113 +559,94 @@ function openArticleModal(id){
       document.getElementById('art-slug').value=a.slug||'';
       document.getElementById('art-img').value=a.imagine_url||'';
       document.getElementById('art-excerpt').value=a.excerpt||'';
-      document.getElementById('art-link1').value=a.link_afiliat||'';
-      document.getElementById('art-link2').value=a.link_afiliat2||'';
-      document.getElementById('art-prod-img1').value=a.imagine_produs1||'';
-      document.getElementById('art-prod-img2').value=a.imagine_produs2||'';
       document.getElementById('art-readtime').value=a.read_time||'5 min';
       document.getElementById('art-tag').value=a.tag||'review';
       document.getElementById('art-rating').value=a.rating||'';
       document.getElementById('art-publicat').checked=a.publicat||false;
       document.getElementById('editor-content').innerHTML=a.continut||'';
-      if(a.imagine_url) updateArtImgPreview();
-      if(a.imagine_produs1) updateProdImg1Preview();
-      if(a.imagine_produs2) updateProdImg2Preview();
+      if(a.imagine_url){const img=document.getElementById('art-img-preview');img.src=a.imagine_url;img.style.display='block';img.classList.add('show');document.getElementById('art-img-placeholder').style.display='none';}
+      // Load produse_lista
+      if(a.produse_lista&&Array.isArray(a.produse_lista)) dynLoad(a.produse_lista);
     }
   }
   document.getElementById('article-modal').classList.add('open');
 }
-function closeModal(){document.getElementById('article-modal').classList.remove('open');editingId=null;}
+
+function closeModal(){document.getElementById('article-modal').classList.remove('open');editingId=null;dynReset();}
+
 function autoSlug(){
   if(editingId) return;
   const slug=document.getElementById('art-titlu').value.toLowerCase()
-    .replace(/ă/g,'a').replace(/â/g,'a').replace(/î/g,'i').replace(/ș/g,'s').replace(/ț/g,'t')
     .replace(/[^a-z0-9\s-]/g,'').replace(/\s+/g,'-').replace(/-+/g,'-').slice(0,80);
   document.getElementById('art-slug').value=slug;
 }
+
 function updateArtImgPreview(){
   const url=document.getElementById('art-img').value.trim();
   const img=document.getElementById('art-img-preview'),ph=document.getElementById('art-img-placeholder');
-  if(url){img.src=url;img.classList.add('show');ph.style.display='none';}
-  else{img.classList.remove('show');ph.style.display='flex';}
+  if(url){img.src=url;img.style.display='block';img.classList.add('show');ph.style.display='none';}
+  else{img.style.display='none';img.classList.remove('show');ph.style.display='flex';}
 }
-function updateProdImg1Preview(){
-  const url=document.getElementById('art-prod-img1').value.trim();
-  const img=document.getElementById('art-prod-img1-preview');
-  if(url){img.src=url;img.style.display='block';}
-  else{img.style.display='none';}
-}
-function updateProdImg2Preview(){
-  const url=document.getElementById('art-prod-img2').value.trim();
-  const img=document.getElementById('art-prod-img2-preview');
-  if(url){img.src=url;img.style.display='block';}
-  else{img.style.display='none';}
-}
-function setLink(url){document.getElementById('art-link1').value=url;}
 
 async function saveArticle(){
   const titlu=document.getElementById('art-titlu').value.trim();
   const slug=document.getElementById('art-slug').value.trim();
-  if(!titlu){showToast('Completează titlul!','error');return;}
-  if(!slug){showToast('Completează slug-ul!','error');return;}
+  if(!titlu){showToast('Completeaza titlul!','error');return;}
+  if(!slug){showToast('Completeaza slug-ul!','error');return;}
   const btn=document.getElementById('btn-save-art');
-  btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Se salvează...';
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Se salveaza...';
+
+  const produseArr = dynProds.filter(p=>p.nume||p.link).map((p,i)=>({
+    index:i+1, nume:p.nume||'', pret:p.pret||'', link:p.link||'', imagine:p.imagine||''
+  }));
+
+  const artImg = document.getElementById('art-img').value.trim();
+  const firstProdImg = produseArr[0]?.imagine || null;
+
   const row={
-    titlu,slug,
-    imagine_url:document.getElementById('art-img').value.trim()||null,
-    imagine_produs1:document.getElementById('art-prod-img1').value.trim()||null,
-    imagine_produs2:document.getElementById('art-prod-img2').value.trim()||null,
-    excerpt:document.getElementById('art-excerpt').value.trim()||null,
-    continut:document.getElementById('editor-content').innerHTML||null,
-    tag:document.getElementById('art-tag').value,
-    rating:document.getElementById('art-rating').value?parseInt(document.getElementById('art-rating').value):null,
-    link_afiliat:document.getElementById('art-link1').value.trim()||null,
-    link_afiliat2:document.getElementById('art-link2').value.trim()||null,
-    read_time:document.getElementById('art-readtime').value.trim()||'5 min',
-    publicat:document.getElementById('art-publicat').checked,
+    titlu, slug,
+    imagine_url: artImg || firstProdImg || null,
+    produse_lista: produseArr.length > 0 ? produseArr : null,
+    excerpt: document.getElementById('art-excerpt').value.trim()||null,
+    continut: document.getElementById('editor-content').innerHTML||null,
+    tag: document.getElementById('art-tag').value,
+    rating: document.getElementById('art-rating').value ? parseInt(document.getElementById('art-rating').value) : null,
+    link_afiliat: produseArr[0]?.link||null,
+    link_afiliat2: produseArr[1]?.link||null,
+    read_time: document.getElementById('art-readtime').value.trim()||'5 min',
+    publicat: document.getElementById('art-publicat').checked,
   };
   let error;
   if(editingId){({error}=await db.from('articole').update(row).eq('id',editingId));}
   else{({error}=await db.from('articole').insert([row]));}
   if(error){showToast('Eroare: '+error.message,'error');}
   else{showToast(editingId?'Articol actualizat! ✅':'Articol salvat! 🎉','success');closeModal();await loadArticles();}
-  btn.disabled=false;btn.textContent='💾 Salvează';
+  btn.disabled=false;btn.textContent='💾 Salveaza';
 }
+
 async function deleteArticle(id){
-  if(!confirm('Ștergi acest articol?')) return;
+  if(!confirm('Stergi acest articol?')) return;
   const{error}=await db.from('articole').delete().eq('id',id);
   if(error){showToast('Eroare.','error');return;}
-  allArticles=allArticles.filter(a=>a.id!==id);
-  renderArticles(allArticles);
+  allArticles=allArticles.filter(a=>a.id!==id);renderArticles(allArticles);
   document.getElementById('stat-total-art').textContent=allArticles.length;
   document.getElementById('stat-pub-art').textContent=allArticles.filter(a=>a.publicat).length;
   document.getElementById('stat-draft-art').textContent=allArticles.filter(a=>!a.publicat).length;
-  showToast('Articol șters.','success');
+  showToast('Articol sters.','success');
 }
 
-// EDITOR
+// ===== EDITOR TOOLBAR =====
 function fmt(cmd){document.execCommand(cmd,false,null);document.getElementById('editor-content').focus();}
 function insertTag(tag){document.execCommand('insertHTML',false,`<${tag}>Titlu</${tag}><p></p>`);}
 function insertUL(){document.execCommand('insertHTML',false,'<ul><li>Element 1</li><li>Element 2</li></ul><p></p>');}
 function insertLink(){const url=prompt('URL:','https://');if(url)document.execCommand('createLink',false,url);}
-function insertCTA(){
-  const link=document.getElementById('art-link1').value||'#';
-  document.execCommand('insertHTML',false,`<p><a href="${link}" target="_blank" rel="noopener sponsored" style="display:block;background:#00ff87;color:#000;text-align:center;padding:16px;font-weight:700;font-size:15px;text-decoration:none;text-transform:uppercase;margin:24px 0 4px;">Vezi Prețul &#8594;</a></p><p style="font-family:monospace;font-size:10px;color:#666;text-align:center;">* Link afiliat - sustii MinimalTechRo fara costuri suplimentare.</p>`);
-}
-function insertProsCons(){
-  document.execCommand('insertHTML',false,`<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0;"><div style="background:rgba(0,255,135,0.05);border:1px solid rgba(0,255,135,0.15);padding:16px;"><h4 style="color:#00ff87;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">Pro</h4><ul><li>Avantaj 1</li><li>Avantaj 2</li></ul></div><div style="background:rgba(255,60,60,0.05);border:1px solid rgba(255,60,60,0.15);padding:16px;"><h4 style="color:#ff3c3c;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">Contra</h4><ul><li>Dezavantaj 1</li></ul></div></div>`);
-}
-function insertVerdict(){
-  document.execCommand('insertHTML',false,`<div style="background:#1a1a1a;border:1px solid #222;border-left:3px solid #00ff87;padding:20px;margin:24px 0;"><div style="font-family:monospace;font-size:10px;color:#00ff87;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;">Verdict Final</div><div style="font-size:16px;font-weight:600;color:#f0f0f0;line-height:1.6;">Scrie verdictul tau final aici...</div></div>`);
-}
-function insertScore(){
-  document.execCommand('insertHTML',false,`<div style="background:#111;border:1px solid rgba(255,255,255,0.08);padding:20px;margin:24px 0;display:flex;gap:24px;align-items:center;flex-wrap:wrap;"><div><div style="font-size:52px;font-weight:800;color:#00ff87;font-family:monospace;line-height:1;">8.5</div><div style="font-size:12px;color:#666;">/ 10 scor final</div></div><div style="flex:1;min-width:180px;"><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:#bbb;">Sunet</span><span style="color:#00ff87;font-size:13px;">9/10</span></div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:#bbb;">Autonomie</span><span style="color:#00ff87;font-size:13px;">8/10</span></div><div style="display:flex;justify-content:space-between;"><span style="font-size:13px;color:#bbb;">Raport calitate-pret</span><span style="color:#00ff87;font-size:13px;">9/10</span></div></div></div>`);
-}
-function insertCompareTable(){
-  document.execCommand('insertHTML',false,`<table style="width:100%;border-collapse:collapse;margin:24px 0;font-size:14px;"><thead><tr style="background:#1a1a1a;"><th style="padding:12px 16px;text-align:left;color:#666;font-size:11px;border-bottom:1px solid #222;text-transform:uppercase;letter-spacing:0.08em;">Criteriu</th><th style="padding:12px 16px;text-align:left;color:#00ff87;font-size:11px;border-bottom:1px solid #222;text-transform:uppercase;">Produs 1</th><th style="padding:12px 16px;text-align:left;color:#7c7cff;font-size:11px;border-bottom:1px solid #222;text-transform:uppercase;">Produs 2</th></tr></thead><tbody><tr style="border-bottom:1px solid #222;"><td style="padding:12px 16px;color:#bbb;">Pret</td><td style="padding:12px 16px;color:#00ff87;font-weight:700;">300 lei</td><td style="padding:12px 16px;color:#bbb;">500 lei</td></tr><tr style="border-bottom:1px solid #222;"><td style="padding:12px 16px;color:#bbb;">Autonomie</td><td style="padding:12px 16px;color:#00ff87;font-weight:700;">9 ore</td><td style="padding:12px 16px;color:#bbb;">11 ore</td></tr><tr><td style="padding:12px 16px;color:#bbb;">Raza actiune</td><td style="padding:12px 16px;color:#bbb;">200m</td><td style="padding:12px 16px;color:#00ff87;font-weight:700;">400m</td></tr></tbody></table>`);
-}
+function insertCTA(){const link=dynProds[0]?.link||'#';document.execCommand('insertHTML',false,`<p><a href="${link}" target="_blank" rel="noopener sponsored" style="display:block;background:#00ff87;color:#000;text-align:center;padding:16px;font-weight:700;font-size:15px;text-decoration:none;text-transform:uppercase;margin:24px 0 4px;">Vezi Pretul &#8594;</a></p>`);}
+function insertProsCons(){document.execCommand('insertHTML',false,`<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0;"><div style="background:rgba(0,255,135,0.05);border:1px solid rgba(0,255,135,0.15);padding:16px;"><h4 style="color:#00ff87;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">Pro</h4><ul><li>Avantaj 1</li></ul></div><div style="background:rgba(255,60,60,0.05);border:1px solid rgba(255,60,60,0.15);padding:16px;"><h4 style="color:#ff3c3c;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">Contra</h4><ul><li>Dezavantaj 1</li></ul></div></div>`);}
+function insertVerdict(){document.execCommand('insertHTML',false,`<div style="background:#1a1a1a;border:1px solid #222;border-left:3px solid #00ff87;padding:20px;margin:24px 0;"><div style="font-family:monospace;font-size:10px;color:#00ff87;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;">Verdict Final</div><div style="font-size:16px;font-weight:600;color:#f0f0f0;line-height:1.6;">Scrie verdictul tau final...</div></div>`);}
+function insertScore(){document.execCommand('insertHTML',false,`<div style="background:#111;border:1px solid rgba(255,255,255,0.08);padding:20px;margin:24px 0;display:flex;gap:24px;align-items:center;flex-wrap:wrap;"><div><div style="font-size:52px;font-weight:800;color:#00ff87;font-family:monospace;line-height:1;">8.5</div><div style="font-size:12px;color:#666;">/ 10</div></div><div style="flex:1;min-width:180px;"><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:#bbb;">Criteriu</span><span style="color:#00ff87;font-size:13px;">9/10</span></div></div></div>`);}
+function insertCompareTable(){document.execCommand('insertHTML',false,`<table style="width:100%;border-collapse:collapse;margin:24px 0;font-size:14px;"><thead><tr style="background:#1a1a1a;"><th style="padding:12px 16px;text-align:left;color:#666;font-size:11px;border-bottom:1px solid #222;">Criteriu</th><th style="padding:12px 16px;text-align:left;color:#00ff87;font-size:11px;border-bottom:1px solid #222;">Produs 1</th><th style="padding:12px 16px;text-align:left;color:#7c7cff;font-size:11px;border-bottom:1px solid #222;">Produs 2</th></tr></thead><tbody><tr style="border-bottom:1px solid #222;"><td style="padding:12px 16px;color:#bbb;">Pret</td><td style="padding:12px 16px;color:#00ff87;font-weight:700;">300 lei</td><td style="padding:12px 16px;color:#bbb;">500 lei</td></tr></tbody></table>`);}
 
-// PRODUCTS
+// ===== PRODUCTS TAB =====
 async function loadProducts(){
   const{data,error}=await db.from('produse').select('*').order('created_at',{ascending:false});
   if(error||!data) return;
@@ -597,15 +656,14 @@ function renderProds(list){
   const el=document.getElementById('prod-list');
   document.getElementById('prod-count').textContent=`${list.length} produse`;
   if(!list.length){el.innerHTML='<div style="text-align:center;color:var(--muted);padding:30px;">Niciun produs.</div>';return;}
-  el.innerHTML=list.map(p=>`
-    <div class="article-item" style="padding:10px 12px;">
-      <img style="width:48px;height:48px;border-radius:8px;object-fit:cover;background:var(--surface3);flex-shrink:0;" src="${esc(p.imagine_url||'')}" alt="" onerror="this.style.background='#222';this.src='';">
-      <div class="article-body">
-        <div class="article-title" style="font-size:12px;" title="${esc(p.nume)}">${esc(p.nume||'')}</div>
-        <div class="article-meta"><span style="font-family:monospace;font-size:12px;color:#f0a500;">${esc(p.pret||'—')}</span>${p.categorie?`<span style="font-size:9px;background:var(--surface3);color:var(--muted);padding:2px 6px;border-radius:4px;">${esc(p.categorie)}</span>`:''}</div>
-      </div>
-      <button class="btn-danger" onclick="deleteProd('${esc(p.id)}')" style="font-size:14px;padding:6px 8px;">🗑</button>
-    </div>`).join('');
+  el.innerHTML=list.map(p=>`<div class="article-item" style="padding:10px 12px;">
+    <img style="width:48px;height:48px;border-radius:8px;object-fit:cover;background:var(--surface3);flex-shrink:0;" src="${esc(p.imagine_url||'')}" alt="" onerror="this.style.background='#222';this.src='';">
+    <div class="article-body">
+      <div class="article-title" style="font-size:12px;">${esc(p.nume||'')}</div>
+      <div class="article-meta"><span style="font-family:monospace;font-size:12px;color:#f0a500;">${esc(p.pret||'—')}</span>${p.categorie?`<span style="font-size:9px;background:var(--surface3);color:var(--muted);padding:2px 6px;border-radius:4px;">${esc(p.categorie)}</span>`:''}</div>
+    </div>
+    <button class="btn-danger" onclick="deleteProd('${esc(p.id)}')" style="font-size:14px;padding:6px 8px;">🗑</button>
+  </div>`).join('');
 }
 function filterProds(q){renderProds(allProds.filter(p=>(p.nume||'').toLowerCase().includes(q.toLowerCase())));}
 async function deleteProd(id){
@@ -615,78 +673,49 @@ async function deleteProd(id){
   allProds=allProds.filter(p=>p.id!==id);renderProds(allProds);showToast('Sters.','success');
 }
 function updateProdPreview(){
-  const img=document.getElementById('f-img').value;
-  const pi=document.getElementById('prod-preview-img');
-  const ph=document.querySelector('#tab-produse .img-preview-placeholder');
-  if(img){pi.src=img;pi.classList.add('show');if(ph)ph.style.display='none';}
-  else{pi.classList.remove('show');if(ph)ph.style.display='flex';}
+  const img=document.getElementById('prod-preview-img');
+  const val=document.getElementById('f-img').value;
+  if(val){img.src=val;img.style.display='block';}else{img.style.display='none';}
 }
 async function detectCategory(){
   const name=document.getElementById('f-name').value.trim();
   if(!name){showToast('Introdu mai intai numele!','error');return;}
-  const btn=document.getElementById('btn-ai-cat');
-  btn.disabled=true;btn.textContent='⏳';
-  try{
-    const res=await fetch(`/api/profitshare?action=categorize&name=${encodeURIComponent(name)}`);
-    const data=await res.json();
-    if(data.category&&CATS.includes(data.category)){document.getElementById('f-cat').value=data.category;showToast(`Categorie: ${data.category} ✅`,'success');}
-    else showToast('Nu am detectat. Selecteaza manual.','error');
-  }catch{showToast('Eroare.','error');}
+  const btn=document.getElementById('btn-ai-cat');btn.disabled=true;btn.textContent='⏳';
+  try{const res=await fetch(`/api/profitshare?action=categorize&name=${encodeURIComponent(name)}`);const data=await res.json();if(data.category&&CATS.includes(data.category)){document.getElementById('f-cat').value=data.category;showToast(`Categorie: ${data.category} ✅`,'success');}else showToast('Nu am detectat. Selecteaza manual.','error');}catch{showToast('Eroare.','error');}
   btn.disabled=false;btn.textContent='✨ AI';
 }
 async function saveProduct(){
   const name=document.getElementById('f-name').value.trim(),link=document.getElementById('f-link').value.trim();
   if(!name||!link){showToast('Completeaza Numele si Linkul!','error');return;}
-  const btn=document.getElementById('btn-save-prod');
-  btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';
+  const btn=document.getElementById('btn-save-prod');btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';
   const{error}=await db.from('produse').insert([{nume:name,link_afiliat:link,imagine_url:document.getElementById('f-img').value.trim()||null,pret:document.getElementById('f-pret').value.trim()||null,pret_vechi:document.getElementById('f-pret-vechi').value.trim()||null,categorie:document.getElementById('f-cat').value||null}]);
-  if(error){showToast('Eroare: '+error.message,'error');}
-  else{showToast('Produs salvat! 🎉','success');['f-name','f-link','f-img','f-pret','f-pret-vechi'].forEach(id=>document.getElementById(id).value='');document.getElementById('f-cat').value='';document.getElementById('prod-preview-img').classList.remove('show');await loadProducts();}
+  if(error){showToast('Eroare: '+error.message,'error');}else{showToast('Produs salvat! 🎉','success');['f-name','f-link','f-img','f-pret','f-pret-vechi'].forEach(id=>document.getElementById(id).value='');document.getElementById('f-cat').value='';document.getElementById('prod-preview-img').style.display='none';await loadProducts();}
   btn.disabled=false;btn.innerHTML='💾 Salveaza Produs';
 }
 
-// SYNC
+// ===== SYNC =====
 function logSync(msg){const log=document.getElementById('sync-log');log.style.display='block';log.textContent+=`[${new Date().toLocaleTimeString('ro-RO')}] ${msg}\n`;log.scrollTop=log.scrollHeight;}
 async function doSync(){
   const btn=document.getElementById('btn-sync');document.getElementById('sync-log').textContent='';document.getElementById('sync-log').style.display='block';
-  btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Se sincronizeaza...';
-  logSync('Pornesc...');
-  try{
-    const adv=document.getElementById('sync-adv').value.trim(),limit=document.getElementById('sync-limit').value;
-    let url=`/api/profitshare?action=sync&limit=${limit}`;if(adv)url+=`&advertiser=${adv}`;
-    const res=await fetch(url,{method:'POST'}),data=await res.json();
-    if(!data.ok){logSync('Eroare: '+(data.error||'Necunoscuta'));}
-    else{const s=data.summary;logSync(`Adaugate: ${s.added} | Skip: ${s.skipped} | Erori: ${s.errors}`);(data.results||[]).forEach(r=>{if(r.status==='added')logSync(`OK ${r.name} -> ${r.category||'—'}`);else if(r.status==='error')logSync(`ERR ${r.name}: ${r.error}`);});logSync('Gata!');await loadProducts();}
-  }catch(e){logSync('Eroare: '+e.message);}
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Se sincronizeaza...';logSync('Pornesc...');
+  try{const adv=document.getElementById('sync-adv').value.trim(),limit=document.getElementById('sync-limit').value;let url=`/api/profitshare?action=sync&limit=${limit}`;if(adv)url+=`&advertiser=${adv}`;const res=await fetch(url,{method:'POST'}),data=await res.json();if(!data.ok){logSync('Eroare: '+(data.error||'Necunoscuta'));}else{const s=data.summary;logSync(`Adaugate: ${s.added} | Skip: ${s.skipped} | Erori: ${s.errors}`);(data.results||[]).forEach(r=>{logSync(r.status==='added'?`OK ${r.name}`:r.status==='error'?`ERR ${r.name}: ${r.error}`:'');});logSync('Gata!');await loadProducts();}}catch(e){logSync('Eroare: '+e.message);}
   btn.disabled=false;btn.textContent='🔄 Porneste Sync';
 }
 async function loadAdvertisers(){
   const log=document.getElementById('adv-log');log.style.display='block';log.textContent='Se incarca...\n';
-  try{const res=await fetch('/api/profitshare?action=advertisers'),data=await res.json();if(!data.ok){log.textContent='Eroare: '+data.error;return;}log.textContent=(data.data||[]).map(a=>`ID: ${a.id||'—'} | ${a.name||a.title||'Fara nume'}`).join('\n')||'Niciun advertiser.';}
-  catch(e){log.textContent='Eroare: '+e.message;}
+  try{const res=await fetch('/api/profitshare?action=advertisers'),data=await res.json();if(!data.ok){log.textContent='Eroare: '+data.error;return;}log.textContent=(data.data||[]).map(a=>`ID: ${a.id||'—'} | ${a.name||a.title||'Fara nume'}`).join('\n')||'Niciun advertiser.';}catch(e){log.textContent='Eroare: '+e.message;}
 }
 
-// COMMISSIONS
+// ===== COMMISSIONS =====
 async function loadCommissions(){
   const content=document.getElementById('comm-content');content.innerHTML='<div style="text-align:center;color:var(--muted);padding:30px;">Se incarca...</div>';
   const status=document.getElementById('comm-status').value,from=document.getElementById('comm-from').value,to=document.getElementById('comm-to').value;
   let url='/api/profitshare?action=commissions&page=1';if(status)url+=`&status=${status}`;if(from)url+=`&date_from=${from}`;if(to)url+=`&date_to=${to}`;
-  try{
-    const res=await fetch(url),data=await res.json();
-    if(!data.ok){content.innerHTML=`<div style="color:var(--red);padding:20px;">Eroare: ${data.error}</div>`;return;}
-    const comms=data.data?.commissions||data.data?.items||data.data||[];
-    if(!Array.isArray(comms)||!comms.length){['c-total','c-pending','c-approved'].forEach(id=>document.getElementById(id).textContent='0');document.getElementById('c-value').textContent='0 lei';content.innerHTML='<div style="text-align:center;color:var(--muted);padding:40px;">Niciun comision gasit.</div>';return;}
-    document.getElementById('c-total').textContent=comms.length;
-    document.getElementById('c-pending').textContent=comms.filter(c=>c.status==='pending').length;
-    document.getElementById('c-approved').textContent=comms.filter(c=>c.status==='approved').length;
-    document.getElementById('c-value').textContent=comms.reduce((s,c)=>s+parseFloat(c.amount||c.commission||0),0).toFixed(2)+' lei';
-    const sc=s=>s==='approved'?'color:var(--green)':s==='pending'?'color:var(--gold)':'color:var(--red)';
-    content.innerHTML=`<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:13px;"><thead><tr style="background:var(--surface2);"><th style="padding:10px 14px;text-align:left;color:var(--muted);font-size:11px;border-bottom:1px solid var(--border);">Produs</th><th style="padding:10px 14px;text-align:left;color:var(--muted);font-size:11px;border-bottom:1px solid var(--border);">Comision</th><th style="padding:10px 14px;text-align:left;color:var(--muted);font-size:11px;border-bottom:1px solid var(--border);">Data</th><th style="padding:10px 14px;text-align:left;color:var(--muted);font-size:11px;border-bottom:1px solid var(--border);">Status</th></tr></thead><tbody>${comms.map(c=>`<tr style="border-bottom:1px solid var(--border);"><td style="padding:10px 14px;color:var(--white);">${esc(c.product_name||c.name||'—')}</td><td style="padding:10px 14px;color:var(--gold);font-family:monospace;">${esc(String(c.amount||c.commission||'—'))}</td><td style="padding:10px 14px;color:var(--muted);font-size:12px;">${esc(c.date||c.created_at||'—')}</td><td style="padding:10px 14px;font-size:11px;font-weight:700;${sc(c.status)}">${esc(c.status||'—').toUpperCase()}</td></tr>`).join('')}</tbody></table></div>`;
-  }catch(e){content.innerHTML=`<div style="color:var(--red);padding:20px;">Eroare: ${e.message}</div>`;}
+  try{const res=await fetch(url),data=await res.json();if(!data.ok){content.innerHTML=`<div style="color:var(--red);padding:20px;">Eroare: ${data.error}</div>`;return;}const comms=data.data?.commissions||data.data?.items||data.data||[];if(!Array.isArray(comms)||!comms.length){['c-total','c-pending','c-approved'].forEach(id=>document.getElementById(id).textContent='0');document.getElementById('c-value').textContent='0 lei';content.innerHTML='<div style="text-align:center;color:var(--muted);padding:40px;">Niciun comision gasit.</div>';return;}document.getElementById('c-total').textContent=comms.length;document.getElementById('c-pending').textContent=comms.filter(c=>c.status==='pending').length;document.getElementById('c-approved').textContent=comms.filter(c=>c.status==='approved').length;document.getElementById('c-value').textContent=comms.reduce((s,c)=>s+parseFloat(c.amount||c.commission||0),0).toFixed(2)+' lei';const sc=s=>s==='approved'?'color:var(--green)':s==='pending'?'color:var(--gold)':'color:var(--red)';content.innerHTML=`<div style="overflow-x:auto;"><table style="width:100%;border-collapse:collapse;font-size:13px;"><thead><tr style="background:var(--surface2);"><th style="padding:10px 14px;text-align:left;color:var(--muted);font-size:11px;border-bottom:1px solid var(--border);">Produs</th><th style="padding:10px 14px;text-align:left;color:var(--muted);font-size:11px;border-bottom:1px solid var(--border);">Comision</th><th style="padding:10px 14px;text-align:left;color:var(--muted);font-size:11px;border-bottom:1px solid var(--border);">Data</th><th style="padding:10px 14px;text-align:left;color:var(--muted);font-size:11px;border-bottom:1px solid var(--border);">Status</th></tr></thead><tbody>${comms.map(c=>`<tr style="border-bottom:1px solid var(--border);"><td style="padding:10px 14px;color:var(--white);">${esc(c.product_name||c.name||'—')}</td><td style="padding:10px 14px;color:var(--gold);font-family:monospace;">${esc(String(c.amount||c.commission||'—'))}</td><td style="padding:10px 14px;color:var(--muted);font-size:12px;">${esc(c.date||c.created_at||'—')}</td><td style="padding:10px 14px;font-size:11px;font-weight:700;${sc(c.status)}">${esc(c.status||'—').toUpperCase()}</td></tr>`).join('')}</tbody></table></div>`;}catch(e){content.innerHTML=`<div style="color:var(--red);padding:20px;">Eroare: ${e.message}</div>`;}
 }
 
-// TOAST
-function showToast(msg,type='success'){const t=document.getElementById('toast');t.textContent=(type==='success'?'OK: ':type==='error'?'ERR: ':'INFO: ')+msg;t.className=`toast ${type} show`;setTimeout(()=>t.classList.remove('show'),3200);}
+// ===== TOAST =====
+function showToast(msg,type='success'){const t=document.getElementById('toast');t.textContent=(type==='success'?'✅ ':type==='error'?'❌ ':'ℹ️ ')+msg;t.className=`toast ${type} show`;setTimeout(()=>t.classList.remove('show'),3200);}
 
 document.getElementById('article-modal').addEventListener('click',e=>{if(e.target===document.getElementById('article-modal'))closeModal();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});

@@ -1,111 +1,126 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Homepage -->
   <url>
-    <loc>https://www.adriangsofficial.shop/</loc>
-    <lastmod>2026-04-04</lastmod>
+    <loc>https://www.minimaltechro.net/</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- Blog index -->
   <url>
-    <loc>https://www.adriangsofficial.shop/blog.html</loc>
-    <lastmod>2026-04-04</lastmod>
+    <loc>https://www.minimaltechro.net/blog.html</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
+
+  <!-- Cluster Microfoane -->
   <url>
-    <loc>https://www.adriangsofficial.shop/blog/hollyland-lark-a1-review-romana.html</loc>
-    <lastmod>2026-04-04</lastmod>
+    <loc>https://www.minimaltechro.net/blog/hollyland-lark-a1-review-romana.html</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.minimaltechro.net/blog/hollyland-lark-a1-vs-rode-wireless-go.html</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.adriangsofficial.shop/blog/hollyland-lark-a1-vs-rode-wireless-go.html</loc>
-    <lastmod>2026-04-04</lastmod>
+    <loc>https://www.minimaltechro.net/blog/microfon-wireless-ieftin-tiktok.html</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Cluster Mouse Gaming -->
+  <url>
+    <loc>https://www.minimaltechro.net/blog/logitech-g402-review-romana.html</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.minimaltechro.net/blog/logitech-g402-vs-g502.html</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.adriangsofficial.shop/blog/microfon-wireless-ieftin-tiktok.html</loc>
-    <lastmod>2026-04-04</lastmod>
+    <loc>https://www.minimaltechro.net/blog/mouse-gaming-sub-200-lei.html</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Cluster Smartwatch -->
+  <url>
+    <loc>https://www.minimaltechro.net/blog/zeblaze-stratos-4-review-romana.html</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.minimaltechro.net/blog/zeblaze-stratos-4-vs-xiaomi-band.html</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.adriangsofficial.shop/blog/logitech-g402-review-romana.html</loc>
-    <lastmod>2026-04-04</lastmod>
+    <loc>https://www.minimaltechro.net/blog/smartwatch-ieftin-gps-2026.html</loc>
+    <lastmod>2026-04-05</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Alte recenzii -->
+  <url>
+    <loc>https://www.minimaltechro.net/blog/anker-soundcore-p40i-review-romana.html</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.adriangsofficial.shop/blog/logitech-g402-vs-g502.html</loc>
-    <lastmod>2026-04-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.adriangsofficial.shop/blog/mouse-gaming-sub-200-lei.html</loc>
-    <lastmod>2026-04-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.adriangsofficial.shop/blog/zeblaze-stratos-4-review-romana.html</loc>
-    <lastmod>2026-04-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.adriangsofficial.shop/blog/zeblaze-stratos-4-vs-xiaomi-band.html</loc>
-    <lastmod>2026-04-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.adriangsofficial.shop/blog/smartwatch-ieftin-gps-2026.html</loc>
-    <lastmod>2026-04-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.adriangsofficial.shop/blog/anker-soundcore-p40i-review-romana.html</loc>
-    <lastmod>2026-04-04</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-  <url>
-    <loc>https://www.adriangsofficial.shop/blog/accesorii-tech-sub-100-lei.html</loc>
-    <lastmod>2026-04-04</lastmod>
+    <loc>https://www.minimaltechro.net/blog/accesorii-tech-sub-100-lei.html</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://www.adriangsofficial.shop/blog/powerbank-anker-vs-xiaomi-vs-baseus.html</loc>
-    <lastmod>2026-04-04</lastmod>
+    <loc>https://www.minimaltechro.net/blog/powerbank-anker-vs-xiaomi-vs-baseus.html</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
+
+  <!-- Pagini statice -->
   <url>
-    <loc>https://www.adriangsofficial.shop/despre.html</loc>
-    <lastmod>2026-04-04</lastmod>
+    <loc>https://www.minimaltechro.net/despre.html</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://www.adriangsofficial.shop/contact.html</loc>
-    <lastmod>2026-04-04</lastmod>
+    <loc>https://www.minimaltechro.net/contact.html</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://www.adriangsofficial.shop/confidentialitate.html</loc>
-    <lastmod>2026-04-04</lastmod>
+    <loc>https://www.minimaltechro.net/confidentialitate.html</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
   <url>
-    <loc>https://www.adriangsofficial.shop/termeni.html</loc>
-    <lastmod>2026-04-04</lastmod>
+    <loc>https://www.minimaltechro.net/termeni.html</loc>
+    <lastmod>2026-04-05</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
   </url>
+
 </urlset>

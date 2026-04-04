@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Meta tags se completează dinamic din JS -->
+  <title>MinimalTechRo</title>
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root{--bg:#0a0a0a;--surface:#111;--surface2:#1a1a1a;--border:#222;--accent:#00ff87;--accent2:#ff3c3c;--text:#f0f0f0;--muted:#666;}
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;line-height:1.7;}
+    header{position:sticky;top:0;z-index:100;background:rgba(10,10,10,0.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);padding:0 clamp(16px,4vw,48px);display:flex;align-items:center;justify-content:space-between;height:60px;}
+    .logo{font-family:'Space Mono',monospace;font-size:14px;font-weight:700;color:var(--accent);text-decoration:none;}
+    nav a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;margin-left:24px;transition:color 0.2s;}
+    nav a:hover{color:var(--text);}
+
+    /* LOADING */
+    .loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:16px;color:var(--muted);}
+    .spinner{width:32px;height:32px;border:3px solid var(--border);border-top-color:var(--accent);border-radius:50%;animation:spin 0.8s linear infinite;}
+    @keyframes spin{to{transform:rotate(360deg)}}
+
+    /* 404 */
+    .not-found{text-align:center;padding:80px 20px;max-width:500px;margin:0 auto;}
+    .not-found h1{font-size:80px;font-weight:800;color:var(--border);margin-bottom:16px;}
+    .not-found h2{font-size:24px;font-weight:700;margin-bottom:12px;}
+    .not-found p{color:var(--muted);margin-bottom:24px;}
+    .btn-back{display:inline-block;background:var(--accent);color:#000;padding:12px 24px;font-weight:700;font-size:13px;text-decoration:none;text-transform:uppercase;}
+
+    /* ARTICLE */
+    .container{max-width:760px;margin:0 auto;padding:clamp(32px,5vw,64px) clamp(16px,4vw,32px);}
+    .breadcrumb{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);margin-bottom:24px;}
+    .breadcrumb a{color:var(--muted);text-decoration:none;}
+    .breadcrumb a:hover{color:var(--accent);}
+    .tag{display:inline-block;font-family:'Space Mono',monospace;font-size:10px;padding:4px 10px;border-radius:2px;letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;}
+    .tag-review{background:rgba(0,255,135,0.1);border:1px solid rgba(0,255,135,0.2);color:var(--accent);}
+    .tag-guide{background:rgba(255,60,60,0.1);border:1px solid rgba(255,60,60,0.2);color:var(--accent2);}
+    .tag-compare{background:rgba(100,100,255,0.1);border:1px solid rgba(100,100,255,0.2);color:#7c7cff;}
+    h1{font-size:clamp(28px,5vw,48px);font-weight:800;letter-spacing:-0.03em;line-height:1.1;margin-bottom:20px;}
+    .meta{display:flex;gap:20px;align-items:center;margin-bottom:24px;flex-wrap:wrap;}
+    .meta-item{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);}
+    .rating{display:flex;gap:3px;margin-bottom:24px;}
+    .star{color:var(--accent);font-size:20px;}
+    .star.empty{color:var(--border);}
+    .hero-img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:2px;margin-bottom:32px;display:block;}
+    .hero-img-contain{width:100%;aspect-ratio:16/9;object-fit:contain;background:#fff;padding:24px;border-radius:2px;margin-bottom:32px;display:block;}
+    .intro-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);padding:20px 24px;margin-bottom:40px;font-size:16px;line-height:1.7;color:#ccc;}
+
+    /* ARTICLE CONTENT - stilizare pentru HTML din editor */
+    .article-content{font-size:15px;line-height:1.8;color:#bbb;}
+    .article-content h2{font-size:clamp(20px,3vw,26px);font-weight:700;letter-spacing:-0.02em;margin:40px 0 16px;color:var(--text);}
+    .article-content h3{font-size:18px;font-weight:700;margin:28px 0 12px;color:var(--text);}
+    .article-content p{margin-bottom:16px;}
+    .article-content strong{color:var(--text);}
+    .article-content a{color:var(--accent);text-decoration:none;}
+    .article-content a:hover{text-decoration:underline;}
+    .article-content ul,.article-content ol{padding-left:20px;margin-bottom:16px;}
+    .article-content li{margin-bottom:6px;}
+    .article-content img{width:100%;border-radius:4px;margin:16px 0;}
+
+    /* CTA afiliat */
+    .cta-section{margin:32px 0;}
+    .cta{display:block;background:var(--accent);color:#000;text-align:center;padding:18px 24px;font-weight:700;font-size:15px;letter-spacing:0.05em;text-decoration:none;margin-bottom:8px;transition:opacity 0.2s;text-transform:uppercase;}
+    .cta:hover{opacity:0.85;}
+    .cta-secondary{display:block;background:transparent;color:var(--text);text-align:center;padding:14px 24px;font-weight:700;font-size:14px;letter-spacing:0.05em;text-decoration:none;border:1px solid var(--border);margin-bottom:8px;transition:border-color 0.2s;text-transform:uppercase;}
+    .cta-secondary:hover{border-color:var(--accent);}
+    .disclaimer{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);text-align:center;margin-bottom:32px;}
+
+    /* RELATED */
+    .related{border-top:1px solid var(--border);padding-top:32px;margin-top:48px;}
+    .related h3{font-size:14px;font-family:'Space Mono',monospace;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;}
+    .related-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
+    .related-card{background:var(--surface);border:1px solid var(--border);padding:16px;text-decoration:none;color:inherit;transition:border-color 0.2s;display:flex;flex-direction:column;gap:6px;}
+    .related-card:hover{border-color:var(--accent);}
+    .related-card-img{width:100%;aspect-ratio:16/9;object-fit:cover;margin-bottom:4px;background:var(--surface2);}
+    .related-card-tag{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);}
+    .related-card-title{font-size:13px;font-weight:700;line-height:1.4;}
+    .related-card-arrow{font-size:14px;color:var(--accent);margin-top:auto;}
+
+    /* SHARE */
+    .share-bar{display:flex;gap:10px;margin:32px 0;flex-wrap:wrap;align-items:center;}
+    .share-label{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);}
+    .share-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid var(--border);background:var(--surface);color:var(--muted);font-family:'Space Mono',monospace;font-size:11px;font-weight:700;text-decoration:none;cursor:pointer;transition:border-color 0.2s,color 0.2s;}
+    .share-btn:hover{border-color:var(--accent);color:var(--accent);}
+
+    footer{border-top:1px solid var(--border);padding:24px clamp(16px,4vw,48px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:48px;}
+    .footer-left{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);}
+    @media(max-width:600px){nav{display:none;}}
+  </style>
+</head>
+<body>
+
+<header>
+  <a href="/" class="logo">MINIMALTECHRO</a>
+  <nav>
+    <a href="/">Produse</a>
+    <a href="/blog.html">Blog</a>
+    <a href="/despre.html">Despre</a>
+  </nav>
+</header>
+
+<div id="page-content">
+  <div class="loading">
+    <div class="spinner"></div>
+    <span>Se încarcă articolul...</span>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">© 2026 MinimalTechRo</div>
+  <div class="footer-left">
+    <a href="/confidentialitate.html" style="color:var(--muted);text-decoration:none;">Confidențialitate</a> ·
+    <a href="/termeni.html" style="color:var(--muted);text-decoration:none;">Termeni</a>
+  </div>
+</footer>
+
+<script>
+const SB_URL='https://sysheihugyeuvwxbpvxc.supabase.co';
+const SB_KEY='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InN5c2hlaWh1Z3lldXZ3eGJwdnhjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMxMTMzMTIsImV4cCI6MjA4ODY4OTMxMn0.jYwwm5BR30Nj_5naoK1XMw6wRwxdrqco5ydbFBgAIFY';
+const db=supabase.createClient(SB_URL,SB_KEY);
+
+function esc(s){const d=document.createElement('div');d.textContent=s??'';return d.innerHTML;}
+function tagClass(t){return t==='review'?'tag-review':t==='guide'?'tag-guide':'tag-compare';}
+function tagLabel(t){return t==='review'?'Recenzie':t==='guide'?'Ghid':'Comparație';}
+function stars(r){if(!r)return '';let s='';for(let i=1;i<=5;i++)s+=`<span class="star${i>r?' empty':''}">★</span>`;return `<div class="rating">${s}</div>`;}
+function fmtDate(iso){if(!iso)return '';return new Date(iso).toLocaleDateString('ro-RO',{day:'numeric',month:'long',year:'numeric'});}
+
+function show404(){
+  document.getElementById('page-content').innerHTML=`
+    <div class="not-found">
+      <h1>404</h1>
+      <h2>Articol negăsit</h2>
+      <p>Articolul pe care îl cauți nu există sau a fost mutat.</p>
+      <a href="/blog.html" class="btn-back">← Înapoi la Blog</a>
+    </div>`;
+}
+
+async function loadRelated(currentId, tag) {
+  const{data}=await db.from('articole')
+    .select('titlu,slug,imagine_url,tag,read_time')
+    .eq('publicat',true)
+    .eq('tag',tag)
+    .neq('id',currentId)
+    .limit(3);
+  return data||[];
+}
+
+async function loadArticle(){
+  const params=new URLSearchParams(window.location.search);
+  const slug=params.get('slug');
+
+  if(!slug){show404();return;}
+
+  try{
+    const{data,error}=await db.from('articole')
+      .select('*')
+      .eq('slug',slug)
+      .eq('publicat',true)
+      .single();
+
+    if(error||!data){show404();return;}
+
+    // Update meta tags
+    document.title=`${data.titlu} | MinimalTechRo`;
+    document.querySelector('meta[name="description"]')?.setAttribute('content',data.excerpt||data.titlu);
+
+    // og tags
+    const setMeta=(prop,content)=>{
+      let el=document.querySelector(`meta[property="${prop}"]`);
+      if(!el){el=document.createElement('meta');el.setAttribute('property',prop);document.head.appendChild(el);}
+      el.setAttribute('content',content);
+    };
+    setMeta('og:title',data.titlu);
+    setMeta('og:description',data.excerpt||'');
+    setMeta('og:image',data.imagine_url||'https://www.adriangsofficial.shop/minimaltechro-logo.jpeg');
+    setMeta('og:url',`https://www.adriangsofficial.shop/blog-articol.html?slug=${slug}`);
+    setMeta('og:type','article');
+
+    // Canonical
+    let canon=document.querySelector('link[rel="canonical"]');
+    if(!canon){canon=document.createElement('link');canon.rel='canonical';document.head.appendChild(canon);}
+    canon.href=`https://www.adriangsofficial.shop/blog-articol.html?slug=${slug}`;
+
+    // Related articles
+    const related=await loadRelated(data.id, data.tag);
+    const relatedHTML=related.length?`
+      <div class="related">
+        <h3>// Articole corelate</h3>
+        <div class="related-grid">
+          ${related.map(r=>`
+            <a class="related-card" href="/blog-articol.html?slug=${esc(r.slug)}">
+              ${r.imagine_url?`<img class="related-card-img" src="${esc(r.imagine_url)}" alt="${esc(r.titlu)}" loading="lazy" onerror="this.style.display='none'">`:'' }
+              <span class="related-card-tag">${tagLabel(r.tag)} · ${esc(r.read_time||'5 min')}</span>
+              <span class="related-card-title">${esc(r.titlu)}</span>
+              <span class="related-card-arrow">↗</span>
+            </a>`).join('')}
+          <a class="related-card" href="/blog.html">
+            <span class="related-card-tag">Toate articolele</span>
+            <span class="related-card-title">Înapoi la Blog</span>
+            <span class="related-card-arrow">←</span>
+          </a>
+        </div>
+      </div>`:'<div class="related"><a href="/blog.html" style="color:var(--accent);text-decoration:none;font-family:\'Space Mono\',monospace;font-size:13px;">← Înapoi la Blog</a></div>';
+
+    // Image class
+    const imgIsProduct=data.imagine_url&&(data.imagine_url.includes('hollyland')||data.imagine_url.includes('zeblaze')||data.imagine_url.includes('emagst')||data.imagine_url.includes('logitech'));
+    const imgClass=imgIsProduct?'hero-img-contain':'hero-img';
+
+    // Build page
+    document.getElementById('page-content').innerHTML=`
+      <div class="container">
+        <div class="breadcrumb">
+          <a href="/">Acasă</a> → <a href="/blog.html">Blog</a> → ${esc(data.titlu)}
+        </div>
+
+        <span class="tag ${tagClass(data.tag)}">${tagLabel(data.tag)}</span>
+
+        <h1>${esc(data.titlu)}</h1>
+
+        <div class="meta">
+          <span class="meta-item">📅 ${fmtDate(data.updated_at||data.created_at)}</span>
+          <span class="meta-item">⏱ ${esc(data.read_time||'5 min')} citire</span>
+          ${data.categorie?`<span class="meta-item">📁 ${esc(data.categorie)}</span>`:''}
+        </div>
+
+        ${stars(data.rating)}
+
+        ${data.imagine_url?`<img class="${imgClass}" src="${esc(data.imagine_url)}" alt="${esc(data.titlu)}" loading="eager" onerror="this.style.display='none'">`:''}
+
+        ${data.excerpt?`<div class="intro-box">${esc(data.excerpt)}</div>`:''}
+
+        <div class="article-content">${data.continut||''}</div>
+
+        ${(data.link_afiliat||data.link_afiliat2)?`
+        <div class="cta-section">
+          ${data.link_afiliat?`<a href="${esc(data.link_afiliat)}" target="_blank" rel="noopener sponsored" class="cta">Vezi Prețul Cel Mai Bun →</a>`:''}
+          ${data.link_afiliat2?`<a href="${esc(data.link_afiliat2)}" target="_blank" rel="noopener sponsored" class="cta-secondary">Vezi Al Doilea Produs →</a>`:''}
+          <p class="disclaimer">* Linkuri afiliate — susții MinimalTechRo fără costuri suplimentare pentru tine.</p>
+        </div>`:''}
+
+        <div class="share-bar">
+          <span class="share-label">Distribuie:</span>
+          <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" target="_blank" rel="noopener">Facebook</a>
+          <a class="share-btn" href="https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(data.titlu)}" target="_blank" rel="noopener">Twitter</a>
+          <button class="share-btn" onclick="navigator.clipboard.writeText(window.location.href);this.textContent='✓ Copiat!'">Copiază link</button>
+        </div>
+
+        ${relatedHTML}
+      </div>`;
+
+  }catch(e){
+    document.getElementById('page-content').innerHTML=`<div class="not-found"><h1>⚠️</h1><h2>Eroare</h2><p>${e.message}</p><a href="/blog.html" class="btn-back">← Înapoi la Blog</a></div>`;
+  }
+}
+
+loadArticle();
+</script>
+</body>
+</html>

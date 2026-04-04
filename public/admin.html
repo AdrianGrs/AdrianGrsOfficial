@@ -64,6 +64,7 @@
     .img-preview-placeholder{width:100%;height:180px;background:var(--surface2);border:2px dashed var(--border);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;cursor:pointer;transition:border-color .15s;color:var(--muted);font-size:13px;}
     .img-preview-placeholder:hover{border-color:var(--red);}
     .img-preview-placeholder .icon{font-size:32px;}
+    .prod-img-preview{width:100%;height:120px;object-fit:contain;background:#fff;border-radius:8px;margin-top:8px;display:none;border:1px solid var(--border);}
     .btn-primary{background:var(--red);color:#fff;border:none;border-radius:10px;font-family:var(--font);font-size:13px;font-weight:700;padding:12px 24px;cursor:pointer;display:inline-flex;align-items:center;gap:7px;transition:opacity .15s;}
     .btn-primary:hover{opacity:.88;}
     .btn-primary:disabled{opacity:.5;pointer-events:none;}
@@ -113,6 +114,10 @@
     .modal-body{padding:24px;}
     .modal-footer{padding:16px 24px;border-top:1px solid var(--border);display:flex;gap:10px;justify-content:flex-end;}
     .rating-stars{color:#f0a500;font-size:12px;}
+    .produs-box{border:1px solid var(--border);border-radius:10px;padding:14px;margin-bottom:12px;background:var(--surface);}
+    .produs-box-label{font-size:11px;font-weight:700;letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+    .produs-box-label.p1{color:var(--red);}
+    .produs-box-label.p2{color:#7c7cff;}
     @media(max-width:640px){.form-row,.form-row-3{grid-template-columns:1fr;}.article-item{flex-direction:column;}.article-img{width:100%;height:120px;}}
   </style>
 </head>
@@ -262,14 +267,17 @@
       <button class="modal-close" onclick="closeModal()">✕</button>
     </div>
     <div class="modal-body">
+
+      <!-- TITLU + SLUG -->
       <div class="form-row" style="margin-bottom:16px;">
         <div class="form-field" style="margin:0;"><label>Titlu articol *</label><input type="text" id="art-titlu" placeholder="ex: Hollyland Lark A1 — Recenzie 2026" oninput="autoSlug()"></div>
         <div class="form-field" style="margin:0;"><label>Slug URL *</label><input type="text" id="art-slug" placeholder="ex: hollyland-lark-a1-review"></div>
       </div>
 
+      <!-- IMAGINE HEADER ARTICOL -->
       <div class="form-field">
-        <label>Imagine principală (URL)</label>
-        <input type="url" id="art-img" placeholder="https://... paste URL de pe Hollyland, Zeblaze, eMAG, Unsplash" oninput="updateArtImgPreview()">
+        <label>🖼️ Imagine Header Articol (URL)</label>
+        <input type="url" id="art-img" placeholder="https://... imagine principala articol (banner)" oninput="updateArtImgPreview()">
         <div class="img-preview-wrap" style="margin-top:10px;">
           <img class="img-preview" id="art-img-preview" src="" alt="">
           <div class="img-preview-placeholder" id="art-img-placeholder" onclick="document.getElementById('art-img').focus()"><span class="icon">🖼️</span><span>Nicio imagine — paste URL mai sus</span></div>
@@ -282,6 +290,7 @@
         </div>
       </div>
 
+      <!-- TIP / RATING / TIMP -->
       <div class="form-row-3" style="margin-bottom:16px;">
         <div class="form-field" style="margin:0;"><label>Tip articol</label>
           <select id="art-tag" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:var(--font);font-size:13px;padding:10px 12px;outline:none;">
@@ -296,24 +305,51 @@
         <div class="form-field" style="margin:0;"><label>Timp citire</label><input type="text" id="art-readtime" placeholder="5 min" value="5 min"></div>
       </div>
 
-      <div class="form-row" style="margin-bottom:16px;">
-        <div class="form-field" style="margin:0;">
-          <label>Link Afiliat Principal</label>
-          <input type="url" id="art-link1" placeholder="https://l.profitshare.ro/l/...">
-          <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
-            <button onclick="setLink('https://l.profitshare.ro/l/15522290')" style="background:var(--surface3);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;padding:4px 10px;cursor:pointer;">🎙️ Lark A1</button>
-            <button onclick="setLink('https://l.profitshare.ro/l/15521891')" style="background:var(--surface3);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;padding:4px 10px;cursor:pointer;">⌚ Zeblaze</button>
-            <button onclick="setLink('https://l.profitshare.ro/l/15511749')" style="background:var(--surface3);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;padding:4px 10px;cursor:pointer;">🖱️ G402</button>
+      <!-- PRODUSE SI LINKURI -->
+      <div style="background:var(--surface2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:16px;">
+        <div style="font-size:12px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:14px;">🛒 Produse Recomandate &amp; Linkuri Afiliate</div>
+
+        <!-- PRODUS 1 -->
+        <div class="produs-box">
+          <div class="produs-box-label p1">Produs Principal #1</div>
+          <div class="form-field" style="margin-bottom:10px;">
+            <label>Link Afiliat Principal</label>
+            <input type="url" id="art-link1" placeholder="https://l.profitshare.ro/l/...">
+            <div style="margin-top:6px;display:flex;gap:6px;flex-wrap:wrap;">
+              <button onclick="setLink('https://l.profitshare.ro/l/15522290')" style="background:var(--surface3);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;padding:4px 10px;cursor:pointer;">🎙️ Lark A1</button>
+              <button onclick="setLink('https://l.profitshare.ro/l/15521891')" style="background:var(--surface3);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;padding:4px 10px;cursor:pointer;">⌚ Zeblaze</button>
+              <button onclick="setLink('https://l.profitshare.ro/l/15511749')" style="background:var(--surface3);border:1px solid var(--border);border-radius:6px;color:var(--muted);font-size:11px;padding:4px 10px;cursor:pointer;">🖱️ G402</button>
+            </div>
+          </div>
+          <div class="form-field" style="margin:0;">
+            <label>🖼️ Imagine Produs #1 (URL)</label>
+            <input type="url" id="art-prod-img1" placeholder="https://... imagine produs principal (eMAG, Hollyland, etc.)" oninput="updateProdImg1Preview()">
+            <img id="art-prod-img1-preview" class="prod-img-preview" src="" alt="Preview produs 1">
           </div>
         </div>
-        <div class="form-field" style="margin:0;"><label>Link Afiliat Secundar (opțional)</label><input type="url" id="art-link2" placeholder="pentru comparații — al doilea produs"></div>
+
+        <!-- PRODUS 2 -->
+        <div class="produs-box" style="margin-bottom:0;">
+          <div class="produs-box-label p2">Produs Comparat #2 (opțional — pentru comparații)</div>
+          <div class="form-field" style="margin-bottom:10px;">
+            <label>Link Afiliat Secundar</label>
+            <input type="url" id="art-link2" placeholder="https://l.profitshare.ro/l/... al doilea produs">
+          </div>
+          <div class="form-field" style="margin:0;">
+            <label>🖼️ Imagine Produs #2 (URL)</label>
+            <input type="url" id="art-prod-img2" placeholder="https://... imagine produs comparat (DJI, Rode, etc.)" oninput="updateProdImg2Preview()">
+            <img id="art-prod-img2-preview" class="prod-img-preview" src="" alt="Preview produs 2">
+          </div>
+        </div>
       </div>
 
+      <!-- EXCERPT -->
       <div class="form-field">
-        <label>Excerpt — rezumat scurt (apare în lista blog & Google)</label>
+        <label>Excerpt — rezumat scurt (apare în lista blog &amp; Google)</label>
         <textarea id="art-excerpt" rows="2" style="width:100%;background:var(--surface2);border:1px solid var(--border);border-radius:8px;color:var(--white);font-family:var(--font);font-size:13px;padding:10px 12px;outline:none;resize:vertical;" placeholder="Max 160 caractere..."></textarea>
       </div>
 
+      <!-- EDITOR CONTINUT -->
       <div class="form-field">
         <label>Conținut articol</label>
         <div class="editor-toolbar">
@@ -327,6 +363,7 @@
           <button class="editor-btn" onclick="insertProsCons()">✓/✗ Pro/Contra</button>
           <button class="editor-btn" onclick="insertVerdict()">🏆 Verdict</button>
           <button class="editor-btn" onclick="insertScore()">⭐ Scor</button>
+          <button class="editor-btn" onclick="insertCompareTable()">⚖️ Tabel VS</button>
         </div>
         <div id="editor-content" contenteditable="true" spellcheck="false" style="width:100%;min-height:320px;background:var(--surface2);border:1px solid var(--border);border-radius:0 0 8px 8px;color:var(--white);font-family:var(--font);font-size:14px;padding:16px;outline:none;line-height:1.7;resize:vertical;overflow-y:auto;"></div>
       </div>
@@ -395,7 +432,7 @@ function renderArticles(list){
   const st=r=>r?'★'.repeat(r)+'☆'.repeat(5-r):'';
   el.innerHTML=list.map(a=>`
     <div class="article-item" id="art-item-${esc(a.id)}">
-      <img class="article-img" src="${esc(a.imagine_url||'')}" alt="" onerror="this.style.background='#222';this.src='';">
+      <img class="article-img" src="${esc(a.imagine_url||a.imagine_produs1||'')}" alt="" onerror="this.style.background='#222';this.src='';">
       <div class="article-body">
         <div class="article-title" title="${esc(a.titlu)}">${esc(a.titlu)}</div>
         <div class="article-meta">
@@ -403,6 +440,8 @@ function renderArticles(list){
           <span class="published-badge ${a.publicat?'badge-pub':'badge-draft'}">${a.publicat?'Publicat':'Draft'}</span>
           ${a.rating?`<span class="rating-stars">${st(a.rating)}</span>`:''}
           <span style="font-size:11px;color:var(--muted);">${a.read_time||'5 min'}</span>
+          ${a.imagine_produs1?'<span style="font-size:10px;background:rgba(0,255,135,.1);color:#00ff87;padding:2px 6px;border-radius:4px;">IMG1 ✓</span>':''}
+          ${a.imagine_produs2?'<span style="font-size:10px;background:rgba(100,100,255,.1);color:#7c7cff;padding:2px 6px;border-radius:4px;">IMG2 ✓</span>':''}
         </div>
         <div class="article-slug">/blog/${esc(a.slug)}.html</div>
       </div>
@@ -425,7 +464,7 @@ function filterArticles(){
 function openArticleModal(id){
   editingId=id;
   document.getElementById('modal-title').textContent=id?'Editează articol':'Articol nou';
-  ['art-titlu','art-slug','art-img','art-excerpt','art-link1','art-link2'].forEach(i=>document.getElementById(i).value='');
+  ['art-titlu','art-slug','art-img','art-excerpt','art-link1','art-link2','art-prod-img1','art-prod-img2'].forEach(i=>document.getElementById(i).value='');
   document.getElementById('art-readtime').value='5 min';
   document.getElementById('art-tag').value='review';
   document.getElementById('art-rating').value='';
@@ -433,6 +472,8 @@ function openArticleModal(id){
   document.getElementById('editor-content').innerHTML='';
   document.getElementById('art-img-preview').classList.remove('show');
   document.getElementById('art-img-placeholder').style.display='flex';
+  document.getElementById('art-prod-img1-preview').style.display='none';
+  document.getElementById('art-prod-img2-preview').style.display='none';
   if(id){
     const a=allArticles.find(x=>x.id===id);
     if(a){
@@ -442,12 +483,16 @@ function openArticleModal(id){
       document.getElementById('art-excerpt').value=a.excerpt||'';
       document.getElementById('art-link1').value=a.link_afiliat||'';
       document.getElementById('art-link2').value=a.link_afiliat2||'';
+      document.getElementById('art-prod-img1').value=a.imagine_produs1||'';
+      document.getElementById('art-prod-img2').value=a.imagine_produs2||'';
       document.getElementById('art-readtime').value=a.read_time||'5 min';
       document.getElementById('art-tag').value=a.tag||'review';
       document.getElementById('art-rating').value=a.rating||'';
       document.getElementById('art-publicat').checked=a.publicat||false;
       document.getElementById('editor-content').innerHTML=a.continut||'';
       if(a.imagine_url) updateArtImgPreview();
+      if(a.imagine_produs1) updateProdImg1Preview();
+      if(a.imagine_produs2) updateProdImg2Preview();
     }
   }
   document.getElementById('article-modal').classList.add('open');
@@ -466,7 +511,20 @@ function updateArtImgPreview(){
   if(url){img.src=url;img.classList.add('show');ph.style.display='none';}
   else{img.classList.remove('show');ph.style.display='flex';}
 }
+function updateProdImg1Preview(){
+  const url=document.getElementById('art-prod-img1').value.trim();
+  const img=document.getElementById('art-prod-img1-preview');
+  if(url){img.src=url;img.style.display='block';}
+  else{img.style.display='none';}
+}
+function updateProdImg2Preview(){
+  const url=document.getElementById('art-prod-img2').value.trim();
+  const img=document.getElementById('art-prod-img2-preview');
+  if(url){img.src=url;img.style.display='block';}
+  else{img.style.display='none';}
+}
 function setLink(url){document.getElementById('art-link1').value=url;}
+
 async function saveArticle(){
   const titlu=document.getElementById('art-titlu').value.trim();
   const slug=document.getElementById('art-slug').value.trim();
@@ -477,6 +535,8 @@ async function saveArticle(){
   const row={
     titlu,slug,
     imagine_url:document.getElementById('art-img').value.trim()||null,
+    imagine_produs1:document.getElementById('art-prod-img1').value.trim()||null,
+    imagine_produs2:document.getElementById('art-prod-img2').value.trim()||null,
     excerpt:document.getElementById('art-excerpt').value.trim()||null,
     continut:document.getElementById('editor-content').innerHTML||null,
     tag:document.getElementById('art-tag').value,
@@ -512,16 +572,19 @@ function insertUL(){document.execCommand('insertHTML',false,'<ul><li>Element 1</
 function insertLink(){const url=prompt('URL:','https://');if(url)document.execCommand('createLink',false,url);}
 function insertCTA(){
   const link=document.getElementById('art-link1').value||'#';
-  document.execCommand('insertHTML',false,`<p><a href="${link}" target="_blank" rel="noopener sponsored" style="display:block;background:#00ff87;color:#000;text-align:center;padding:16px;font-weight:700;font-size:15px;text-decoration:none;text-transform:uppercase;margin:24px 0 4px;">Vezi Prețul →</a></p><p style="font-family:monospace;font-size:10px;color:#666;text-align:center;">* Link afiliat — susții MinimalTechRo fără costuri suplimentare.</p>`);
+  document.execCommand('insertHTML',false,`<p><a href="${link}" target="_blank" rel="noopener sponsored" style="display:block;background:#00ff87;color:#000;text-align:center;padding:16px;font-weight:700;font-size:15px;text-decoration:none;text-transform:uppercase;margin:24px 0 4px;">Vezi Prețul &#8594;</a></p><p style="font-family:monospace;font-size:10px;color:#666;text-align:center;">* Link afiliat - sustii MinimalTechRo fara costuri suplimentare.</p>`);
 }
 function insertProsCons(){
-  document.execCommand('insertHTML',false,`<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0;"><div style="background:rgba(0,255,135,0.05);border:1px solid rgba(0,255,135,0.15);padding:16px;"><h4 style="color:#00ff87;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">✓ Pro</h4><ul><li>Avantaj 1</li><li>Avantaj 2</li></ul></div><div style="background:rgba(255,60,60,0.05);border:1px solid rgba(255,60,60,0.15);padding:16px;"><h4 style="color:#ff3c3c;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">✗ Contra</h4><ul><li>Dezavantaj 1</li></ul></div></div>`);
+  document.execCommand('insertHTML',false,`<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:24px 0;"><div style="background:rgba(0,255,135,0.05);border:1px solid rgba(0,255,135,0.15);padding:16px;"><h4 style="color:#00ff87;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">Pro</h4><ul><li>Avantaj 1</li><li>Avantaj 2</li></ul></div><div style="background:rgba(255,60,60,0.05);border:1px solid rgba(255,60,60,0.15);padding:16px;"><h4 style="color:#ff3c3c;font-size:11px;text-transform:uppercase;letter-spacing:0.1em;margin-bottom:10px;">Contra</h4><ul><li>Dezavantaj 1</li></ul></div></div>`);
 }
 function insertVerdict(){
-  document.execCommand('insertHTML',false,`<div style="background:#1a1a1a;border:1px solid #222;border-left:3px solid #00ff87;padding:20px;margin:24px 0;"><div style="font-family:monospace;font-size:10px;color:#00ff87;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;">// Verdict Final</div><div style="font-size:16px;font-weight:600;color:#f0f0f0;line-height:1.6;">Scrie verdictul tău final aici...</div></div>`);
+  document.execCommand('insertHTML',false,`<div style="background:#1a1a1a;border:1px solid #222;border-left:3px solid #00ff87;padding:20px;margin:24px 0;"><div style="font-family:monospace;font-size:10px;color:#00ff87;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;">Verdict Final</div><div style="font-size:16px;font-weight:600;color:#f0f0f0;line-height:1.6;">Scrie verdictul tau final aici...</div></div>`);
 }
 function insertScore(){
-  document.execCommand('insertHTML',false,`<div style="background:#111;border:1px solid rgba(255,255,255,0.08);padding:20px;margin:24px 0;display:flex;gap:24px;align-items:center;flex-wrap:wrap;"><div><div style="font-size:52px;font-weight:800;color:#00ff87;font-family:monospace;line-height:1;">8.5</div><div style="font-size:12px;color:#666;">/ 10 scor final</div></div><div style="flex:1;min-width:180px;"><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:#bbb;">Criteriu 1</span><span style="color:#00ff87;font-size:13px;">9/10</span></div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:#bbb;">Criteriu 2</span><span style="color:#00ff87;font-size:13px;">8/10</span></div><div style="display:flex;justify-content:space-between;"><span style="font-size:13px;color:#bbb;">Raport calitate-preț</span><span style="color:#00ff87;font-size:13px;">9/10</span></div></div></div>`);
+  document.execCommand('insertHTML',false,`<div style="background:#111;border:1px solid rgba(255,255,255,0.08);padding:20px;margin:24px 0;display:flex;gap:24px;align-items:center;flex-wrap:wrap;"><div><div style="font-size:52px;font-weight:800;color:#00ff87;font-family:monospace;line-height:1;">8.5</div><div style="font-size:12px;color:#666;">/ 10 scor final</div></div><div style="flex:1;min-width:180px;"><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:#bbb;">Sunet</span><span style="color:#00ff87;font-size:13px;">9/10</span></div><div style="display:flex;justify-content:space-between;margin-bottom:6px;"><span style="font-size:13px;color:#bbb;">Autonomie</span><span style="color:#00ff87;font-size:13px;">8/10</span></div><div style="display:flex;justify-content:space-between;"><span style="font-size:13px;color:#bbb;">Raport calitate-pret</span><span style="color:#00ff87;font-size:13px;">9/10</span></div></div></div>`);
+}
+function insertCompareTable(){
+  document.execCommand('insertHTML',false,`<table style="width:100%;border-collapse:collapse;margin:24px 0;font-size:14px;"><thead><tr style="background:#1a1a1a;"><th style="padding:12px 16px;text-align:left;color:#666;font-size:11px;border-bottom:1px solid #222;text-transform:uppercase;letter-spacing:0.08em;">Criteriu</th><th style="padding:12px 16px;text-align:left;color:#00ff87;font-size:11px;border-bottom:1px solid #222;text-transform:uppercase;">Produs 1</th><th style="padding:12px 16px;text-align:left;color:#7c7cff;font-size:11px;border-bottom:1px solid #222;text-transform:uppercase;">Produs 2</th></tr></thead><tbody><tr style="border-bottom:1px solid #222;"><td style="padding:12px 16px;color:#bbb;">Pret</td><td style="padding:12px 16px;color:#00ff87;font-weight:700;">300 lei</td><td style="padding:12px 16px;color:#bbb;">500 lei</td></tr><tr style="border-bottom:1px solid #222;"><td style="padding:12px 16px;color:#bbb;">Autonomie</td><td style="padding:12px 16px;color:#00ff87;font-weight:700;">9 ore</td><td style="padding:12px 16px;color:#bbb;">11 ore</td></tr><tr><td style="padding:12px 16px;color:#bbb;">Raza actiune</td><td style="padding:12px 16px;color:#bbb;">200m</td><td style="padding:12px 16px;color:#00ff87;font-weight:700;">400m</td></tr></tbody></table>`);
 }
 
 // PRODUCTS
@@ -546,10 +609,10 @@ function renderProds(list){
 }
 function filterProds(q){renderProds(allProds.filter(p=>(p.nume||'').toLowerCase().includes(q.toLowerCase())));}
 async function deleteProd(id){
-  if(!confirm('Ștergi?')) return;
+  if(!confirm('Stergi?')) return;
   const{error}=await db.from('produse').delete().eq('id',id);
   if(error){showToast('Eroare.','error');return;}
-  allProds=allProds.filter(p=>p.id!==id);renderProds(allProds);showToast('Șters.','success');
+  allProds=allProds.filter(p=>p.id!==id);renderProds(allProds);showToast('Sters.','success');
 }
 function updateProdPreview(){
   const img=document.getElementById('f-img').value;
@@ -560,59 +623,59 @@ function updateProdPreview(){
 }
 async function detectCategory(){
   const name=document.getElementById('f-name').value.trim();
-  if(!name){showToast('Introdu mai întâi numele!','error');return;}
+  if(!name){showToast('Introdu mai intai numele!','error');return;}
   const btn=document.getElementById('btn-ai-cat');
   btn.disabled=true;btn.textContent='⏳';
   try{
     const res=await fetch(`/api/profitshare?action=categorize&name=${encodeURIComponent(name)}`);
     const data=await res.json();
     if(data.category&&CATS.includes(data.category)){document.getElementById('f-cat').value=data.category;showToast(`Categorie: ${data.category} ✅`,'success');}
-    else showToast('Nu am detectat. Selectează manual.','error');
+    else showToast('Nu am detectat. Selecteaza manual.','error');
   }catch{showToast('Eroare.','error');}
   btn.disabled=false;btn.textContent='✨ AI';
 }
 async function saveProduct(){
   const name=document.getElementById('f-name').value.trim(),link=document.getElementById('f-link').value.trim();
-  if(!name||!link){showToast('Completează Numele și Linkul!','error');return;}
+  if(!name||!link){showToast('Completeaza Numele si Linkul!','error');return;}
   const btn=document.getElementById('btn-save-prod');
   btn.disabled=true;btn.innerHTML='<span class="spinner"></span>';
   const{error}=await db.from('produse').insert([{nume:name,link_afiliat:link,imagine_url:document.getElementById('f-img').value.trim()||null,pret:document.getElementById('f-pret').value.trim()||null,pret_vechi:document.getElementById('f-pret-vechi').value.trim()||null,categorie:document.getElementById('f-cat').value||null}]);
   if(error){showToast('Eroare: '+error.message,'error');}
   else{showToast('Produs salvat! 🎉','success');['f-name','f-link','f-img','f-pret','f-pret-vechi'].forEach(id=>document.getElementById(id).value='');document.getElementById('f-cat').value='';document.getElementById('prod-preview-img').classList.remove('show');await loadProducts();}
-  btn.disabled=false;btn.innerHTML='💾 Salvează Produs';
+  btn.disabled=false;btn.innerHTML='💾 Salveaza Produs';
 }
 
 // SYNC
 function logSync(msg){const log=document.getElementById('sync-log');log.style.display='block';log.textContent+=`[${new Date().toLocaleTimeString('ro-RO')}] ${msg}\n`;log.scrollTop=log.scrollHeight;}
 async function doSync(){
   const btn=document.getElementById('btn-sync');document.getElementById('sync-log').textContent='';document.getElementById('sync-log').style.display='block';
-  btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Se sincronizează...';
+  btn.disabled=true;btn.innerHTML='<span class="spinner"></span> Se sincronizeaza...';
   logSync('Pornesc...');
   try{
     const adv=document.getElementById('sync-adv').value.trim(),limit=document.getElementById('sync-limit').value;
     let url=`/api/profitshare?action=sync&limit=${limit}`;if(adv)url+=`&advertiser=${adv}`;
     const res=await fetch(url,{method:'POST'}),data=await res.json();
-    if(!data.ok){logSync('Eroare: '+(data.error||'Necunoscută'));}
-    else{const s=data.summary;logSync(`Adăugate: ${s.added} | Skip: ${s.skipped} | Erori: ${s.errors}`);(data.results||[]).forEach(r=>{if(r.status==='added')logSync(`✅ ${r.name} → ${r.category||'—'}`);else if(r.status==='error')logSync(`❌ ${r.name}: ${r.error}`);});logSync('Gata!');await loadProducts();}
+    if(!data.ok){logSync('Eroare: '+(data.error||'Necunoscuta'));}
+    else{const s=data.summary;logSync(`Adaugate: ${s.added} | Skip: ${s.skipped} | Erori: ${s.errors}`);(data.results||[]).forEach(r=>{if(r.status==='added')logSync(`OK ${r.name} -> ${r.category||'—'}`);else if(r.status==='error')logSync(`ERR ${r.name}: ${r.error}`);});logSync('Gata!');await loadProducts();}
   }catch(e){logSync('Eroare: '+e.message);}
-  btn.disabled=false;btn.textContent='🔄 Pornește Sync';
+  btn.disabled=false;btn.textContent='🔄 Porneste Sync';
 }
 async function loadAdvertisers(){
-  const log=document.getElementById('adv-log');log.style.display='block';log.textContent='Se încarcă...\n';
-  try{const res=await fetch('/api/profitshare?action=advertisers'),data=await res.json();if(!data.ok){log.textContent='Eroare: '+data.error;return;}log.textContent=(data.data||[]).map(a=>`ID: ${a.id||'—'} | ${a.name||a.title||'Fără nume'}`).join('\n')||'Niciun advertiser.';}
+  const log=document.getElementById('adv-log');log.style.display='block';log.textContent='Se incarca...\n';
+  try{const res=await fetch('/api/profitshare?action=advertisers'),data=await res.json();if(!data.ok){log.textContent='Eroare: '+data.error;return;}log.textContent=(data.data||[]).map(a=>`ID: ${a.id||'—'} | ${a.name||a.title||'Fara nume'}`).join('\n')||'Niciun advertiser.';}
   catch(e){log.textContent='Eroare: '+e.message;}
 }
 
 // COMMISSIONS
 async function loadCommissions(){
-  const content=document.getElementById('comm-content');content.innerHTML='<div style="text-align:center;color:var(--muted);padding:30px;">Se încarcă...</div>';
+  const content=document.getElementById('comm-content');content.innerHTML='<div style="text-align:center;color:var(--muted);padding:30px;">Se incarca...</div>';
   const status=document.getElementById('comm-status').value,from=document.getElementById('comm-from').value,to=document.getElementById('comm-to').value;
   let url='/api/profitshare?action=commissions&page=1';if(status)url+=`&status=${status}`;if(from)url+=`&date_from=${from}`;if(to)url+=`&date_to=${to}`;
   try{
     const res=await fetch(url),data=await res.json();
     if(!data.ok){content.innerHTML=`<div style="color:var(--red);padding:20px;">Eroare: ${data.error}</div>`;return;}
     const comms=data.data?.commissions||data.data?.items||data.data||[];
-    if(!Array.isArray(comms)||!comms.length){['c-total','c-pending','c-approved'].forEach(id=>document.getElementById(id).textContent='0');document.getElementById('c-value').textContent='0 lei';content.innerHTML='<div style="text-align:center;color:var(--muted);padding:40px;">Niciun comision găsit.</div>';return;}
+    if(!Array.isArray(comms)||!comms.length){['c-total','c-pending','c-approved'].forEach(id=>document.getElementById(id).textContent='0');document.getElementById('c-value').textContent='0 lei';content.innerHTML='<div style="text-align:center;color:var(--muted);padding:40px;">Niciun comision gasit.</div>';return;}
     document.getElementById('c-total').textContent=comms.length;
     document.getElementById('c-pending').textContent=comms.filter(c=>c.status==='pending').length;
     document.getElementById('c-approved').textContent=comms.filter(c=>c.status==='approved').length;
@@ -623,7 +686,7 @@ async function loadCommissions(){
 }
 
 // TOAST
-function showToast(msg,type='success'){const t=document.getElementById('toast');t.textContent=(type==='success'?'✅ ':type==='error'?'❌ ':'ℹ️ ')+msg;t.className=`toast ${type} show`;setTimeout(()=>t.classList.remove('show'),3200);}
+function showToast(msg,type='success'){const t=document.getElementById('toast');t.textContent=(type==='success'?'OK: ':type==='error'?'ERR: ':'INFO: ')+msg;t.className=`toast ${type} show`;setTimeout(()=>t.classList.remove('show'),3200);}
 
 document.getElementById('article-modal').addEventListener('click',e=>{if(e.target===document.getElementById('article-modal'))closeModal();});
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});

@@ -92,6 +92,15 @@
         .auth-sub { font-size: 10px; color: var(--muted); letter-spacing: 0.5px; text-transform: uppercase; }
         .auth-sep { width: 1px; height: 28px; background: var(--border); flex-shrink: 0; }
 
+        /* ===== HERO STATIC — FIX FIRST PAINT + AUTHORITY ===== */
+        .hero-static { padding: 20px 24px 0; }
+        .hero-static-inner { max-width: 1400px; margin: 0 auto; }
+        .hero-static h1 { font-family: var(--font-display); font-size: clamp(24px,4vw,48px); font-weight: 700; color: var(--white); letter-spacing: 1px; line-height: 1.1; }
+        .hero-static h1 span { color: var(--red); }
+        .hero-static p { color: var(--muted); font-size: 14px; margin-top: 8px; }
+        .hero-static p a { color: var(--red); text-decoration: none; font-weight: 600; }
+        .hero-static p a:hover { text-decoration: underline; }
+
         /* LAYOUT */
         .page-layout { max-width: 1400px; margin: 0 auto; padding: 24px 24px 60px; display: grid; grid-template-columns: 1fr; gap: 24px; }
         .filter-wrap { overflow-x: auto; scrollbar-width: none; -ms-overflow-style: none; padding-bottom: 4px; }
@@ -236,7 +245,7 @@
     </div>
 </div>
 
-<!-- AUTHORITY BAR — Social Proof vizibil, deasupra fold -->
+<!-- AUTHORITY BAR -->
 <div class="authority-bar">
     <div class="authority-bar-inner">
         <div class="auth-item">
@@ -270,6 +279,14 @@
                 <div class="auth-sub">Doar ce recomand cu adevărat</div>
             </div>
         </div>
+    </div>
+</div>
+
+<!-- ===== HERO STATIC — FIX #2: FIRST PAINT + AUTHORITY ===== -->
+<div class="hero-static">
+    <div class="hero-static-inner">
+        <h1>Gadgeturi testate. <span>Prețuri reale.</span></h1>
+        <p>Selectate personal de <a href="/despre.html">Adrian Grosu</a> — creator tech cu 20.4K urmăritori TikTok</p>
     </div>
 </div>
 
@@ -470,14 +487,13 @@
         grid.className = "products-grid";
 
         items.forEach((p, i) => {
-            const isTop = i === 0; // primul produs din fiecare categorie = "Recomandat"
+            const isTop = i === 0;
             const img = safeUrl(p.imagine_url || "https://via.placeholder.com/300x300/181818/333?text=•");
             const name = escapeHtml(p.nume || "Produs");
             const price = escapeHtml(p.pret || "Vezi Oferta");
             const link = safeUrl(p.link_afiliat || "#");
             const hasOld = p.pret_vechi;
 
-            // Badge logic: primul = Recomandat, altele cu reducere = OFERTĂ
             let badgeHtml = "";
             if (isTop) {
                 badgeHtml = `<div class="badge-recomandat">⭐ Recomandat</div>`;
@@ -485,12 +501,10 @@
                 badgeHtml = `<div class="discount-badge show">OFERTĂ</div>`;
             }
 
-            // Urgency strip doar dacă are pret_vechi (are reducere activă)
             const urgencyHtml = hasOld
                 ? `<div class="urgency-strip">⏰ Reducere temporară — prețul se poate schimba</div>`
                 : "";
 
-            // Preț vechi / sursă
             const priceExtra = hasOld
                 ? `<span class="prod-price-old">${escapeHtml(p.pret_vechi)}</span>`
                 : `<span class="prod-price-source">eMAG</span>`;

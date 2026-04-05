@@ -3,14 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Blog Tech | MinimalTechRo</title>
-  <meta name="description" content="Recenzii și recomandări de produse tech testate. Ghiduri de cumpărare, comparații și sfaturi pentru gadgeturi în România." />
-  <meta property="og:title" content="Blog Tech | MinimalTechRo" />
-  <meta property="og:description" content="Recenzii reale pentru gadgeturi pe care le-am folosit. Fără bullshit, fără copy-paste de pe fișa de produs." />
-  <meta property="og:image" content="https://www.adriangsofficial.shop/minimaltechro-logo.jpeg" />
-  <meta property="og:url" content="https://www.adriangsofficial.shop/blog.html" />
+  <title>Blog Tech România — Recenzii Gadgeturi Testate | MinimalTechRo</title>
+
+  <!-- SEO FIX: Meta description corectă -->
+  <meta name="description" content="Recenzii și ghiduri de cumpărare pentru gadgeturi tech în România 2026. Hollyland Lark A1, Zeblaze Stratos 4, Logitech G402 — testate personal de Adrian Grosu." />
+  <meta name="robots" content="index, follow" />
+
+  <meta property="og:title" content="Blog Tech România — Recenzii Gadgeturi Testate | MinimalTechRo" />
+  <meta property="og:description" content="Recenzii reale pentru gadgeturi pe care le-am folosit. Microfoane wireless, mouse gaming, smartwatch-uri ieftine — fără bullshit, fără copy-paste." />
+  <meta property="og:image" content="https://www.minimaltechro.net/minimaltechro-logo.jpeg" />
+  <meta property="og:url" content="https://www.minimaltechro.net/blog.html" />
   <meta property="og:type" content="website" />
-  <link rel="canonical" href="https://www.adriangsofficial.shop/blog.html" />
+  <meta property="og:locale" content="ro_RO" />
+
+  <link rel="canonical" href="https://www.minimaltechro.net/blog.html" />
+
+  <!-- SEO FIX: Schema BreadcrumbList -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      {
+        "@type": "ListItem",
+        "position": 1,
+        "name": "Acasă",
+        "item": "https://www.minimaltechro.net/"
+      },
+      {
+        "@type": "ListItem",
+        "position": 2,
+        "name": "Blog Tech",
+        "item": "https://www.minimaltechro.net/blog.html"
+      }
+    ]
+  }
+  </script>
+
+  <!-- SEO FIX: Schema Blog -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    "name": "MinimalTechRo Blog",
+    "url": "https://www.minimaltechro.net/blog.html",
+    "description": "Recenzii și ghiduri pentru gadgeturi tech ieftine în România — testate personal de Adrian Grosu.",
+    "author": {
+      "@type": "Person",
+      "name": "Adrian Grosu",
+      "url": "https://www.minimaltechro.net/despre.html"
+    },
+    "blogPost": [
+      {
+        "@type": "BlogPosting",
+        "headline": "Hollyland Lark A1 Recenzie 2026 — Cel Mai Bun Microfon Wireless Sub 400 Lei",
+        "url": "https://www.minimaltechro.net/blog/hollyland-lark-a1-review-romana.html"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "Zeblaze Stratos 4 Recenzie 2026 — Smartwatch AMOLED + GPS la 200 Lei",
+        "url": "https://www.minimaltechro.net/blog/zeblaze-stratos-4-review-romana.html"
+      },
+      {
+        "@type": "BlogPosting",
+        "headline": "Logitech G402 Recenzie 2026 — Mouse Gaming din 2014 Care Încă Bate Concurența",
+        "url": "https://www.minimaltechro.net/blog/logitech-g402-review-romana.html"
+      }
+    ]
+  }
+  </script>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
@@ -26,6 +88,15 @@
     nav a{color:var(--muted);text-decoration:none;font-size:13px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;transition:color 0.2s;}
     nav a:hover,nav a.active{color:var(--text);}
     nav a.active{color:var(--accent);}
+
+    /* SEO FIX: Breadcrumb visible */
+    .breadcrumb-bar{padding:12px clamp(16px,4vw,48px);border-bottom:1px solid var(--border);background:rgba(10,10,10,0.5);position:relative;z-index:1;}
+    .breadcrumb-bar-inner{max-width:1200px;margin:0 auto;}
+    .breadcrumb-nav{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);}
+    .breadcrumb-nav a{color:var(--muted);text-decoration:none;}
+    .breadcrumb-nav a:hover{color:var(--accent);}
+    .breadcrumb-nav span{color:var(--accent);}
+
     .hero{padding:clamp(48px,8vw,96px) clamp(16px,4vw,48px) clamp(32px,5vw,64px);position:relative;z-index:1;max-width:1200px;margin:0 auto;}
     .hero-tag{display:inline-flex;align-items:center;gap:8px;background:rgba(0,255,135,0.08);border:1px solid rgba(0,255,135,0.2);color:var(--accent);font-family:'Space Mono',monospace;font-size:11px;padding:6px 14px;border-radius:2px;margin-bottom:24px;letter-spacing:0.1em;}
     .hero-tag::before{content:'';width:6px;height:6px;background:var(--accent);border-radius:50%;animation:pulse 2s infinite;}
@@ -71,6 +142,18 @@
     .empty-state{text-align:center;padding:80px 20px;color:var(--muted);}
     .empty-state .icon{font-size:48px;margin-bottom:16px;}
     .empty-state h3{font-size:18px;font-weight:700;margin-bottom:8px;color:var(--text);}
+
+    /* SEO FIX: Static article links pentru Google bot */
+    .static-articles{max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,48px) 40px;position:relative;z-index:1;}
+    .static-articles-title{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:16px;}
+    .static-articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
+    .static-article-link{display:block;padding:14px 16px;border:1px solid var(--border);background:var(--surface);text-decoration:none;color:var(--muted);font-size:13px;font-weight:600;line-height:1.4;transition:border-color 0.2s,color 0.2s;}
+    .static-article-link:hover{border-color:var(--accent);color:var(--text);}
+    .static-article-link .tag-small{font-size:9px;font-family:'Space Mono',monospace;letter-spacing:0.1em;text-transform:uppercase;display:block;margin-bottom:6px;}
+    .static-article-link.review .tag-small{color:var(--accent);}
+    .static-article-link.guide .tag-small{color:var(--accent2);}
+    .static-article-link.compare .tag-small{color:#7c7cff;}
+
     footer{border-top:1px solid var(--border);padding:32px clamp(16px,4vw,48px);display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1;gap:16px;flex-wrap:wrap;margin-top:40px;}
     .footer-left{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);}
     .footer-links{display:flex;gap:20px;}
@@ -78,20 +161,29 @@
     .footer-links a:hover{color:var(--accent);}
     .card{animation:fadeUp 0.4s ease both;}
     @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-    @media(max-width:600px){.blog-grid,.skeleton-grid{grid-template-columns:1fr;}nav{gap:16px;}}
+    @media(max-width:600px){.blog-grid,.skeleton-grid{grid-template-columns:1fr;}nav{gap:16px;}.static-articles-grid{grid-template-columns:1fr 1fr;}}
   </style>
 </head>
 <body>
 
 <header>
   <a href="/" class="logo">MINIMALTECHRO</a>
-  <nav>
+  <nav aria-label="Navigare principală">
     <a href="/">Produse</a>
-    <a href="/blog.html" class="active">Blog</a>
+    <a href="/blog.html" class="active" aria-current="page">Blog</a>
     <a href="/despre.html">Despre</a>
     <a href="/contact.html">Contact</a>
   </nav>
 </header>
+
+<!-- SEO FIX: Breadcrumb vizibil -->
+<div class="breadcrumb-bar">
+  <div class="breadcrumb-bar-inner">
+    <nav class="breadcrumb-nav" aria-label="Breadcrumb">
+      <a href="/">Acasă</a> → <span>Blog Tech</span>
+    </nav>
+  </div>
+</div>
 
 <section class="hero">
   <div class="hero-tag">Recenzii & Ghiduri Tech</div>
@@ -101,24 +193,76 @@
 
 <hr class="divider" />
 
+<!-- SEO FIX: Link-uri statice indexabile de Google (nu depind de JS) -->
+<section class="static-articles" aria-label="Articole recente">
+  <div class="static-articles-title">// Articole disponibile</div>
+  <div class="static-articles-grid">
+    <a href="/blog/hollyland-lark-a1-review-romana.html" class="static-article-link review">
+      <span class="tag-small">Recenzie</span>
+      Hollyland Lark A1 — Microfon wireless sub 400 lei
+    </a>
+    <a href="/blog/hollyland-lark-a1-vs-rode-wireless-go.html" class="static-article-link compare">
+      <span class="tag-small">Comparație</span>
+      Hollyland Lark A1 vs Rode Wireless GO II
+    </a>
+    <a href="/blog/microfon-wireless-ieftin-tiktok.html" class="static-article-link guide">
+      <span class="tag-small">Ghid</span>
+      Cel mai bun microfon wireless ieftin pentru TikTok
+    </a>
+    <a href="/blog/zeblaze-stratos-4-review-romana.html" class="static-article-link review">
+      <span class="tag-small">Recenzie</span>
+      Zeblaze Stratos 4 — AMOLED + GPS la 200 lei
+    </a>
+    <a href="/blog/zeblaze-stratos-4-vs-xiaomi-band.html" class="static-article-link compare">
+      <span class="tag-small">Comparație</span>
+      Zeblaze Stratos 4 vs Xiaomi Smart Band 8 Pro
+    </a>
+    <a href="/blog/smartwatch-ieftin-gps-2026.html" class="static-article-link guide">
+      <span class="tag-small">Ghid</span>
+      Cel mai bun smartwatch ieftin cu GPS 2026
+    </a>
+    <a href="/blog/logitech-g402-review-romana.html" class="static-article-link review">
+      <span class="tag-small">Recenzie</span>
+      Logitech G402 — Mouse gaming merită în 2026?
+    </a>
+    <a href="/blog/logitech-g402-vs-g502.html" class="static-article-link compare">
+      <span class="tag-small">Comparație</span>
+      Logitech G402 vs G502 HERO — Care merită?
+    </a>
+    <a href="/blog/mouse-gaming-sub-200-lei.html" class="static-article-link guide">
+      <span class="tag-small">Ghid</span>
+      Cel mai bun mouse gaming sub 200 lei 2026
+    </a>
+    <a href="/blog/anker-soundcore-p40i-review-romana.html" class="static-article-link review">
+      <span class="tag-small">Recenzie</span>
+      Anker Soundcore P40i — Căști ANC sub 200 lei
+    </a>
+    <a href="/blog/powerbank-anker-vs-xiaomi-vs-baseus.html" class="static-article-link compare">
+      <span class="tag-small">Comparație</span>
+      Powerbank: Anker vs Xiaomi vs Baseus
+    </a>
+    <a href="/blog/accesorii-tech-sub-100-lei.html" class="static-article-link guide">
+      <span class="tag-small">Ghid</span>
+      5 accesorii tech sub 100 lei care merită
+    </a>
+  </div>
+</section>
+
 <section class="blog-section">
   <div class="section-header">
-    <span class="section-title">// Articole</span>
+    <span class="section-title">// Toate articolele</span>
     <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-      <div class="filter-tabs" id="filter-tabs">
+      <div class="filter-tabs" id="filter-tabs" role="group" aria-label="Filtru articole">
         <button class="filter-tab active" data-filter="all">Toate</button>
         <button class="filter-tab" data-filter="review">Recenzii</button>
         <button class="filter-tab" data-filter="guide">Ghiduri</button>
         <button class="filter-tab" data-filter="compare">Comparații</button>
       </div>
-      <span class="article-count" id="article-count"></span>
+      <span class="article-count" id="article-count" aria-live="polite"></span>
     </div>
   </div>
   <div id="blog-content">
-    <div class="skeleton-grid">
-      <div class="skeleton-card"></div>
-      <div class="skeleton-card"></div>
-      <div class="skeleton-card"></div>
+    <div class="skeleton-grid" aria-hidden="true">
       <div class="skeleton-card"></div>
       <div class="skeleton-card"></div>
       <div class="skeleton-card"></div>
@@ -128,11 +272,11 @@
 
 <footer>
   <div class="footer-left">© 2026 MinimalTechRo • Conținut afiliat</div>
-  <div class="footer-links">
+  <nav class="footer-links" aria-label="Footer">
     <a href="/confidentialitate.html">Confidențialitate</a>
     <a href="/termeni.html">Termeni</a>
     <a href="/contact.html">Contact</a>
-  </div>
+  </nav>
 </footer>
 
 <script>
@@ -145,7 +289,7 @@ function esc(s){const d=document.createElement('div');d.textContent=s??'';return
 function tagClass(t){return t==='review'?'tag-review':t==='guide'?'tag-guide':'tag-compare';}
 function tagLabel(t){return t==='review'?'Recenzie':t==='guide'?'Ghid':'Comparație';}
 function tagEmoji(t){return t==='review'?'📝':t==='guide'?'💡':'⚖️';}
-function stars(r){if(!r)return '';let s='';for(let i=1;i<=5;i++)s+=`<span class="star${i>r?' empty':''}">★</span>`;return `<div class="rating">${s}</div>`;}
+function stars(r){if(!r)return '';let s='';for(let i=1;i<=5;i++)s+=`<span class="star${i>r?' empty':''}">★</span>`;return `<div class="rating" aria-label="Rating ${r} din 5">${s}</div>`;}
 function fmtDate(iso){if(!iso)return '';return new Date(iso).toLocaleDateString('ro-RO',{day:'numeric',month:'short',year:'numeric'});}
 
 function renderGrid(list){
@@ -156,10 +300,10 @@ function renderGrid(list){
     return;
   }
   content.innerHTML=`<div class="blog-grid">${list.map((a,i)=>`
-    <a class="card" href="/blog-articol.html?slug=${esc(a.slug)}" style="animation-delay:${Math.min(i*0.05,0.4)}s">
+    <a class="card" href="/blog/${esc(a.slug)}.html" style="animation-delay:${Math.min(i*0.05,0.4)}s" aria-label="${esc(a.titlu)}">
       <div class="card-img-wrap">
         ${a.imagine_url
-          ?`<img class="card-img" src="${esc(a.imagine_url)}" alt="${esc(a.titlu)}" loading="${i<3?'eager':'lazy'}" onerror="this.parentElement.innerHTML='<div class=card-img-placeholder>${tagEmoji(a.tag)}</div>'">`
+          ?`<img class="card-img" src="${esc(a.imagine_url)}" alt="${esc(a.titlu)}" loading="${i<3?'eager':'lazy'}" width="400" height="225" onerror="this.parentElement.innerHTML='<div class=card-img-placeholder>${tagEmoji(a.tag)}</div>'">`
           :`<div class="card-img-placeholder">${tagEmoji(a.tag)}</div>`}
       </div>
       <div class="card-body">
@@ -172,7 +316,7 @@ function renderGrid(list){
         <p class="card-excerpt">${esc(a.excerpt||'')}</p>
         <div class="card-footer">
           <span class="card-date">${fmtDate(a.updated_at||a.created_at)}</span>
-          <span class="card-arrow">↗</span>
+          <span class="card-arrow" aria-hidden="true">↗</span>
         </div>
       </div>
     </a>`).join('')}</div>`;

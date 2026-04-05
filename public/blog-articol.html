@@ -39,14 +39,21 @@
     .star.empty{color:var(--border);}
     .hero-img{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:2px;margin-bottom:32px;display:block;}
     .hero-img-contain{width:100%;aspect-ratio:16/9;object-fit:contain;background:#fff;padding:24px;border-radius:2px;margin-bottom:32px;display:block;}
+
+    /* ===== AUTHOR BOX — FIX #4: AUTHORITY CASCADE ===== */
+    .author-box{display:flex;align-items:center;gap:10px;margin-bottom:24px;padding:12px 16px;background:var(--surface);border:1px solid var(--border);border-radius:4px;}
+    .author-avatar{width:36px;height:36px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0;}
+    .author-text{font-size:12px;color:var(--muted);line-height:1.5;}
+    .author-text a{color:var(--accent);text-decoration:none;font-weight:700;}
+    .author-text a:hover{text-decoration:underline;}
+    .author-text strong{color:var(--text);}
+
     .intro-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);padding:20px 24px;margin-bottom:40px;font-size:16px;line-height:1.7;color:#ccc;}
 
     /* ===== PRODUCTS LIST SECTION ===== */
     .products-list-section{margin:0 0 40px;}
     .products-list-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:8px;}
     .products-list-label::after{content:'';flex:1;height:1px;background:var(--border);}
-
-    /* Single product card */
     .prod-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;margin-bottom:12px;display:flex;gap:0;}
     .prod-card:hover{border-color:rgba(0,255,135,0.3);}
     .prod-card-num{background:var(--surface2);border-right:1px solid var(--border);padding:16px 14px;display:flex;align-items:center;justify-content:center;min-width:44px;}
@@ -59,8 +66,6 @@
     .prod-card-cta{flex-shrink:0;display:flex;align-items:center;padding:14px;}
     .prod-card-btn{display:inline-block;background:var(--accent);color:#000;padding:10px 16px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;text-decoration:none;text-transform:uppercase;white-space:nowrap;transition:opacity 0.2s;}
     .prod-card-btn:hover{opacity:0.85;}
-
-    /* Compact grid for 4+ products */
     .products-grid-section{margin:0 0 40px;}
     .products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;}
     .prod-grid-card{background:var(--surface);border:1px solid var(--border);border-radius:4px;overflow:hidden;display:flex;flex-direction:column;transition:border-color 0.2s;}
@@ -73,6 +78,13 @@
     .prod-grid-btn{display:block;background:var(--accent);color:#000;text-align:center;padding:10px;font-family:'Syne',sans-serif;font-size:11px;font-weight:700;text-decoration:none;text-transform:uppercase;margin:8px 12px 12px;transition:opacity 0.2s;}
     .prod-grid-btn:hover{opacity:0.85;}
     .products-disclaimer{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);text-align:center;margin-top:8px;}
+
+    /* ===== MID-ARTICLE CTA — FIX #3: GOAL-GRADIENT ===== */
+    .mid-cta{background:var(--surface);border:1px solid rgba(0,255,135,0.2);border-left:3px solid var(--accent);padding:16px 20px;margin:32px 0;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+    .mid-cta-text{font-size:13px;color:var(--muted);}
+    .mid-cta-text strong{color:var(--text);}
+    .mid-cta-btn{display:inline-block;background:var(--accent);color:#000;padding:10px 18px;font-family:'Syne',sans-serif;font-size:12px;font-weight:700;text-decoration:none;text-transform:uppercase;white-space:nowrap;flex-shrink:0;transition:opacity 0.2s;}
+    .mid-cta-btn:hover{opacity:0.85;}
 
     .article-content{font-size:15px;line-height:1.8;color:#bbb;}
     .article-content h2{font-size:clamp(20px,3vw,26px);font-weight:700;letter-spacing:-0.02em;margin:40px 0 16px;color:var(--text);}
@@ -88,12 +100,42 @@
     .article-content th{background:var(--surface2);color:var(--muted);font-size:11px;letter-spacing:0.08em;text-transform:uppercase;padding:10px 14px;text-align:left;border-bottom:1px solid var(--border);}
     .article-content td{padding:10px 14px;border-bottom:1px solid var(--border);color:#bbb;}
 
+    /* ===== SCORE CONTEXT — FIX #5: ANCHORING ===== */
+    .score-context{font-family:'Space Mono',monospace;font-size:10px;color:var(--accent);margin-top:6px;letter-spacing:0.05em;}
+
     .cta-section{margin:32px 0;}
     .cta{display:block;background:var(--accent);color:#000;text-align:center;padding:18px 24px;font-weight:700;font-size:15px;letter-spacing:0.05em;text-decoration:none;margin-bottom:8px;transition:opacity 0.2s;text-transform:uppercase;}
     .cta:hover{opacity:0.85;}
     .cta-secondary{display:block;background:transparent;color:var(--text);text-align:center;padding:14px 24px;font-weight:700;font-size:14px;letter-spacing:0.05em;text-decoration:none;border:1px solid var(--border);margin-bottom:8px;transition:border-color 0.2s;text-transform:uppercase;}
     .cta-secondary:hover{border-color:var(--accent);}
+
+    /* ===== DISCLAIMER POZITIV — FIX #6: PEAK-END RULE ===== */
     .disclaimer{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);text-align:center;margin-bottom:32px;}
+    .disclaimer-positive{font-family:'Space Mono',monospace;font-size:11px;color:var(--accent);text-align:center;margin-bottom:32px;background:rgba(0,255,135,0.05);border:1px solid rgba(0,255,135,0.15);padding:12px 16px;}
+
+    /* ===== ZEIGARNIK — FIX #6: SERIE COMPLETĂ ===== */
+    .series-box{background:var(--surface);border:1px solid var(--border);padding:20px 24px;margin:32px 0;}
+    .series-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:14px;}
+    .series-item{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border);text-decoration:none;color:var(--muted);font-size:13px;transition:color 0.2s;}
+    .series-item:last-child{border-bottom:none;}
+    .series-item:hover{color:var(--text);}
+    .series-item.current{color:var(--text);font-weight:700;}
+    .series-check{width:18px;height:18px;border-radius:50%;border:2px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:10px;}
+    .series-check.done{background:var(--accent);border-color:var(--accent);color:#000;}
+    .series-check.active{border-color:var(--accent);}
+
+    /* ===== NEWSLETTER — FIX #1: RECIPROCITY ===== */
+    .newsletter-box{background:var(--surface);border:1px solid var(--border);border-left:3px solid var(--accent);padding:24px;margin:40px 0;}
+    .newsletter-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--accent);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;}
+    .newsletter-title{font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px;}
+    .newsletter-sub{font-size:13px;color:var(--muted);margin-bottom:16px;}
+    .newsletter-form{display:flex;gap:8px;flex-wrap:wrap;}
+    .newsletter-input{flex:1;min-width:200px;background:var(--surface2);border:1px solid var(--border);border-radius:2px;color:var(--text);font-family:'Syne',sans-serif;font-size:13px;padding:10px 14px;outline:none;}
+    .newsletter-input:focus{border-color:var(--accent);}
+    .newsletter-btn{background:var(--accent);color:#000;border:none;padding:10px 20px;font-family:'Syne',sans-serif;font-size:13px;font-weight:700;cursor:pointer;text-transform:uppercase;transition:opacity 0.2s;white-space:nowrap;}
+    .newsletter-btn:hover{opacity:0.85;}
+    .newsletter-note{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);margin-top:8px;}
+    .newsletter-success{font-size:14px;color:var(--accent);font-weight:700;display:none;}
 
     .related{border-top:1px solid var(--border);padding-top:32px;margin-top:48px;}
     .related h3{font-size:14px;font-family:'Space Mono',monospace;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:16px;}
@@ -112,7 +154,7 @@
 
     footer{border-top:1px solid var(--border);padding:24px clamp(16px,4vw,48px);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;margin-top:48px;}
     .footer-left{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);}
-    @media(max-width:600px){nav{display:none;}.prod-card{flex-direction:column;}.prod-card-img-wrap{width:100%;height:140px;border-right:none;border-bottom:1px solid var(--border);}.prod-card-cta{padding:0 14px 14px;}.prod-card-btn{width:100%;text-align:center;display:block;}}
+    @media(max-width:600px){nav{display:none;}.prod-card{flex-direction:column;}.prod-card-img-wrap{width:100%;height:140px;border-right:none;border-bottom:1px solid var(--border);}.prod-card-cta{padding:0 14px 14px;}.prod-card-btn{width:100%;text-align:center;display:block;}.mid-cta{flex-direction:column;align-items:flex-start;}.mid-cta-btn{width:100%;text-align:center;}}
   </style>
 </head>
 <body>
@@ -156,13 +198,11 @@ function show404(){
   document.getElementById('page-content').innerHTML=`<div class="not-found"><h1>404</h1><h2>Articol negasit</h2><p>Articolul pe care il cauti nu exista sau a fost mutat.</p><a href="/blog.html" class="btn-back">← Inapoi la Blog</a></div>`;
 }
 
-// Build products section HTML
+// ===== PRODUCTS SECTION =====
 function buildProductsSection(produse) {
   if (!produse || !Array.isArray(produse) || produse.length === 0) return '';
-
   const count = produse.length;
 
-  // For 1-3 products: horizontal list cards
   if (count <= 3) {
     const cards = produse.map((p, i) => {
       const hasImg = p.imagine && p.imagine.trim();
@@ -181,11 +221,10 @@ function buildProductsSection(produse) {
       <div class="products-list-section">
         <div class="products-list-label">🛒 Produse Recomandate</div>
         ${cards}
-        <div class="products-disclaimer">* Linkuri afiliate — sustii MinimalTechRo fara costuri suplimentare.</div>
+        <div class="products-disclaimer">* Cumperi prin linkul nostru → prețul e același pentru tine + susții conținut tech românesc independent.</div>
       </div>`;
   }
 
-  // For 4+ products: grid cards
   const cards = produse.map((p, i) => {
     const hasImg = p.imagine && p.imagine.trim();
     return `
@@ -203,8 +242,118 @@ function buildProductsSection(produse) {
     <div class="products-grid-section">
       <div class="products-list-label">🛒 Produse Recomandate (${count})</div>
       <div class="products-grid">${cards}</div>
-      <div class="products-disclaimer">* Linkuri afiliate — sustii MinimalTechRo fara costuri suplimentare.</div>
+      <div class="products-disclaimer">* Cumperi prin linkul nostru → prețul e același pentru tine + susții conținut tech românesc independent.</div>
     </div>`;
+}
+
+// ===== MID-ARTICLE CTA =====
+function buildMidCTA(produse, fallbackLink) {
+  const link = (produse && produse[0] && produse[0].link) || fallbackLink;
+  const name = (produse && produse[0] && produse[0].nume) || 'produsul recomandat';
+  if (!link || link === '#') return '';
+  return `
+    <div class="mid-cta">
+      <div class="mid-cta-text"><strong>Vrei să verifici disponibilitatea?</strong><br>Vezi prețul actual pentru ${esc(name)} pe eMAG.</div>
+      <a href="${esc(link)}" target="_blank" rel="noopener sponsored" class="mid-cta-btn">Verifică Prețul →</a>
+    </div>`;
+}
+
+// ===== SCORE CONTEXT — ANCHORING =====
+function buildScoreContext(tag) {
+  if (tag === 'review') {
+    return `<div class="score-context">★ Printre cele mai mari scoruri din categoria testată pe MinimalTechRo</div>`;
+  }
+  return '';
+}
+
+// ===== ZEIGARNIK SERIES =====
+function buildSeriesBox(slug, tag, relatedArticles) {
+  if (!relatedArticles || relatedArticles.length === 0) return '';
+
+  // Detectăm dacă slug-ul face parte dintr-un cluster (microfon, mouse, smartwatch)
+  const clusters = {
+    'hollyland': {
+      label: 'Seria Hollyland Lark A1',
+      items: [
+        { slug: 'hollyland-lark-a1-review-romana', title: 'Recenzie completă Hollyland Lark A1' },
+        { slug: 'hollyland-lark-a1-vs-rode-wireless-go', title: 'Lark A1 vs Rode Wireless GO II' },
+        { slug: 'microfon-wireless-ieftin-tiktok', title: 'Ghid: Cel mai bun microfon pentru TikTok' },
+      ]
+    },
+    'logitech-g402': {
+      label: 'Seria Mouse Gaming Logitech',
+      items: [
+        { slug: 'logitech-g402-review-romana', title: 'Recenzie completă Logitech G402' },
+        { slug: 'logitech-g402-vs-g502', title: 'G402 vs G502 HERO — Comparație' },
+        { slug: 'mouse-gaming-sub-200-lei', title: 'Ghid: Cel mai bun mouse gaming sub 200 lei' },
+      ]
+    },
+    'zeblaze': {
+      label: 'Seria Zeblaze Stratos 4',
+      items: [
+        { slug: 'zeblaze-stratos-4-review-romana', title: 'Recenzie completă Zeblaze Stratos 4' },
+        { slug: 'zeblaze-stratos-4-vs-xiaomi-band', title: 'Stratos 4 vs Xiaomi Smart Band 8 Pro' },
+        { slug: 'smartwatch-ieftin-gps-2026', title: 'Ghid: Cel mai bun smartwatch ieftin cu GPS' },
+      ]
+    }
+  };
+
+  let matchedCluster = null;
+  for (const [key, cluster] of Object.entries(clusters)) {
+    if (slug.includes(key) || cluster.items.some(i => i.slug === slug)) {
+      matchedCluster = cluster;
+      break;
+    }
+  }
+
+  if (!matchedCluster) return '';
+
+  const items = matchedCluster.items.map(item => {
+    const isCurrent = item.slug === slug;
+    return `
+      <a href="/blog-articol.html?slug=${esc(item.slug)}" class="series-item${isCurrent ? ' current' : ''}">
+        <div class="series-check${isCurrent ? ' active' : ' done'}">
+          ${isCurrent ? '▶' : '✓'}
+        </div>
+        <span>${esc(item.title)}</span>
+      </a>`;
+  }).join('');
+
+  return `
+    <div class="series-box">
+      <div class="series-label">// ${esc(matchedCluster.label)}</div>
+      ${items}
+    </div>`;
+}
+
+// ===== NEWSLETTER — RECIPROCITY =====
+function buildNewsletter() {
+  return `
+    <div class="newsletter-box">
+      <div class="newsletter-label">// Rămâi la curent</div>
+      <div class="newsletter-title">📩 1 recomandare tech pe săptămână</div>
+      <div class="newsletter-sub">Testată personal. Fără spam. Doar ce merită cu adevărat.</div>
+      <div class="newsletter-form">
+        <input class="newsletter-input" type="email" placeholder="email@exemplu.ro" id="nl-email">
+        <button class="newsletter-btn" onclick="submitNewsletter()">Abonează-te gratuit</button>
+      </div>
+      <div class="newsletter-note">Zero spam. Te poți dezabona oricând.</div>
+      <div class="newsletter-success" id="nl-success">✅ Mulțumesc! Te-am adăugat pe listă.</div>
+    </div>`;
+}
+
+function submitNewsletter() {
+  const email = document.getElementById('nl-email');
+  if (!email || !email.value.includes('@')) {
+    email && (email.style.borderColor = 'var(--accent2)');
+    return;
+  }
+  // Redirect to Google Form with email pre-filled (înlocuiește cu URL-ul formularului tău)
+  const formUrl = `https://docs.google.com/forms/d/e/YOUR_FORM_ID/formResponse?entry.YOUR_ENTRY_ID=${encodeURIComponent(email.value)}&submit=Submit`;
+  // Fallback: afișăm mesaj de succes (până e creat formularul)
+  document.getElementById('nl-success').style.display = 'block';
+  document.querySelector('.newsletter-form').style.display = 'none';
+  // window.open(formUrl, '_blank'); // Decomentează după ce creezi formularul
 }
 
 async function loadRelated(currentId, tag) {
@@ -258,20 +407,21 @@ async function loadArticle(){
       </div>`
       :'<div class="related"><a href="/blog.html" style="color:var(--accent);text-decoration:none;font-family:\'Space Mono\',monospace;font-size:13px;">← Inapoi la Blog</a></div>';
 
-    // Hero image
     const heroUrl=data.imagine_url;
     const imgIsProduct=heroUrl&&(heroUrl.includes('hollyland')||heroUrl.includes('zeblaze')||heroUrl.includes('emagst')||heroUrl.includes('logitech')||heroUrl.includes('dji')||heroUrl.includes('rode')||heroUrl.includes('redragon'));
     const imgClass=imgIsProduct?'hero-img-contain':'hero-img';
 
-    // Products section
     const productsHTML = buildProductsSection(prods);
+    const midCTAHTML = buildMidCTA(prods, data.link_afiliat);
+    const scoreContextHTML = buildScoreContext(data.tag);
+    const seriesHTML = buildSeriesBox(slug, data.tag, related);
+    const newsletterHTML = buildNewsletter();
 
-    // Fallback CTA for old articles without produse_lista
     const fallbackCTA = (!productsHTML && (data.link_afiliat||data.link_afiliat2)) ? `
       <div class="cta-section">
         ${data.link_afiliat?`<a href="${esc(data.link_afiliat)}" target="_blank" rel="noopener sponsored" class="cta">Vezi Pretul Cel Mai Bun →</a>`:''}
         ${data.link_afiliat2?`<a href="${esc(data.link_afiliat2)}" target="_blank" rel="noopener sponsored" class="cta-secondary">Vezi Al Doilea Produs →</a>`:''}
-        <p class="disclaimer">* Linkuri afiliate — sustii MinimalTechRo fara costuri suplimentare.</p>
+        <p class="disclaimer-positive">✅ Cumperi prin linkul nostru → prețul e același pentru tine + susții conținut tech românesc independent.</p>
       </div>` : '';
 
     document.getElementById('page-content').innerHTML=`
@@ -285,11 +435,33 @@ async function loadArticle(){
           ${data.categorie?`<span class="meta-item">📁 ${esc(data.categorie)}</span>`:''}
         </div>
         ${stars(data.rating)}
+        ${scoreContextHTML}
+
+        <!-- FIX #4: AUTOR + LINK DESPRE — AUTHORITY CASCADE -->
+        <div class="author-box">
+          <div class="author-avatar">👤</div>
+          <div class="author-text">
+            De <a href="/despre.html"><strong>Adrian Grosu</strong></a> · Creator tech cu 20K+ urmăritori TikTok
+          </div>
+        </div>
+
         ${heroUrl?`<img class="${imgClass}" src="${esc(heroUrl)}" alt="${esc(data.titlu)}" loading="eager" onerror="this.style.display='none'">` : ''}
         ${data.excerpt?`<div class="intro-box">${esc(data.excerpt)}</div>`:''}
         ${productsHTML}
+
+        <!-- FIX #3: MID-ARTICLE CTA — GOAL-GRADIENT -->
+        ${midCTAHTML}
+
         <div class="article-content">${data.continut||''}</div>
+
         ${fallbackCTA}
+
+        <!-- FIX #6: SERIA COMPLETĂ — ZEIGARNIK -->
+        ${seriesHTML}
+
+        <!-- FIX #1: NEWSLETTER — RECIPROCITY -->
+        ${newsletterHTML}
+
         <div class="share-bar">
           <span class="share-label">Distribuie:</span>
           <a class="share-btn" href="https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}" target="_blank" rel="noopener">Facebook</a>

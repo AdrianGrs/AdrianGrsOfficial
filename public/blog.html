@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Blog Tech România — Recenzii Gadgeturi Testate | MinimalTechRo</title>
 
-  <!-- SEO FIX: Meta description corectă -->
   <meta name="description" content="Recenzii și ghiduri de cumpărare pentru gadgeturi tech în România 2026. Hollyland Lark A1, Zeblaze Stratos 4, Logitech G402 — testate personal de Adrian Grosu." />
   <meta name="robots" content="index, follow" />
 
@@ -18,7 +17,6 @@
 
   <link rel="canonical" href="https://www.minimaltechro.net/blog.html" />
 
-  <!-- SEO FIX: Schema BreadcrumbList -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -40,7 +38,6 @@
   }
   </script>
 
-  <!-- SEO FIX: Schema Blog -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -89,7 +86,6 @@
     nav a:hover,nav a.active{color:var(--text);}
     nav a.active{color:var(--accent);}
 
-    /* SEO FIX: Breadcrumb visible */
     .breadcrumb-bar{padding:12px clamp(16px,4vw,48px);border-bottom:1px solid var(--border);background:rgba(10,10,10,0.5);position:relative;z-index:1;}
     .breadcrumb-bar-inner{max-width:1200px;margin:0 auto;}
     .breadcrumb-nav{font-family:'Space Mono',monospace;font-size:11px;color:var(--muted);}
@@ -143,7 +139,7 @@
     .empty-state .icon{font-size:48px;margin-bottom:16px;}
     .empty-state h3{font-size:18px;font-weight:700;margin-bottom:8px;color:var(--text);}
 
-    /* SEO FIX: Static article links pentru Google bot */
+    /* Sectiunea articole statice indexabile */
     .static-articles{max-width:1200px;margin:0 auto;padding:0 clamp(16px,4vw,48px) 40px;position:relative;z-index:1;}
     .static-articles-title{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:16px;}
     .static-articles-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px;}
@@ -161,7 +157,7 @@
     .footer-links a:hover{color:var(--accent);}
     .card{animation:fadeUp 0.4s ease both;}
     @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
-    @media(max-width:600px){.blog-grid,.skeleton-grid{grid-template-columns:1fr;}nav{gap:16px;}.static-articles-grid{grid-template-columns:1fr 1fr;}}
+    @media(max-width:600px){.blog-grid,.skeleton-grid{grid-template-columns:1fr;}nav{display:none;}.static-articles-grid{grid-template-columns:1fr 1fr;}}
   </style>
 </head>
 <body>
@@ -176,7 +172,7 @@
   </nav>
 </header>
 
-<!-- SEO FIX: Breadcrumb vizibil -->
+<!-- Breadcrumb vizibil pentru Google -->
 <div class="breadcrumb-bar">
   <div class="breadcrumb-bar-inner">
     <nav class="breadcrumb-nav" aria-label="Breadcrumb">
@@ -193,7 +189,7 @@
 
 <hr class="divider" />
 
-<!-- SEO FIX: Link-uri statice indexabile de Google (nu depind de JS) -->
+<!-- Link-uri statice indexabile de Google (nu depind de JS) -->
 <section class="static-articles" aria-label="Articole recente">
   <div class="static-articles-title">// Articole disponibile</div>
   <div class="static-articles-grid">
@@ -292,6 +288,16 @@ function tagEmoji(t){return t==='review'?'📝':t==='guide'?'💡':'⚖️';}
 function stars(r){if(!r)return '';let s='';for(let i=1;i<=5;i++)s+=`<span class="star${i>r?' empty':''}">★</span>`;return `<div class="rating" aria-label="Rating ${r} din 5">${s}</div>`;}
 function fmtDate(iso){if(!iso)return '';return new Date(iso).toLocaleDateString('ro-RO',{day:'numeric',month:'short',year:'numeric'});}
 
+/*
+ * FIX PRINCIPAL:
+ * Articolele din Supabase (create din Admin Panel) se încarcă
+ * prin blog-articol.html?slug=  nu prin /blog/slug.html
+ * Cele statice rămân în secțiunea de mai sus (static-articles)
+ */
+function articleUrl(slug) {
+  return `/blog-articol.html?slug=${encodeURIComponent(slug)}`;
+}
+
 function renderGrid(list){
   const content=document.getElementById('blog-content');
   document.getElementById('article-count').textContent=list.length+' articole';
@@ -300,7 +306,7 @@ function renderGrid(list){
     return;
   }
   content.innerHTML=`<div class="blog-grid">${list.map((a,i)=>`
-    <a class="card" href="/blog/${esc(a.slug)}.html" style="animation-delay:${Math.min(i*0.05,0.4)}s" aria-label="${esc(a.titlu)}">
+    <a class="card" href="${articleUrl(a.slug)}" style="animation-delay:${Math.min(i*0.05,0.4)}s" aria-label="${esc(a.titlu)}">
       <div class="card-img-wrap">
         ${a.imagine_url
           ?`<img class="card-img" src="${esc(a.imagine_url)}" alt="${esc(a.titlu)}" loading="${i<3?'eager':'lazy'}" width="400" height="225" onerror="this.parentElement.innerHTML='<div class=card-img-placeholder>${tagEmoji(a.tag)}</div>'">`
@@ -329,7 +335,10 @@ async function loadArticles(){
       .eq('publicat',true)
       .order('created_at',{ascending:false});
     document.getElementById('blog-content').innerHTML='';
-    if(error||!data){document.getElementById('blog-content').innerHTML='<div class="empty-state"><div class="icon">⚠️</div><h3>Eroare la încărcare</h3><p>Încearcă să reîmprospătezi pagina.</p></div>';return;}
+    if(error||!data){
+      document.getElementById('blog-content').innerHTML='<div class="empty-state"><div class="icon">⚠️</div><h3>Eroare la încărcare</h3><p>Încearcă să reîmprospătezi pagina.</p></div>';
+      return;
+    }
     allArticles=data;
     renderGrid(data);
   }catch(e){

@@ -8,6 +8,29 @@
       "source": "/blog-articol",
       "destination": "/blog-articol.html"
     }
+  ],
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "adriangsofficial.shop"
+        }
+      ],
+      "destination": "https://www.minimaltechro.net/$1",
+      "permanent": true
+    },
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.adriangsofficial.shop"
+        }
+      ],
+      "destination": "https://www.minimaltechro.net/$1",
+      "permanent": true
+    }
   ]
 }
-

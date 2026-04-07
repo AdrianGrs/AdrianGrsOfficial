@@ -376,7 +376,7 @@ async function loadArticle(){
 
     const setMeta=(prop,content)=>{let el=document.querySelector(`meta[property="${prop}"]`);if(!el){el=document.createElement('meta');el.setAttribute('property',prop);document.head.appendChild(el);}el.setAttribute('content',content);};
     const prods = Array.isArray(data.produse_lista) ? data.produse_lista : [];
-    const ogImg = data.imagine_url || prods[0]?.imagine || 'https://www.adriangsofficial.shop/minimaltechro-logo.jpeg';
+    const ogImg = data.imagine_url || prods[0]?.imagine || 'https://www.minimaltechro.net/minimaltechro-logo.jpeg';
     setMeta('og:title',data.titlu);
     setMeta('og:description',data.excerpt||'');
     setMeta('og:image',ogImg);
